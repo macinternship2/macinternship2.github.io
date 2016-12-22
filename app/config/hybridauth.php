@@ -11,7 +11,7 @@
 
 return
 array(
-	"base_url" => "http://localhost:8000/googleauth/auth",
+	"base_url" => env("APP_URL","http://localhost:8000")."/socialauth/auth",
 	"providers" => array(
 				// openid providers
 		"OpenID" => array(
@@ -30,7 +30,7 @@ array(
 		),
 		"Facebook" => array(
 		"enabled" => true,
-		"keys" => array("id" => "", "secret" => ""),
+		"keys" => array("id" => env('FACEBOOK_APP_ID', 'your_google_api_id'), "secret" => env('FACEBOOK_APP_SECRET', 'your_google_api_id')),
 		"trustForwarded" => false
 		),
 		"Twitter" => array(

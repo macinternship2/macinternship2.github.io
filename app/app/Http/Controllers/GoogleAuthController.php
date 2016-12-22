@@ -4,7 +4,6 @@ use App\User;
 use Auth;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Hybridauth\Hybridauth;
 use Hybrid_Auth;
 use Hybrid_Endpoint;
 

@@ -45,6 +45,8 @@ Route::post('signin', 'SignInController@authenticate');
 Route::get('signout', 'SignInController@signout');
 
 Route::get('fbauth/{auth?}', array('as'=>'facebookAuth', 'uses'=>'SocialAuthController@getFacebookLogin'));
+Route::get('socialauth/auth/{provider}', 'SocialAuthController@getSocialLogin');
+Route::get('socialauth/auth', 'SocialAuthController@getSocialLoginCallBack');
 Route::get('googleauth/{action?}', 'GoogleAuthController@getGoogleLogin');
 
 Route::get('signup', 'SignUpController@showForm');
