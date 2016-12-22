@@ -42,11 +42,11 @@
 			<div class="social-media-signins">
 				Or sign in using your social media account
 				
-				<a class="facebook" href="/socialauth/auth/Facebook">
+				<a class="facebook" target="_blank" href="/socialauth/auth/Facebook">
 					<i class="fa-lg fa fa-facebook"></i>
 					<div class="pull-right">Sign in with facebook</div>
 				</a>
-				<a class="google-plus" href="/socialauth/auth/Google">
+				<a class="google-plus" target="_blank" href="/socialauth/auth/Google">
 					<i class="fa-lg fa fa-google-plus"></i>
 					<div class="pull-right">Sign in with Google</div>
 				</a>
