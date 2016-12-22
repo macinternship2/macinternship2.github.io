@@ -24,7 +24,7 @@
 								<td class="user-icon">
 									<i class="fa fa-user"></i>
 								</td>
-								<td class="text-center">
+								<td class="text-center sign-in-sign-up">
 									Sign in / Sign up
 								</td>
 							</tr>

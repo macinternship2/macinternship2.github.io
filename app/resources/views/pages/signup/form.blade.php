@@ -7,7 +7,7 @@
 		<p>Already have an AccessLocator account? <a href="/signin">Sign in</a></p>
 	</div>
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-6 col-xs-12">
 			<div class="signup-form">
 				<form method="post" action="/signup">
 					{!! csrf_field() !!}
@@ -35,7 +35,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-6 col-xs-12">
 			<div class="social-media-signins">
 				Or sign in using your social media account
 				

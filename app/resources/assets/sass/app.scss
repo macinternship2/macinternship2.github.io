@@ -88,6 +88,7 @@ body {
 	bottom: 0;
 	left: 0;
 	right: 0;
+	overflow-x: hidden;
 }
 
 h1, h2, h3 {
@@ -121,7 +122,7 @@ h1, h2, h3 {
 	text-decoration: none;
 }
 
-header, footer {
+header {
 	padding-left: 10px;
 	padding-right: 10px;
 }
@@ -156,9 +157,7 @@ ul.nav {
 
 footer {
 	position: absolute;
-	bottom: 0;
-	right: 6px;
-	left: 6px;
+	bottom: 0; 
 }
 
 .container {
@@ -537,6 +536,10 @@ footer {
 		margin-left: auto;
 		margin-right: auto;
 
+		.sign-in-sign-up {
+			font-weight: bold;
+		}
+
 		.search {
 			width: 100%;
 			margin-top: 30px;
@@ -637,11 +640,62 @@ footer {
 	}	
 }
 
+@media screen and (max-width: 450px) {
+	html > body {
+		.signup-form {
+			width: 100%;
+		}
+
+		div.social-media-signins {
+			width: 305px;
+			> a {
+				width: 300px;
+				
+				> div {
+					width: 242px;
+				}
+			}
+		}
+
+		.sign-up .agreements {
+			width: 100%;
+		}
+
+		#copyright {
+			// keep the copyright notice on a single line.
+			// Use em for older browsers not supporting vw units.
+			font-size: 0.8em;
+
+			font-size: 3.3vw;
+		}
+	}
+}
+
 @media screen and (max-width: 550px) {
-	body {
-		.home {
+	html > body {
+		.nav > li > a {
+			// Some pixel units for older browsers not supporting vw units
+			padding-left: 7px;
+			padding-right: 7px;
+
+			// vw units for newer browsers
+			padding-left: 2vw;
+			padding-right: 2vw;
+		}
+
+		.home-page {
+			.intro {
+				width: 100%;
+
+				// Some pixel units for older browsers not supporting vw units
+				padding-left: 30px;
+				padding-right: 30px;
+
+				padding-right: 10vw;
+				padding-left: 10vw;
+			}
 			.home-inputs {
-				width: auto;
+				width: 100%;
 			}
 		}
 	}
@@ -701,6 +755,7 @@ footer {
 			border-left-width: 0;
 			margin-left: auto;
 			margin-right: auto;
+			margin-bottom: 40px;
 		}
 		
 		.sign-up {
@@ -855,8 +910,4 @@ footer {
 			color: #000;
 		}
 	}
-}
-
-#copyright {
-	margin-left: 10px;
 }
