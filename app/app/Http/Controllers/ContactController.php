@@ -20,6 +20,7 @@ class ContactController extends Controller {
 		$validation_rules = array(
 			'email'            => 'required|email',
 			'comment'         => 'required',
+			'g-recaptcha-response' => 'required|captcha'
 		);
 		$validator = Validator::make(Input::all(), $validation_rules);
 		if ($validator->fails())

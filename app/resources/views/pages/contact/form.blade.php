@@ -19,6 +19,9 @@
 						rows="5">{{ old('comment') }}</textarea>
 				</div>
 				<div class="col-xs-12">
+					{!! app('captcha')->display(); !!}
+				</div>
+				<div class="col-xs-12">
 					<input type="submit" class="clean" value="Send Message">
 				</div>
 			</div>

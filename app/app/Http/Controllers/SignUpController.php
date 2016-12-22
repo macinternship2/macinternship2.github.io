@@ -23,7 +23,8 @@ class SignUpController extends Controller {
 			'last_name'             => 'required',
 			'email'            => 'required|email|unique:user',  
 			'password'         => 'required',
-			'password_confirm' => 'required|same:password'
+			'password_confirm' => 'required|same:password',
+			'g-recaptcha-response' => 'required|captcha'
 		);
 		$validator = Validator::make(Input::all(), $validation_rules);
 		if ($validator->fails())

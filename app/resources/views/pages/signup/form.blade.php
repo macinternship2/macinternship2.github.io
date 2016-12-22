@@ -28,6 +28,9 @@
 						<div class="col-xs-12">
 							<input class="clean" name="password_confirm" type="password" placeholder="Type your password again" value="{{ old('password_confirm') }}">
 						</div>
+						<div class="col-xs-12">
+							{!! app('captcha')->display(); !!}
+						</div>
 					</div>
 					<div>
 						<input class="clean" type="submit" value="Sign Up">
