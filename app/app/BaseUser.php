@@ -11,7 +11,7 @@ class BaseUser
 	*
 	* @return true if and only if the parameters match a user record.
 	*/
-	public static function authenticate(string $email, string $password)
+	public static function authenticate($email, $password)
 	{
 		$matching_user = User::where('email', '=', $email)->first();
 		if (!$matching_user)
