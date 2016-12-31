@@ -120,6 +120,9 @@ h1, h2, h3 {
 #logo {
 	font-size: 26px;
 	text-decoration: none;
+	background-image: url('../images/logo_37px_high.jpg');
+	background-repeat: no-repeat;
+	padding-left: 45px;
 }
 
 header {
@@ -135,6 +138,11 @@ ul.nav {
 	
 	li {
 		float: left;
+	}
+	
+	.sign-out {
+		font-size: 20px;
+		line-height: 16px;
 	}
 }
 
@@ -163,7 +171,6 @@ footer {
 .container {
 	background-color: #fff;
 	position: relative;
-	padding-bottom: 30px;
 	min-height: 100%;
 	box-shadow: 0 0 15px #888;
 }
@@ -235,6 +242,10 @@ footer {
 		max-width: 500px;
 		margin-left: auto;
 		margin-right: auto;
+		
+		textarea {
+			resize: vertical;
+		}
 	}
 	
 	.sent-message {
@@ -392,6 +403,14 @@ footer {
 	}
 	
 	.question-category {
+		> a {
+			border-top: 1px solid mix($base_colour1, #ffffff, 50%);
+			
+			&:hover {
+				border-top: 1px solid mix($base_colour1, #ffffff, 10%);
+			}
+		}
+	
 		.title-bar {
 			.pie-graph {
 				display: table-cell;
@@ -504,7 +523,8 @@ footer {
 }
 
 .home-page {
-	min-height: 90vh;
+	min-height: 94vh;
+	min-height: calc(100vh - 40px);
 	background-image: url('../images/home_background_1170px.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -596,7 +616,6 @@ footer {
 		padding-right: 15px;
 		padding-left: 15px;
 		margin-top: 40px;
-		margin-bottom: 50px;
 		
 		.location-tag {
 			padding-left: 0;
