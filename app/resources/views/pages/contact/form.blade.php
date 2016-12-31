@@ -36,11 +36,11 @@
 		if (widget.length > 0)
 		{
 			parentWidth = document.getElementById("comment").offsetWidth;
-	        childWidth = 304;
-	        scale = (parentWidth) / (childWidth);
-	        new_width = childWidth * scale;
-	        widget[0].style.transform = 'scale('+scale+',1)';
-	        widget[0].style.transformOrigin = '0 0';
+			childWidth = 304;
+			scale = (parentWidth) / (childWidth);
+			new_width = childWidth * scale;
+			widget[0].style.transform = 'scale('+scale+',1)';
+			widget[0].style.transformOrigin = '0 0';
 		}
 	}
 	//onload 
