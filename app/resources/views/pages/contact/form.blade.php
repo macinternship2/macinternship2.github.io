@@ -13,13 +13,13 @@
 						value="{{ old('email') }}">
 				</div>
 				<div class="col-xs-12">
-					<textarea class="clean"
+					<textarea class="clean" id="comment"
 						name="comment"
 						placeholder="Your Comment"
 						rows="5">{{ old('comment') }}</textarea>
 				</div>
 				<div class="col-xs-12">
-					{!! app('captcha')->display(); !!}
+					{!! app('captcha')->display($attributes = ['data-size'=>'normal','data-theme'=>'light'], $lang = null); !!}
 				</div>
 				<div class="col-xs-12">
 					<input type="submit" class="clean" value="Send Message">
@@ -28,5 +28,25 @@
 		</form>
 	</div>
 </div>
+<script type="text/javascript">
+//adjust the widget
+	function ScaleReCaptcha()
+	{
+		widget = document.getElementsByClassName('g-recaptcha');
+		if (widget.length > 0)
+		{
+			parentWidth = document.getElementById("comment").offsetWidth;
+	        childWidth = 304;
+	        scale = (parentWidth) / (childWidth);
+	        new_width = childWidth * scale;
+	        widget[0].style.transform = 'scale('+scale+',1)';
+	        widget[0].style.transformOrigin = '0 0';
+		}
+	}
+	//onload 
+	(function() {
+		ScaleReCaptcha();
+	})();
+</script>
 
 @stop
