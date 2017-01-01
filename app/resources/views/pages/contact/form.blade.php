@@ -19,7 +19,12 @@
 						rows="5">{{ old('comment') }}</textarea>
 				</div>
 				<div class="col-xs-12">
+					<div class="clean">
 					{!! app('captcha')->display($attributes = ['data-size'=>'normal','data-theme'=>'light'], $lang = null); !!}
+					<noscript>
+						your javascript is disabled, plese enable it to continue.
+					</noscript>
+					</div>
 				</div>
 				<div class="col-xs-12">
 					<input type="submit" class="clean" value="Send Message">
