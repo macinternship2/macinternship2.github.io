@@ -1021,6 +1021,36 @@ body.fixed-menu {
 	}
 }
 
+#hover-text-display {
+	position: fixed;
+	bottom: 0;
+	padding-bottom: 20px; // Position above the 
+	width: 1170px;
+	font-size: 18px;
+	text-align: center;
+	background-color: #fff;
+	box-shadow: 0 0 5px #fff;
+	box-sizing: border-box;
+	opacity: 1;
+	transition: opacity 1.0s;
+	
+	&.hiding {
+		opacity: 0;
+	}
+}
+
+@media screen and (max-width: 1199px) and (min-width: 992px) {
+	#hover-text-display {
+		width: 970px;
+	}
+}
+
+@media screen and (max-width: 991px) and (min-width: 768px) {
+	#hover-text-display {
+		width: 750px;
+	}
+}
+
 .home-page {
 	min-height: 94vh;
 	min-height: calc(100vh - 40px);
@@ -1628,7 +1658,7 @@ body.fixed-menu {
 			color: #888;
 		}
 	}
-	
+
 	&[type="submit"] {
 		@extend %clean-submit;
 	}
