@@ -5,6 +5,7 @@
   <script src="/css/jquery/jquery-ui.js"></script>
   <script src="/js/profile.js"></script>
   <script src="/js/profile_save_button.js"></script>
+  <script src="/js/profile_save_prompt.js"></script>
 @stop
 @section('content')
 <div class="profile row">
