@@ -35,7 +35,7 @@ class LocationReportController extends Controller {
 			$rating_system = 'universal';
 		}
 		$location = Location::find($location_id);
-		$question_categories = QuestionCategory::with('questions')->get();
+		$question_categories = QuestionCategory::with('questions')->orderBy('name','ASC')->get();
 		$view_data = [
 			'location' => $location,
 			'question_categories' => $question_categories,
