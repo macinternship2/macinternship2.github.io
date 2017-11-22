@@ -22,7 +22,7 @@ class ProfileController extends Controller {
 	public static function getProfileView($validator = null)
 	{
 		$user = BaseUser::getDbUser();
-		$question_categories = QuestionCategory::with('questions')->get();
+		$question_categories = QuestionCategory::with('questions')->orderBy('name','ASC')->get();
 		$countries = Country::orderBy('name')->get();
 		$enabled_countries = Country::whereIn('id', function($query){
 			$query->select('country_id')
