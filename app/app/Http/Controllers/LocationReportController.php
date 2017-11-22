@@ -12,7 +12,7 @@ class LocationReportController extends Controller {
     public function show2(string $location_id, $question_category_id)
 	{
 		$location = Location::find($location_id);
-		$question_categories = QuestionCategory::with('questions')->get();
+		$question_categories = QuestionCategory::with('questions')->orderBy('name','ASC')->get();
 		$question_category_id = intval($question_category_id);
 		$question_category = QuestionCategory::find($question_category_id);
 		$view_data = [

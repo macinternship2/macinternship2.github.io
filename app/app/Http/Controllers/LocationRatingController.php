@@ -115,7 +115,7 @@ class LocationRatingController extends Controller {
 			return redirect()->intended('/signin');
 		}
 	   $location = Location::find($location_id);
-	   $question_categories = QuestionCategory::with('questions')->get();
+	   $question_categories = QuestionCategory::with('questions')->orderBy('name','ASC')->get();
 	   $question_category = null;
 	   $next_question_category_id = null;
 
