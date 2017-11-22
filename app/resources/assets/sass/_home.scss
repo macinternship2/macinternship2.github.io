@@ -44,7 +44,8 @@ html > body #main > .home-page {
 		padding-top: 30px;
 		margin-left: auto;
 		margin-right: auto;
-
+		
+		
 		.sign-in-sign-up {
 			font-weight: bold;
 		}
@@ -206,6 +207,9 @@ html > body #main > .home-page {
 @media screen and (max-width: 360px) {
 	html > body {
 		.home-page {
+		.message {
+  		 font-size: 2em;
+			}
 			.intro {
 				p {
 					font-size: 0.95em;
@@ -270,6 +274,7 @@ html > body #main > .home-page {
 							border-left-width: 1px;
 							border-bottom-width: 1px;
 						}
+						
 						
 						&:nth-last-child(2), &:nth-last-child(1) {
 							> a {

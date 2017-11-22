@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Input;
 
 function compareByDistance($location1, $location2)
 {
-	if ( $location1->distance < $location2->distance )
+	$distance1 = round($location1->distance, 2);
+	$distance2 = round($location2->distance, 2);
+	if ( $distance1 < $distance2 )
 		return -1;
-	else if ( $location1->distance === $location2->distance )
-		return 0;
+	else if ( $distance1 === $distance2 )
+		return compareByName($location1, $location2);
 	else
 		return 1;
 }
@@ -21,11 +23,11 @@ function compareByDistance($location1, $location2)
 function compareByRating($location1, $location2)
 {
 	if ( $location1->rating < $location2->rating )
-		return -1;
-	else if ( $location1->rating === $location2->rating )
-		return 0;
-	else
 		return 1;
+	else if ( $location1->rating === $location2->rating )
+		return compareByDistance($location1, $location2);
+	else
+		return -1;
 }
 
 function compareByName($location1, $location2)
@@ -335,7 +337,7 @@ class LocationSearchController extends Controller {
 		$keywords = '';
 		$location_tag_name = '';
 		$location_tag_id = '';
-		$order_by_field_name = 'name';
+		$order_by_field_name = 'rating';
 		if ( Input::has('order_by') )
 		{
 			$field_name = Input::get('order_by');
