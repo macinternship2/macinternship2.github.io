@@ -17,12 +17,17 @@ class HomeController extends Controller {
     public function index(Request $request)
     {
 		$address_value = BaseUser::getAddress();
+		$message = '';
 		if (trim($address_value) === trim(BaseUser::getDefaultAddress()))
 		{
 			$address_value = '';
 		}
+		if ( !empty(Input::get('message')) ) {
+			$message = trim(Input::get('message'));
+		}
 		$location_search_options = DB::table('location_search_option')->get();
         return view('pages.home', [
+			'message' => $message,
 			'location_tags' => LocationTag::orderBy('name')->get(),
 			'is_authenticated' => BaseUser::isSignedIn(),
 			'address_default' => BaseUser::getDefaultAddress(),

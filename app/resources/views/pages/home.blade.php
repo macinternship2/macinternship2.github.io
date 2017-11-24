@@ -24,6 +24,9 @@
 		</div>
 		<div class="col-lg-7">
 			<div class="home-inputs">
+			<div class="message text-center">
+					{{$message}}
+				</div>
 				@if (!$is_authenticated)
 				<div class="signin-signup">
 					<a href="/signin">
@@ -40,6 +43,7 @@
 					</a>
 				</div>
 				@endif
+				
 				<div>
 					<div id="map"></div>
 				</div>
