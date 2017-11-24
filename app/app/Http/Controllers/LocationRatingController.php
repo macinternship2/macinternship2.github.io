@@ -130,8 +130,8 @@ class LocationRatingController extends Controller {
 	   }
 	   if ( $question_category_id )
 	   {
-			$next_question_category = QuestionCategory::where('id', '>', $question_category_id)
-				->first();
+			$next_question_category = QuestionCategory::where('name', '>', $question_category->name)->orderBy('name', 'ASC')->first();
+			
 			if ( $next_question_category )
 			{
 				$next_question_category_id = $next_question_category->id;
