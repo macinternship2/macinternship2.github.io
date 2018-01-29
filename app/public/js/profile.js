@@ -102,6 +102,15 @@ function updateRegionOptions()
 	});
 }
 
+function rotateImage()
+{
+	$.ajax({
+		'method': 'GET',
+		'url': '/profile-photo-rotate',
+	}).then(randomizePhotoURL);
+	
+}
+
 // Used for the State/Province datalist
 function downloadRegions()
 {
@@ -123,3 +132,10 @@ $( function() {
 	getCountryElement().change(updateRegionOptions);
 	downloadRegions().then(updateRegionOptions);
 } );
+
+// profile photo rotate icon will disappear in 20 secs
+ $(document).ready(function () {          
+    setTimeout(function() {
+        $('#profile-photo-rotate').slideUp("slow");
+    }, 20000);
+});

@@ -39,6 +39,7 @@ Route::post('change-password', 'ChangePasswordController@post');
 Route::get('profile-photo-upload', 'ProfilePhotoUploadController@index');
 Route::post('profile-photo-upload', 'ProfilePhotoUploadController@post');
 Route::get('profile-photo', 'ProfilePhotoUploadController@photo');
+Route::get('profile-photo-rotate', 'ProfilePhotoUploadController@rotate');
 Route::get('location-search', 'LocationSearchController@search');
 Route::post('api/set-search-radius', 'LocationSearchController@setSearchRadius');
 Route::get('location-modify/{location_id}', 'LocationManagementController@show');
