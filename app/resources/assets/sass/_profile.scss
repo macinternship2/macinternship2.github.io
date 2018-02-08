@@ -49,7 +49,14 @@
 			display: none;
 		}
 	}
-
+	
+ select.form-control{
+    	background: url(https://i.stack.imgur.com/tLwVk.png) right / 22px no-repeat #fff;
+    	-webkit-appearance: none;
+   	-moz-appearance: none;  
+        appearance: none;
+        padding-right: 80px;  
+	}
     .photo-display {
         cursor: pointer;
         text-align: center;
