@@ -45,7 +45,7 @@
 			unrated
 		@endif">
 			@if ($rating_system === 'personal' && !$personal_rating_is_available)
-				@include('pages.location_report.personal_not_available')
+				@include('pages.location_report.personal_not_available', ['location_id' => $location->id])
 			@elseif ($num_ratings === 0)
 				<div class="title-bar">
 					<h3>{{ $location->name }}</h3>
@@ -76,11 +76,11 @@
 					@foreach ( $question_categories as $category )
 						<div class="question-category">
 							<a href="/location-reporting/{{ $location->id }}/{{ $category->id }}">
-							@include('pages.components.pie_graph', array('percent' => $category->getAccessibilityRating($location->id, $rating_system)))
+							@include('pages.components.pie_graph', array('percent' => $category->getAccessibilityRating($location->id, 'universal')))
 							
 								<span class="category-name">{{ $category->name }}</span>
 								
-								<span class="percentage">{{ $category->getAccessibilityRating($location->id, $rating_system).'%' }}</span>
+								<span class="percentage">{{ $category->getAccessibilityRating($location->id, 'universal').'%' }}</span>
 							</a>
 						</div>
 					@endforeach

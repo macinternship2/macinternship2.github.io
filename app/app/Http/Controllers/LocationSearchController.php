@@ -4,6 +4,9 @@ use App\LocationTag;
 use App\Location;
 use App\BaseUser;
 use App\Libraries\Gis;
+use App\Question;
+use App\AnswerRepository;
+use DB;
 use Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -42,14 +45,6 @@ function updateDistances(array $locations)
 	$longitude = $user->getLongitude();
 	$latitude = $user->getLatitude();
 	\App\Libraries\Gis::updateDistancesFromPoint($longitude, $latitude, $locations);
-}
-
-function updateRatings(array $locations)
-{
-	foreach ($locations as $location)
-	{
-		$location->rating = $location->getAccessibilityRating('universal');
-	}
 }
 
 function calcSum($numbers, $max)
@@ -166,7 +161,7 @@ function filterLocationsToMax($locations, $max)
 		];
 }
 
-function getSortedLocations($locationsQuery, $view, $order_by_field_name)
+function getSortedLocations($locationsQuery, $view, $order_by_field_name, $ratingSystem)
 {
 	// Order by id just to clarify that any filtering will be deterministic.
 	$locationsQuery = $locationsQuery->orderBy('id');
@@ -190,7 +185,7 @@ function getSortedLocations($locationsQuery, $view, $order_by_field_name)
 	$locations = $locationsResult['locations'];
 
 	if ( $view === 'table' ) {
-		updateRatings($locations);
+		AnswerRepository::updateRatings($locations, $ratingSystem);
 		if ( $order_by_field_name === 'name' )
 			usort($locations, 'App\Http\Controllers\compareByName');
 		else if ( $order_by_field_name === 'distance' )
@@ -262,6 +257,11 @@ class LocationSearchController extends Controller {
 		if ( Input::has('address') )
 			BaseUser::setAddress(Input::get('address'));
 
+		if (BaseUser::isSignedIn()) 
+			$ratingSystem = 'personal';
+		else
+			$ratingSystem = 'universal';
+
 		$locationsQuery = Location::query();
 		$location_tag = '';
 		$keywords = '';
@@ -310,7 +310,7 @@ class LocationSearchController extends Controller {
 		BaseUser::setKeywords($keywords);
 
 		$locationsQuery = filterLatitudeAndLongitude($locationsQuery);
-		$locationsResult = getSortedLocations($locationsQuery, $view, $order_by_field_name);
+		$locationsResult = getSortedLocations($locationsQuery, $view, $order_by_field_name, $ratingSystem);
 
 		$url_factory = new URLFactory([
 			'keywords' => $keywords,
