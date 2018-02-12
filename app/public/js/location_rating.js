@@ -72,7 +72,7 @@ function saveAnswerChange(question_id, answer_text)
 {
 	// Turn the answer text into a number 0, 1, 2.
 	answer_text = answer_text.toLowerCase().trim();
-	var answer_value_map = {"no": 0, "yes": 1, "n/a to location": 2, "didn't look": 3};
+	var answer_value_map = {"no": 0, "yes": 1, "n/a to location": 2, "i didn't look": 3};
 	if ( answer_value_map[answer_text] !== undefined )
 	{
 		answer_text = answer_value_map[answer_text];

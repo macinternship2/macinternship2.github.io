@@ -68,14 +68,14 @@ This is where to put SCSS for the location report that shows a map.
 			flex-shrink: 0;
 		}
 	}
-	
+
 	> .row > .col-xs-5 {
 		a {
 			max-width: 100%;
 			display: inline-block;
 			text-overflow: ellipsis;
 			overflow: hidden;
-			height: 1.2em; 
+			height: 1.2em;
 			white-space: nowrap;
 		}
 	}
@@ -139,7 +139,7 @@ This is where to put SCSS for the location report that shows a map.
 			box-shadow: 0 0 8px #aaa inset, 0 0 8px rgba(0, 0, 0, 0.6);
 			border-radius: 4px;
 			max-width: 350px;
-			
+
 			&.unrated {
 				.title-bar {
 					padding-top: 15px;
@@ -150,12 +150,20 @@ This is where to put SCSS for the location report that shows a map.
 						margin-bottom: 0;
 					}
 				}
-				
+
 				.questions {
 					padding-bottom: 20px;
-					
+
 					p {
 						text-align: center;
+
+						a {
+							text-decoration: underline;
+
+							&:hover {
+								text-decoration: none;
+							}
+						}
 					}
 				}
 			}
@@ -171,7 +179,7 @@ This is where to put SCSS for the location report that shows a map.
 					box-shadow:  0px 3px 3px #ddd inset, 0px -3px 3px #ddd inset;
 				}
 			}
-			
+
 			p {
 				color: #222;
 
@@ -344,15 +352,15 @@ This is where to put SCSS for the location report that shows a map.
 @media screen and (max-width: 991px) {
 	html > body .location-report > .map-and-box {
 		position: static;
-	
+
 		.questions-box {
 			position: static;
 			width: 100%;
 			max-width: 100%;
-			
+
 			.title-bar {
 				width: 100%;
-				
+
 				h3 {
 					width: 80%; /* for browsers that don't support calc or vw */
 					max-width: 80%;
@@ -361,7 +369,7 @@ This is where to put SCSS for the location report that shows a map.
 				}
 			}
 		}
-		
+
 		#map {
 			position: static;
 			width: 100%;

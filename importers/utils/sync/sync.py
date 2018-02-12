@@ -105,9 +105,17 @@ def add_missing_data(db, table_names):
 	db.commit()
 
 
+def offset_question_order(db):
+	cursor = db.cursor()
+	cursor.execute('update question set `order`=`order` + 100')
+
+
 def set_fields_on_questions(db):
 	cursor = db.cursor()
 	questions_data = load_seed_data_from('question')
+	# Update order to prevent unique constraint violations 
+	# as order is updated in the following loop.
+	cursor = db.cursor()
 	for question_data in questions_data:
 		update_sql = 'update question set question_html=%s, is_always_required=%s, `order`=%s where id=%s'
 		cursor.execute(update_sql, (question_data['question_html'],
