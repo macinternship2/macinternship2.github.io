@@ -43,7 +43,7 @@
 						@endif
 						" title="I didn't look to see if this criteria is met">
 							<div>
-							Didn't Look
+							I Didn't Look
 							</div>
 						</div>
 					</div>
