@@ -1,5 +1,11 @@
 @import "_placeholders.scss";
 
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ styles */
+	div.profile select.form-control {
+		background-image: none;
+	}
+}
 
 .profile {
 	@extend %page-base;
@@ -48,15 +54,18 @@
 		option[disabled] {
 			display: none;
 		}
-	}
-	
- select.form-control{
-    	background: url(https://i.stack.imgur.com/tLwVk.png) 98% 50% / 22px no-repeat #fff;
-    	-webkit-appearance: none;
-   	-moz-appearance: none;  
-        appearance: none;
-        padding-right: 0px;
-	  
+
+		&.form-control {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			background-image: url('/images/drop-down-arrow.svg');
+			background-position: right 16px top 12px;
+			background-size: 9px 8px;
+			background-repeat: no-repeat;
+			background-color: #fff;
+			appearance: none;
+			box-shadow: 0 0 7px #fff inset, 0 0 7px #fff inset, 0 0 7px #fff inset;
+		}
 	}
 
     .photo-display {
