@@ -67,6 +67,15 @@
 			box-shadow: 0 0 7px #fff inset, 0 0 7px #fff inset, 0 0 7px #fff inset;
 		}
 	}
+	
+ select.form-control{
+    	background: url(https://i.stack.imgur.com/tLwVk.png) 98% 50% / 22px no-repeat #fff;
+    	-webkit-appearance: none;
+   	-moz-appearance: none;  
+        appearance: none;
+        padding-right: 0px;
+	  
+	}
 
     .photo-display {
         cursor: pointer;
