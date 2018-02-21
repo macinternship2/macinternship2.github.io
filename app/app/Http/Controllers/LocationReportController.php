@@ -37,6 +37,9 @@ class LocationReportController extends Controller {
 	*/
     public function show(string $location_id, $rating_system = null)
     {
+		if ($rating_system === null && BaseUser::isSignedIn()) {
+			$rating_system = 'personal';
+		}
 		if ($rating_system !== 'personal') {
 			$rating_system = 'universal';
 		}

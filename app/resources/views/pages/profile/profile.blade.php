@@ -162,7 +162,7 @@
 								step="0.01"
 								min="0.01"
 								max="{{ $max_search_radius_km }}"
-								value="{{ $user->search_radius_km }}">
+								value="{{ number_format($user->search_radius_km, 2) }}">
 						</div>
 					</div>
 				</div>

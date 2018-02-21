@@ -4,6 +4,7 @@ namespace App;
 use Session;
 use Exception;
 use DateTime;
+use DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\AuthenticationException;
 
@@ -12,6 +13,28 @@ class BaseUser
 	public static function getMaximumSearchRadiusKM()
 	{
 		return 500;
+	}
+
+	public static function getPersonalQuestions($question_category_id = null)
+	{
+		$user = BaseUser::getDbUser();
+		$user_question_query = DB::table('user_question');
+		if ($question_category_id !== null)
+		{
+			$user_question_query = $user_question_query->leftJoin('question', function($join) {
+				$join->on('question.question_category_id', '=', $question_category_id);
+				$join->on('question.id', '=', 'user_question.question_id');
+			});
+		}
+		$user_questions = $user_question_query
+			->where('user_id', '=', $user->id)
+			->get(array('question_id'));
+		$question_ids = [];
+		foreach ($user_questions as $user_question)
+		{
+			$question_ids []= $user_question->question_id;
+		}
+		return $question_ids;
 	}
 
 	/**

@@ -18,7 +18,69 @@ class AnswerRepository
 		$this->location_id = $location_id;
 		$this->question_category_id = $question_category_id;
 	}
-	
+
+	public static function getRatingForLocation($location, $question_ids)
+	{
+		$num_questions = count($question_ids);
+		$ratings = $location->ratings_cache;
+		if (!$ratings)
+		{
+			// Refresh the cache.
+			$location->getAccessibilityRating('universal');
+		}
+		if ($location->universal_rating === 0 || empty($question_ids))
+		{
+			// If the universal rating is 0,
+			// the result must be 0 no matter what question ids were specified.
+			// Skip the other work for sake of efficiency.
+			return $location->universal_rating;
+		}
+		$ratings = $location->ratings_cache;
+		$totalRating = 0;
+		foreach ($question_ids as $question_id)
+		{
+			$totalRating += $ratings['' . $question_id];
+		}
+		return $totalRating / $num_questions;
+	}
+
+	public static function updateRatings(array $locations, $ratingSystem)
+	{
+		if ( $ratingSystem === 'personal' )
+		{
+			$question_ids = BaseUser::getPersonalQuestions();
+			$num_questions = count($question_ids);
+			if ( count($question_ids) > 0 )
+			{
+				foreach ($locations as $location)
+				{
+					$ratings = $location->ratings_cache;
+					if (!$ratings)
+					{
+						// Refresh the cache.
+						$location->getAccessibilityRating('universal');
+					}
+					$ratings = $location->ratings_cache;
+					$totalRating = 0;
+					foreach ($question_ids as $question_id)
+					{
+						$totalRating += $ratings['' . $question_id];
+					}
+					$location->rating = $totalRating / $num_questions;
+				}
+			}
+			else {
+				$ratingSystem = 'universal';
+			}
+		}
+		if ($ratingSystem === 'universal' ) {
+			foreach ($locations as $location)
+			{
+				$location->rating = $location->getAccessibilityRating('universal');
+			}
+		}
+	}
+
 	private static function getAnswersForLocation(string $location_id)
 	{
 		if ( !Session::has('answers_'.$location_id) )
@@ -38,10 +100,10 @@ class AnswerRepository
 
 	public static function saveAnswer(string $location_id, int $question_id, int $answer_value)
 	{
-		// Validate that the corresponding question doesn't have "is_always_required" set when answer_value indicates that 
+		// Validate that the corresponding question doesn't have "is_always_required" set when answer_value indicates that
 		// the question's feature is not required.
-		// For example, "Lit parking lot" is required regardless of the specific location because no matter what the location is, 
-		// if you use a wheelchair and have poor eyesight, you'd need struggle to get there.  The client isn't allowed to 
+		// For example, "Lit parking lot" is required regardless of the specific location because no matter what the location is,
+		// if you use a wheelchair and have poor eyesight, you'd need struggle to get there.  The client isn't allowed to
 		// indicate these few questions as "not required" because it is required for EVERY location.
 		if ( $answer_value === 2 )
 		{
@@ -53,12 +115,12 @@ class AnswerRepository
 		}
 		Session::put('answers_'.$location_id.'_'.$question_id, $answer_value);
 	}
-	
+
 	public static function removeAnswer(string $location_id, int $question_id)
 	{
 		Session::forget('answers_'.$location_id.'_'.$question_id);
 	}
-	
+
 	public static function getAnswer(string $location_id, int $question_id)
 	{
 		$key = 'answers_'.$location_id.'_'.$question_id;
@@ -74,24 +136,24 @@ class AnswerRepository
 		$key = 'answers_'.$location_id.'_comment_'.$question_category_id;
 		Session::put($key, $comment);
 	}
-	
+
 	public function getAnswerForQuestion($question_id)
 	{
 		return AnswerRepository::getAnswer($this->location_id, $question_id);
 	}
-	
+
 	public function getComment()
 	{
 		$key = 'answers_'.$this->location_id.'_comment_'.$this->question_category_id;
 		if ( !Session::has($key) )
 			return '';
-		
+
 		return Session::get($key);
 	}
-	
+
 	public static function getReviewedLocations()
 	{
-		$unsubmitted_ids = AnswerRepository::getUncommittedReviewedLocations();			
+		$unsubmitted_ids = AnswerRepository::getUncommittedReviewedLocations();
 		$location_ids = $unsubmitted_ids;
 		$user = BaseUser::getDbUser();
 		// Find the distinct location ids from this query:
@@ -105,7 +167,7 @@ class AnswerRepository
 				$location_ids []= $rated_location;
 			}
 		}
-		
+
 		return [
 			'location_ids' => $location_ids,
 			'unsubmitted_ids' => $unsubmitted_ids
@@ -133,7 +195,7 @@ class AnswerRepository
 		}
 		return $location_ids;
 	}
-	
+
 	public static function destroyUncommittedChanges()
 	{
 		$answer_keys = [];
@@ -146,7 +208,7 @@ class AnswerRepository
 		}
 		Session::forget($answer_keys);
 	}
-	
+
 	/**
 	Copies answers from session to database
 	*/
@@ -167,7 +229,7 @@ class AnswerRepository
 					$index = strpos($key, 'comment_');
 					$question_category_id = intval(substr($key, $index + strlen('comment_')));
 					$comment = $obj;
-					
+
 					$review_comment = [
 						'id' => Uuid::generate(4)->string,
 						'answered_by_user_id' => $user_id,
@@ -175,7 +237,7 @@ class AnswerRepository
 						'question_category_id' => $question_category_id,
 						'content' => $comment,
 						'when_submitted' => $now];
-					
+
 					// Don't save empty comments.
 					if ( trim($comment) !== '' )
 					{

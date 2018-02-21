@@ -19,7 +19,7 @@ class QuestionCategory extends Eloquent
 		$totalCount = 0;
 		foreach ($questions as $question)
 		{
-			$individualRating = $question->getAccessibilityRating($location_id, $ratingSystem);
+			$individualRating = $question->getAccessibilityRating($location_id, 'universal');
 			$sum = $sum + $individualRating;
 			$totalCount ++;
 		}

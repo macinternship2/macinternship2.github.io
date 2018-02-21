@@ -86,12 +86,18 @@ class Location extends Eloquent
 		{
 			return $this->universal_rating;
 		}
+		if ( $ratingSystem === 'personal' )
+		{
+			$locations = [$this];
+			AnswerRepository::updateRatings($locations, 'personal');
+			return $this->rating;
+		}
 		$totalCount = 0;
 		$sum = 0;
 		$questionCategories = QuestionCategory::get();
 		foreach ($questionCategories as $category)
 		{
-			$sum += $category->getAccessibilityRating($this->id, $ratingSystem);
+			$sum += $category->getAccessibilityRating($this->id, 'universal');
 			$totalCount ++;
 		}
 
