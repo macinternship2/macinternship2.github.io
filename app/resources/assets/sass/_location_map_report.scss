@@ -71,12 +71,12 @@ This is where to put SCSS for the location report that shows a map.
 
 	> .row > .col-xs-5 {
 		a {
-			max-width: 100%;
 			display: inline-block;
 			text-overflow: ellipsis;
 			overflow: hidden;
 			height: 1.2em;
 			white-space: nowrap;
+			max-width: 100%;
 		}
 	}
 
@@ -171,7 +171,6 @@ This is where to put SCSS for the location report that shows a map.
 			> div.text-center {
 				color: #222;
 				cursor: pointer;
-				border-top: 1px solid mix($base_colour1, #ffffff, 50%);
 
 				&:hover {
 					background-color: #fff;
@@ -191,7 +190,6 @@ This is where to put SCSS for the location report that shows a map.
 			.title-bar {
 				padding-bottom: 3px;
 				height: 55px;
-				border-bottom: 1px solid mix(#fff, #235, 20%);
 
 				h3 {
 					color: #000;
@@ -249,8 +247,13 @@ This is where to put SCSS for the location report that shows a map.
 
 			.question-category {
 				a {
+					border-radius: 5px;
+					border-width: 1px;
+					border-style: solid;
+					border-color: #888;
+					margin-bottom: 2px;
 					color: #000;
-					padding: 5px 0;
+					padding: 5px 2px;
 					display: block;
 					text-decoration: none;
 
@@ -276,10 +279,6 @@ This is where to put SCSS for the location report that shows a map.
 	}
 
 	.question-category {
-		> a {
-			border-top: 1px solid mix($base_colour1, #ffffff, 50%);
-		}
-
 		.title-bar {
 			.pie-graph {
 				display: table-cell;
