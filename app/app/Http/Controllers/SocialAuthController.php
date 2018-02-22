@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Hybrid_Auth;
 use Hybrid_Endpoint;
 use App\Country;
+use Illuminate\Support\Facades\Input;
 
 class SocialAuthController extends Controller {
 
@@ -19,7 +20,6 @@ class SocialAuthController extends Controller {
 			return view('pages.signin')->withErrors('Ooophs, there is a problem! you can try it again.')->with('email','');
 		}
 		try {
-
 			$auth = new Hybrid_Auth(config_path('hybridauth.php'));
 			$provider = $auth->authenticate($providerName);
 			$profile = $provider->getUserProfile();
@@ -32,6 +32,12 @@ class SocialAuthController extends Controller {
 				throw new Exception('Unrecognized provider name '.$providerName);
 			BaseUser::signIn($profile->email);
 			BaseUser::updateEmailConfirmationDate();
+			if (Input::has('after_signin_redirect')) {
+				$after_signin_redirect = Input::get('after_signin_redirect');
+				echo 'redirecting to '.$after_signin_redirect;
+				exit();
+				return redirect($after_signin_redirect);
+			}
 			return redirect()->intended('profile');
 
 		} catch (Exception $e) {
