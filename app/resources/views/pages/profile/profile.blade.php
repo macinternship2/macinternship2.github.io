@@ -1,6 +1,5 @@
 @extends('layouts.default', ['body_class' => 'nav-profile'])
 @section('head-content')
-
 	<link href="/css/jquery/jquery-ui.css" rel="stylesheet" type="text/css">
 	<script src="/css/jquery/external/jquery/jquery.js"></script>
 	<script src="/css/jquery/jquery-ui.js"></script>
@@ -9,7 +8,7 @@
 	<script src="/js/profile_save_prompt.js"></script>
 	<script src="/js/utils.js"></script>
 	<script src="/js/question_explanation.js"></script>
-@sto
+@stop
 @section('content')
 <div class="profile row">
 	<div class="col-md-3 col-sm-4 col-xs-12">
@@ -40,7 +39,7 @@
  	</div>
     <div class="col-md-9 col-sm-8 col-xs-12">
 		@if (Session::has('message'))
-			<div class="alert alert-success alert-dismissible" role="alert" style="margin-top: 16px">
+			<div class="alert alert-success alert-dismissible margin-top-12" role="alert">
 				<strong>{{Session::get('message')}}</strong>
 			</div>
 		@endif
@@ -240,5 +239,4 @@
 
 	</div>
 </div>
-
 @stop

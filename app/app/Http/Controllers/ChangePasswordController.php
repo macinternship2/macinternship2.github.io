@@ -33,13 +33,12 @@ class ChangePasswordController extends Controller {
         if (BaseUser::isSignedIn())
         {
 			$user = BaseUser::getDbUser();
-			$validator = Validator::make(
-			    $request->all(), [
-			        'current_password' => 'required',
-                    'new_password' => 'required',
-                    'password_confirm' => 'required|same:new_password'
-                ]
-            );
+			$validationRules = [
+                'current_password' => 'required',
+                'new_password' => 'required',
+                'password_confirm' => 'required|same:new_password'
+            ];
+			$validator = Validator::make($request->all(), $validationRules);
 			if ($validator->fails()) {
 			    return redirect()->to('change-password')->withErrors($validator->errors())->withInput();
             } else {
