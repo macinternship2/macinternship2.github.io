@@ -1,21 +1,20 @@
 @extends('layouts.default', ['body_class' => 'nav-profile'])
 @section('head-content')
-  <link href="/css/jquery/jquery-ui.css" rel="stylesheet" type="text/css">
-  <script src="/css/jquery/external/jquery/jquery.js"></script>
-  <script src="/css/jquery/jquery-ui.js"></script>
-  <script src="/js/profile.js"></script>
-  <script src="/js/profile_save_button.js"></script>
-  <script src="/js/profile_save_prompt.js"></script>
-  <script src="/js/utils.js"></script>
-  <script src="/js/question_explanation.js"></script>
-@stop
+
+	<link href="/css/jquery/jquery-ui.css" rel="stylesheet" type="text/css">
+	<script src="/css/jquery/external/jquery/jquery.js"></script>
+	<script src="/css/jquery/jquery-ui.js"></script>
+	<script src="/js/profile.js"></script>
+	<script src="/js/profile_save_button.js"></script>
+	<script src="/js/profile_save_prompt.js"></script>
+	<script src="/js/utils.js"></script>
+	<script src="/js/question_explanation.js"></script>
+@sto
 @section('content')
 <div class="profile row">
 	<div class="col-md-3 col-sm-4 col-xs-12">
 		@if ($has_profile_photo)
-
 			<div class="photo-display">
-
 			    <p class="remove-photo"><a href="/profile-photo-delete">Remove Photo</a></p>
 				<div id="profile-photo-rotate" onclick="rotateImage()"><i class="fa fa-repeat fa-4x"></i></div>
 				<div class="photo-changer" onclick="selectImageFile()">
@@ -40,6 +39,11 @@
 		</form>
  	</div>
     <div class="col-md-9 col-sm-8 col-xs-12">
+		@if (Session::has('message'))
+			<div class="alert alert-success alert-dismissible" role="alert" style="margin-top: 16px">
+				<strong>{{Session::get('message')}}</strong>
+			</div>
+		@endif
 		@if ( $is_internal_user )
 			<a class="internal-dashboard-link" href="/dashboard"><em class="fa fa-gears"></em></a>
 		@endif
