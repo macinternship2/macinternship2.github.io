@@ -43,7 +43,7 @@
 	}
 
 	.data {
-		max-height: calc(100vh - 165px);
+		max-height: calc(100vh - 190px);
 		overflow-y: auto;
 		overflow-x: hidden;
 
@@ -170,11 +170,11 @@
 			}
 
 			.data {
-				max-height: calc(100vh - 175px);
+				max-height: calc(100vh - 240px);
 			}
 
 			&.warned .data {
-				max-height: calc(100vh - 200px);
+				max-height: calc(100vh - 250px);
 			}
 		}
 	}
@@ -224,11 +224,11 @@
 	body {
 		.location-search {
 			&.warned .data {
-				max-height: calc(100vh - 195px);
+				max-height: calc(100vh - 215px);
 			}
 
 			.data {
-				max-height: calc(100vh - 215px);
+				max-height: calc(100vh - 225px);
 
 				.location {
 					[class^='col-xs-'] {
