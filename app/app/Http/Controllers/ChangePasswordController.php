@@ -6,8 +6,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
 
 class ChangePasswordController extends Controller {
 
@@ -34,7 +32,7 @@ class ChangePasswordController extends Controller {
         {
 			$user = BaseUser::getDbUser();
 			$validationRules = [
-                'current_password' => 'required',
+			    'current_password' => 'required',
                 'new_password' => 'required',
                 'password_confirm' => 'required|same:new_password'
             ];
