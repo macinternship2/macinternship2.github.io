@@ -4,6 +4,21 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+echo "About to run use DB statement.";
+//use DB;
+
+echo "About to check version";
+//$results = DB::select( DB::raw("select version()") );
+echo "Got version number";
+//$mysql_version =  $results[0]->{'version()'};
+//$mariadb_version = '';
+
+/*if (strpos($mysql_version, 'Maria') !== false) {
+    $mariadb_version = $mysql_version;
+    $mysql_version = '';
+}
+*/
+
 class CreateInitialDatabaseSchema extends Migration
 {
     /**

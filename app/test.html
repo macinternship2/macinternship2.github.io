@@ -1,0 +1,924 @@
+ <html>
+ <head>
+ </head>
+ <body>
+This is from PHPAfter setting a few variables.Error: Unable to connect to MySQL.
+Debugging errno: 2054
+Debugging error: The server requested authentication method unknown to the client
+phpinfo()
+PHP Version => 7.2.1
+
+System => Darwin Jagrutis-MacBook-Pro.local 17.5.0 Darwin Kernel Version 17.5.0: Mon Mar  5 22:24:32 PST 2018; root:xnu-4570.51.1~1/RELEASE_X86_64 x86_64
+Build Date => Jan 15 2018 12:20:38
+Configure Command =>  './configure'  '--with-gd' '--with-jpeg-dir=/Applications/MAMP/Library' '--with-png-dir=/Applications/MAMP/Library' '--with-zlib' '--with-zlib-dir=/Applications/MAMP/Library' '--with-freetype-dir=/Applications/MAMP/Library' '--prefix=/Applications/MAMP/bin/php/php7.2.1' '--exec-prefix=/Applications/MAMP/bin/php/php7.2.1' '--sysconfdir=/Applications/MAMP/bin/php/php7.2.1/conf' '--with-config-file-path=/Applications/MAMP/bin/php/php7.2.1/conf' '--enable-ftp' '--with-bz2=/Applications/MAMP/Library' '--with-ldap' '--with-mysqli=mysqlnd' '--enable-mbstring=all' '--with-curl=/Applications/MAMP/Library' '--enable-sockets' '--enable-bcmath' '--with-imap=shared,/Applications/MAMP/Library/lib/imap-2007f' '--with-imap-ssl=/Applications/MAMP/Library' '--enable-soap' '--with-kerberos' '--enable-calendar' '--with-pgsql=shared,/Applications/MAMP/Library/pg' '--enable-exif' '--with-libxml-dir=/Applications/MAMP/Library' '--with-gettext=shared,/Applications/MAMP/Library' '--with-xsl=/Applications/MAMP/Library' '--with-pdo-mysql=mysqlnd' '--with-pdo-pgsql=shared,/Applications/MAMP/Library/pg' '--with-openssl=/Applications/MAMP/Library' '--enable-zip' '--with-pcre-dir=/Applications/MAMP/Library' '--with-libzip=/Applications/MAMP/Library' '--with-iconv=/Applications/MAMP/Library' '--enable-opcache' '--enable-intl' '--with-tidy=shared' '--with-icu-dir=/Applications/MAMP/Library' '--enable-wddx' '--with-libexpat-dir=/Applications/MAMP/Library' '--with-readline' '--with-mhash' '--with-iconv-dir=/Applications/MAMP/Library' '--with-sodium=/Applications/MAMP/Library' '--with-password-argon2=/Applications/MAMP/Library' '--enable-cgi' '--disable-phpdbg' 'YACC=/Applications/MAMP/Library/bin/bison'
+Server API => Command Line Interface
+Virtual Directory Support => disabled
+Configuration File (php.ini) Path => /Applications/MAMP/bin/php/php7.2.1/conf
+Loaded Configuration File => /Applications/MAMP/bin/php/php7.2.1/conf/php.ini
+Scan this dir for additional .ini files => (none)
+Additional .ini files parsed => (none)
+PHP API => 20170718
+PHP Extension => 20170718
+Zend Extension => 320170718
+Zend Extension Build => API320170718,NTS
+PHP Extension Build => API20170718,NTS
+Debug Build => no
+Thread Safety => disabled
+Zend Signal Handling => enabled
+Zend Memory Manager => enabled
+Zend Multibyte Support => provided by mbstring
+IPv6 Support => enabled
+DTrace Support => disabled
+
+Registered PHP Streams => https, ftps, compress.zlib, compress.bzip2, php, file, glob, data, http, ftp, phar, zip
+Registered Stream Socket Transports => tcp, udp, unix, udg, ssl, sslv3, tls, tlsv1.0, tlsv1.1, tlsv1.2
+Registered Stream Filters => zlib.*, bzip2.*, convert.iconv.*, string.rot13, string.toupper, string.tolower, string.strip_tags, convert.*, consumed, dechunk
+
+This program makes use of the Zend Scripting Language Engine:
+Zend Engine v3.2.0, Copyright (c) 1998-2017 Zend Technologies
+
+
+ _______________________________________________________________________
+
+
+Configuration
+
+bcmath
+
+BCMath support => enabled
+
+Directive => Local Value => Master Value
+bcmath.scale => 0 => 0
+
+bz2
+
+BZip2 Support => Enabled
+Stream Wrapper support => compress.bzip2://
+Stream Filter support => bzip2.decompress, bzip2.compress
+BZip2 Version => 1.0.6, 6-Sept-2010
+
+calendar
+
+Calendar support => enabled
+
+Core
+
+PHP Version => 7.2.1
+
+Directive => Local Value => Master Value
+allow_url_fopen => On => On
+allow_url_include => Off => Off
+arg_separator.input => & => &
+arg_separator.output => & => &
+auto_append_file => no value => no value
+auto_globals_jit => On => On
+auto_prepend_file => no value => no value
+browscap => no value => no value
+default_charset => UTF-8 => UTF-8
+default_mimetype => text/html => text/html
+disable_classes => no value => no value
+disable_functions => no value => no value
+display_errors => Off => Off
+display_startup_errors => Off => Off
+doc_root => no value => no value
+docref_ext => no value => no value
+docref_root => no value => no value
+enable_dl => On => On
+enable_post_data_reading => On => On
+error_append_string => no value => no value
+error_log => /Applications/MAMP/logs/php_error.log => /Applications/MAMP/logs/php_error.log
+error_prepend_string => no value => no value
+error_reporting => 32767 => 32767
+expose_php => On => On
+extension_dir => /Applications/MAMP/bin/php/php7.2.1/lib/php/extensions/no-debug-non-zts-20170718/ => /Applications/MAMP/bin/php/php7.2.1/lib/php/extensions/no-debug-non-zts-20170718/
+file_uploads => On => On
+hard_timeout => 2 => 2
+highlight.comment => <font style="color: #FF8000">#FF8000</font> => <font style="color: #FF8000">#FF8000</font>
+highlight.default => <font style="color: #0000BB">#0000BB</font> => <font style="color: #0000BB">#0000BB</font>
+highlight.html => <font style="color: #000000">#000000</font> => <font style="color: #000000">#000000</font>
+highlight.keyword => <font style="color: #007700">#007700</font> => <font style="color: #007700">#007700</font>
+highlight.string => <font style="color: #DD0000">#DD0000</font> => <font style="color: #DD0000">#DD0000</font>
+html_errors => Off => Off
+ignore_repeated_errors => Off => Off
+ignore_repeated_source => Off => Off
+ignore_user_abort => Off => Off
+implicit_flush => On => On
+include_path => .:/Applications/MAMP/bin/php/php7.2.1/lib/php => .:/Applications/MAMP/bin/php/php7.2.1/lib/php
+input_encoding => no value => no value
+internal_encoding => no value => no value
+log_errors => On => On
+log_errors_max_len => 1024 => 1024
+mail.add_x_header => On => On
+mail.force_extra_parameters => no value => no value
+mail.log => no value => no value
+max_execution_time => 0 => 0
+max_file_uploads => 20 => 20
+max_input_nesting_level => 64 => 64
+max_input_time => -1 => -1
+max_input_vars => 1000 => 1000
+memory_limit => 128M => 128M
+open_basedir => no value => no value
+output_buffering => 0 => 0
+output_encoding => no value => no value
+output_handler => no value => no value
+post_max_size => 8M => 8M
+precision => 14 => 14
+realpath_cache_size => 4096K => 4096K
+realpath_cache_ttl => 120 => 120
+register_argc_argv => On => On
+report_memleaks => On => On
+report_zend_debug => Off => Off
+request_order => GP => GP
+sendmail_from => no value => no value
+sendmail_path => /usr/sbin/sendmail -t -i  => /usr/sbin/sendmail -t -i 
+serialize_precision => -1 => -1
+short_open_tag => Off => Off
+SMTP => localhost => localhost
+smtp_port => 25 => 25
+sys_temp_dir => no value => no value
+track_errors => Off => Off
+unserialize_callback_func => no value => no value
+upload_max_filesize => 32M => 32M
+upload_tmp_dir => /Applications/MAMP/tmp/php => /Applications/MAMP/tmp/php
+user_dir => no value => no value
+user_ini.cache_ttl => 300 => 300
+user_ini.filename => .user.ini => .user.ini
+variables_order => EGPCS => EGPCS
+xmlrpc_error_number => 0 => 0
+xmlrpc_errors => Off => Off
+zend.assertions => 1 => 1
+zend.detect_unicode => On => On
+zend.enable_gc => On => On
+zend.multibyte => Off => Off
+zend.script_encoding => no value => no value
+zend.signal_check => Off => Off
+
+ctype
+
+ctype functions => enabled
+
+curl
+
+cURL support => enabled
+cURL Information => 7.52.1
+Age => 3
+Features
+AsynchDNS => No
+CharConv => No
+Debug => No
+GSS-Negotiate => No
+IDN => No
+IPv6 => Yes
+krb4 => No
+Largefile => Yes
+libz => Yes
+NTLM => Yes
+NTLMWB => Yes
+SPNEGO => No
+SSL => Yes
+SSPI => No
+TLS-SRP => Yes
+HTTP2 => No
+GSSAPI => No
+KERBEROS5 => No
+UNIX_SOCKETS => Yes
+PSL => No
+Protocols => dict, file, ftp, ftps, gopher, http, https, imap, imaps, ldap, ldaps, pop3, pop3s, rtsp, smb, smbs, smtp, smtps, telnet, tftp
+Host => x86_64-apple-darwin13.4.0
+SSL Version => OpenSSL/1.0.2j
+ZLib Version => 1.2.8
+
+date
+
+date/time support => enabled
+timelib version => 2017.05beta9
+"Olson" Timezone Database Version => 2017.3
+Timezone Database => internal
+Default timezone => UTC
+
+Directive => Local Value => Master Value
+date.default_latitude => 31.7667 => 31.7667
+date.default_longitude => 35.2333 => 35.2333
+date.sunrise_zenith => 90.583333 => 90.583333
+date.sunset_zenith => 90.583333 => 90.583333
+date.timezone => no value => no value
+
+dom
+
+DOM/XML => enabled
+DOM/XML API Version => 20031129
+libxml Version => 2.8.0
+HTML Support => enabled
+XPath Support => enabled
+XPointer Support => enabled
+Schema Support => enabled
+RelaxNG Support => enabled
+
+exif
+
+EXIF Support => enabled
+EXIF Version => 7.2.1
+Supported EXIF Version => 0220
+Supported filetypes => JPEG, TIFF
+Multibyte decoding support using mbstring => enabled
+Extended EXIF tag formats => Canon, Casio, Fujifilm, Nikon, Olympus, Samsung, Panasonic, DJI, Sony, Pentax, Minolta, Sigma, Foveon, Kyocera, Ricoh, AGFA, Epson
+
+Directive => Local Value => Master Value
+exif.decode_jis_intel => JIS => JIS
+exif.decode_jis_motorola => JIS => JIS
+exif.decode_unicode_intel => UCS-2LE => UCS-2LE
+exif.decode_unicode_motorola => UCS-2BE => UCS-2BE
+exif.encode_jis => no value => no value
+exif.encode_unicode => ISO-8859-15 => ISO-8859-15
+
+fileinfo
+
+fileinfo support => enabled
+version => 1.0.5
+libmagic => 531
+
+filter
+
+Input Validation and Filtering => enabled
+Revision => $Id: cdc5e15bb616f10210b94ecd8789e66c927a375f $
+
+Directive => Local Value => Master Value
+filter.default => unsafe_raw => unsafe_raw
+filter.default_flags => no value => no value
+
+ftp
+
+FTP support => enabled
+FTPS support => enabled
+
+gd
+
+GD Support => enabled
+GD Version => bundled (2.1.0 compatible)
+FreeType Support => enabled
+FreeType Linkage => with freetype
+FreeType Version => 2.6.5
+GIF Read Support => enabled
+GIF Create Support => enabled
+JPEG Support => enabled
+libJPEG Version => 9 compatible
+PNG Support => enabled
+libPNG Version => 1.6.27
+WBMP Support => enabled
+XBM Support => enabled
+
+Directive => Local Value => Master Value
+gd.jpeg_ignore_warning => 1 => 1
+
+gettext
+
+GetText Support => enabled
+
+hash
+
+hash support => enabled
+Hashing Engines => md2 md4 md5 sha1 sha224 sha256 sha384 sha512/224 sha512/256 sha512 sha3-224 sha3-256 sha3-384 sha3-512 ripemd128 ripemd160 ripemd256 ripemd320 whirlpool tiger128,3 tiger160,3 tiger192,3 tiger128,4 tiger160,4 tiger192,4 snefru snefru256 gost gost-crypto adler32 crc32 crc32b fnv132 fnv1a32 fnv164 fnv1a64 joaat haval128,3 haval160,3 haval192,3 haval224,3 haval256,3 haval128,4 haval160,4 haval192,4 haval224,4 haval256,4 haval128,5 haval160,5 haval192,5 haval224,5 haval256,5 
+
+MHASH support => Enabled
+MHASH API Version => Emulated Support
+
+iconv
+
+iconv support => enabled
+iconv implementation => libiconv
+iconv library version => 1.14
+
+Directive => Local Value => Master Value
+iconv.input_encoding => no value => no value
+iconv.internal_encoding => no value => no value
+iconv.output_encoding => no value => no value
+
+imap
+
+IMAP c-Client Version => 2007f
+SSL Support => enabled
+Kerberos Support => enabled
+
+intl
+
+Internationalization support => enabled
+version => 1.1.0
+ICU version => 56.1
+ICU Data version => 56.1
+ICU TZData version => 2015f
+ICU Unicode version => 8.0
+
+Directive => Local Value => Master Value
+intl.default_locale => no value => no value
+intl.error_level => 0 => 0
+intl.use_exceptions => 0 => 0
+
+json
+
+json support => enabled
+json version => 1.6.0
+
+ldap
+
+LDAP Support => enabled
+RCS Version => $Id: a8b9923b10cc429ee8bc16654ca510c8d4129aba $
+Total Links => 0/unlimited
+API Version => 3001
+Vendor Name => OpenLDAP
+Vendor Version => 20428
+
+Directive => Local Value => Master Value
+ldap.max_links => Unlimited => Unlimited
+
+libxml
+
+libXML support => active
+libXML Compiled Version => 2.8.0
+libXML Loaded Version => 20800
+libXML streams => enabled
+
+mbstring
+
+Multibyte Support => enabled
+Multibyte string engine => libmbfl
+HTTP input encoding translation => disabled
+libmbfl version => 1.3.2
+oniguruma version => 6.3.0
+
+mbstring extension makes use of "streamable kanji code filter and converter", which is distributed under the GNU Lesser General Public License version 2.1.
+
+Multibyte (japanese) regex support => enabled
+Multibyte regex (oniguruma) backtrack check => On
+Multibyte regex (oniguruma) version => 6.3.0
+
+Directive => Local Value => Master Value
+mbstring.detect_order => no value => no value
+mbstring.encoding_translation => Off => Off
+mbstring.func_overload => 0 => 0
+mbstring.http_input => no value => no value
+mbstring.http_output => no value => no value
+mbstring.http_output_conv_mimetypes => ^(text/|application/xhtml\+xml) => ^(text/|application/xhtml\+xml)
+mbstring.internal_encoding => no value => no value
+mbstring.language => neutral => neutral
+mbstring.strict_detection => Off => Off
+mbstring.substitute_character => no value => no value
+
+mysqli
+
+MysqlI Support => enabled
+Client API library version => mysqlnd 5.0.12-dev - 20150407 - $Id: b396954eeb2d1d9ed7902b8bae237b287f21ad9e $
+Active Persistent Links => 0
+Inactive Persistent Links => 0
+Active Links => 0
+
+Directive => Local Value => Master Value
+mysqli.allow_local_infile => On => On
+mysqli.allow_persistent => On => On
+mysqli.default_host => no value => no value
+mysqli.default_port => 3306 => 3306
+mysqli.default_pw => no value => no value
+mysqli.default_socket => /Applications/MAMP/tmp/mysql/mysql.sock => /Applications/MAMP/tmp/mysql/mysql.sock
+mysqli.default_user => no value => no value
+mysqli.max_links => Unlimited => Unlimited
+mysqli.max_persistent => Unlimited => Unlimited
+mysqli.reconnect => Off => Off
+mysqli.rollback_on_cached_plink => Off => Off
+
+mysqlnd
+
+mysqlnd => enabled
+Version => mysqlnd 5.0.12-dev - 20150407 - $Id: b396954eeb2d1d9ed7902b8bae237b287f21ad9e $
+Compression => supported
+core SSL => supported
+extended SSL => supported
+Command buffer size => 4096
+Read buffer size => 32768
+Read timeout => 86400
+Collecting statistics => Yes
+Collecting memory statistics => Yes
+Tracing => n/a
+Loaded plugins => mysqlnd,debug_trace,auth_plugin_mysql_native_password,auth_plugin_mysql_clear_password,auth_plugin_sha256_password
+API Extensions => pdo_mysql,mysqli
+
+mysqlnd statistics =>  
+bytes_sent => 0
+bytes_received => 78
+packets_sent => 0
+packets_received => 1
+protocol_overhead_in => 4
+protocol_overhead_out => 0
+bytes_received_ok_packet => 0
+bytes_received_eof_packet => 0
+bytes_received_rset_header_packet => 0
+bytes_received_rset_field_meta_packet => 0
+bytes_received_rset_row_packet => 0
+bytes_received_prepare_response_packet => 0
+bytes_received_change_user_packet => 0
+packets_sent_command => 0
+packets_received_ok => 0
+packets_received_eof => 0
+packets_received_rset_header => 0
+packets_received_rset_field_meta => 0
+packets_received_rset_row => 0
+packets_received_prepare_response => 0
+packets_received_change_user => 0
+result_set_queries => 0
+non_result_set_queries => 0
+no_index_used => 0
+bad_index_used => 0
+slow_queries => 0
+buffered_sets => 0
+unbuffered_sets => 0
+ps_buffered_sets => 0
+ps_unbuffered_sets => 0
+flushed_normal_sets => 0
+flushed_ps_sets => 0
+ps_prepared_never_executed => 0
+ps_prepared_once_executed => 0
+rows_fetched_from_server_normal => 0
+rows_fetched_from_server_ps => 0
+rows_buffered_from_client_normal => 0
+rows_buffered_from_client_ps => 0
+rows_fetched_from_client_normal_buffered => 0
+rows_fetched_from_client_normal_unbuffered => 0
+rows_fetched_from_client_ps_buffered => 0
+rows_fetched_from_client_ps_unbuffered => 0
+rows_fetched_from_client_ps_cursor => 0
+rows_affected_normal => 0
+rows_affected_ps => 0
+rows_skipped_normal => 0
+rows_skipped_ps => 0
+copy_on_write_saved => 0
+copy_on_write_performed => 0
+command_buffer_too_small => 0
+connect_success => 0
+connect_failure => 1
+connection_reused => 0
+reconnect => 0
+pconnect_success => 0
+active_connections => 18446744073709551615
+active_persistent_connections => 0
+explicit_close => 0
+implicit_close => 0
+disconnect_close => 0
+in_middle_of_command_close => 0
+explicit_free_result => 0
+implicit_free_result => 0
+explicit_stmt_close => 0
+implicit_stmt_close => 0
+mem_emalloc_count => 3
+mem_emalloc_amount => 4174
+mem_ecalloc_count => 12
+mem_ecalloc_amount => 3040
+mem_erealloc_count => 0
+mem_erealloc_amount => 0
+mem_efree_count => 17
+mem_efree_amount => 7243
+mem_malloc_count => 0
+mem_malloc_amount => 0
+mem_calloc_count => 0
+mem_calloc_amount => 0
+mem_realloc_count => 0
+mem_realloc_amount => 0
+mem_free_count => 1
+mem_free_amount => 65
+mem_estrndup_count => 0
+mem_strndup_count => 0
+mem_estrdup_count => 2
+mem_strdup_count => 1
+mem_edupl_count => 0
+mem_dupl_count => 0
+proto_text_fetched_null => 0
+proto_text_fetched_bit => 0
+proto_text_fetched_tinyint => 0
+proto_text_fetched_short => 0
+proto_text_fetched_int24 => 0
+proto_text_fetched_int => 0
+proto_text_fetched_bigint => 0
+proto_text_fetched_decimal => 0
+proto_text_fetched_float => 0
+proto_text_fetched_double => 0
+proto_text_fetched_date => 0
+proto_text_fetched_year => 0
+proto_text_fetched_time => 0
+proto_text_fetched_datetime => 0
+proto_text_fetched_timestamp => 0
+proto_text_fetched_string => 0
+proto_text_fetched_blob => 0
+proto_text_fetched_enum => 0
+proto_text_fetched_set => 0
+proto_text_fetched_geometry => 0
+proto_text_fetched_other => 0
+proto_binary_fetched_null => 0
+proto_binary_fetched_bit => 0
+proto_binary_fetched_tinyint => 0
+proto_binary_fetched_short => 0
+proto_binary_fetched_int24 => 0
+proto_binary_fetched_int => 0
+proto_binary_fetched_bigint => 0
+proto_binary_fetched_decimal => 0
+proto_binary_fetched_float => 0
+proto_binary_fetched_double => 0
+proto_binary_fetched_date => 0
+proto_binary_fetched_year => 0
+proto_binary_fetched_time => 0
+proto_binary_fetched_datetime => 0
+proto_binary_fetched_timestamp => 0
+proto_binary_fetched_string => 0
+proto_binary_fetched_json => 0
+proto_binary_fetched_blob => 0
+proto_binary_fetched_enum => 0
+proto_binary_fetched_set => 0
+proto_binary_fetched_geometry => 0
+proto_binary_fetched_other => 0
+init_command_executed_count => 0
+init_command_failed_count => 0
+com_quit => 0
+com_init_db => 0
+com_query => 0
+com_field_list => 0
+com_create_db => 0
+com_drop_db => 0
+com_refresh => 0
+com_shutdown => 0
+com_statistics => 0
+com_process_info => 0
+com_connect => 0
+com_process_kill => 0
+com_debug => 0
+com_ping => 0
+com_time => 0
+com_delayed_insert => 0
+com_change_user => 0
+com_binlog_dump => 0
+com_table_dump => 0
+com_connect_out => 0
+com_register_slave => 0
+com_stmt_prepare => 0
+com_stmt_execute => 0
+com_stmt_send_long_data => 0
+com_stmt_close => 0
+com_stmt_reset => 0
+com_stmt_set_option => 0
+com_stmt_fetch => 0
+com_deamon => 0
+bytes_received_real_data_normal => 0
+bytes_received_real_data_ps => 0
+
+openssl
+
+OpenSSL support => enabled
+OpenSSL Library Version => OpenSSL 1.0.2j  26 Sep 2016
+OpenSSL Header Version => OpenSSL 1.0.2j  26 Sep 2016
+Openssl default config => /Applications/MAMP/Library/OpenSSL/openssl.cnf
+
+Directive => Local Value => Master Value
+openssl.cafile => no value => no value
+openssl.capath => no value => no value
+
+pcre
+
+PCRE (Perl Compatible Regular Expressions) Support => enabled
+PCRE Library Version => 8.41 2017-07-05
+PCRE JIT Support => enabled
+
+Directive => Local Value => Master Value
+pcre.backtrack_limit => 1000000 => 1000000
+pcre.jit => 1 => 1
+pcre.recursion_limit => 100000 => 100000
+
+PDO
+
+PDO support => enabled
+PDO drivers => mysql, sqlite, pgsql
+
+pdo_mysql
+
+PDO Driver for MySQL => enabled
+Client API version => mysqlnd 5.0.12-dev - 20150407 - $Id: b396954eeb2d1d9ed7902b8bae237b287f21ad9e $
+
+Directive => Local Value => Master Value
+pdo_mysql.default_socket => /Applications/MAMP/tmp/mysql/mysql.sock => /Applications/MAMP/tmp/mysql/mysql.sock
+
+pdo_pgsql
+
+PDO Driver for PostgreSQL => enabled
+PostgreSQL(libpq) Version => 8.4.22
+Module version => 7.2.1
+Revision =>  $Id: 93712a6af603ebb2ee5792c5be271d4d03edfbde $ 
+
+pdo_sqlite
+
+PDO Driver for SQLite 3.x => enabled
+SQLite Library => 3.20.1
+
+pgsql
+
+PostgreSQL Support => enabled
+PostgreSQL(libpq) Version => 8.4.22
+PostgreSQL(libpq)  => PostgreSQL 8.4.22 on i386-apple-darwin13.4.0, compiled by GCC Apple LLVM version 6.0 (clang-600.0.54) (based on LLVM 3.5svn), 64-bit
+Multibyte character support => enabled
+SSL support => enabled
+Active Persistent Links => 0
+Active Links => 0
+
+Directive => Local Value => Master Value
+pgsql.allow_persistent => On => On
+pgsql.auto_reset_persistent => Off => Off
+pgsql.ignore_notice => Off => Off
+pgsql.log_notice => Off => Off
+pgsql.max_links => Unlimited => Unlimited
+pgsql.max_persistent => Unlimited => Unlimited
+
+Phar
+
+Phar: PHP Archive support => enabled
+Phar EXT version => 2.0.2
+Phar API version => 1.1.1
+SVN revision => $Id: 65ebce0f0856fc5a90a62d32dd0bb5c00627706f $
+Phar-based phar archives => enabled
+Tar-based phar archives => enabled
+ZIP-based phar archives => enabled
+gzip compression => enabled
+bzip2 compression => enabled
+OpenSSL support => enabled
+
+
+Phar based on pear/PHP_Archive, original concept by Davey Shafik.
+Phar fully realized by Gregory Beaver and Marcus Boerger.
+Portions of tar implementation Copyright (c) 2003-2009 Tim Kientzle.
+Directive => Local Value => Master Value
+phar.cache_list => no value => no value
+phar.readonly => On => On
+phar.require_hash => On => On
+
+posix
+
+Revision => $Id: bb23a5bc2983506c20a1ca7b530527177192d0d3 $
+
+readline
+
+Readline Support => enabled
+Readline library => 6.3
+
+Directive => Local Value => Master Value
+cli.pager => no value => no value
+cli.prompt => \b \>  => \b \> 
+
+Reflection
+
+Reflection => enabled
+Version => $Id: 6cf0392a73b8c11a067a885da01dcdb18461c4f4 $
+
+session
+
+Session Support => enabled
+Registered save handlers => files user 
+Registered serializer handlers => php_serialize php php_binary wddx 
+
+Directive => Local Value => Master Value
+session.auto_start => Off => Off
+session.cache_expire => 180 => 180
+session.cache_limiter => nocache => nocache
+session.cookie_domain => no value => no value
+session.cookie_httponly => no value => no value
+session.cookie_lifetime => 0 => 0
+session.cookie_path => / => /
+session.cookie_secure => 0 => 0
+session.gc_divisor => 100 => 100
+session.gc_maxlifetime => 1440 => 1440
+session.gc_probability => 1 => 1
+session.lazy_write => On => On
+session.name => PHPSESSID => PHPSESSID
+session.referer_check => no value => no value
+session.save_handler => files => files
+session.save_path => /Applications/MAMP/tmp/php => /Applications/MAMP/tmp/php
+session.serialize_handler => php => php
+session.sid_bits_per_character => 5 => 5
+session.sid_length => 26 => 26
+session.upload_progress.cleanup => On => On
+session.upload_progress.enabled => On => On
+session.upload_progress.freq => 1% => 1%
+session.upload_progress.min_freq => 1 => 1
+session.upload_progress.name => PHP_SESSION_UPLOAD_PROGRESS => PHP_SESSION_UPLOAD_PROGRESS
+session.upload_progress.prefix => upload_progress_ => upload_progress_
+session.use_cookies => 1 => 1
+session.use_only_cookies => 1 => 1
+session.use_strict_mode => 0 => 0
+session.use_trans_sid => 0 => 0
+
+SimpleXML
+
+Simplexml support => enabled
+Revision => $Id: 0ec2c86f4a6299cc833d763b611003ac4e18fd45 $
+Schema support => enabled
+
+soap
+
+Soap Client => enabled
+Soap Server => enabled
+
+Directive => Local Value => Master Value
+soap.wsdl_cache => 1 => 1
+soap.wsdl_cache_dir => /tmp => /tmp
+soap.wsdl_cache_enabled => 1 => 1
+soap.wsdl_cache_limit => 5 => 5
+soap.wsdl_cache_ttl => 86400 => 86400
+
+sockets
+
+Sockets Support => enabled
+
+sodium
+
+sodium support => enabled
+libsodium headers version => 1.0.16
+libsodium library version => 1.0.16
+
+SPL
+
+SPL support => enabled
+Interfaces => OuterIterator, RecursiveIterator, SeekableIterator, SplObserver, SplSubject
+Classes => AppendIterator, ArrayIterator, ArrayObject, BadFunctionCallException, BadMethodCallException, CachingIterator, CallbackFilterIterator, DirectoryIterator, DomainException, EmptyIterator, FilesystemIterator, FilterIterator, GlobIterator, InfiniteIterator, InvalidArgumentException, IteratorIterator, LengthException, LimitIterator, LogicException, MultipleIterator, NoRewindIterator, OutOfBoundsException, OutOfRangeException, OverflowException, ParentIterator, RangeException, RecursiveArrayIterator, RecursiveCachingIterator, RecursiveCallbackFilterIterator, RecursiveDirectoryIterator, RecursiveFilterIterator, RecursiveIteratorIterator, RecursiveRegexIterator, RecursiveTreeIterator, RegexIterator, RuntimeException, SplDoublyLinkedList, SplFileInfo, SplFileObject, SplFixedArray, SplHeap, SplMinHeap, SplMaxHeap, SplObjectStorage, SplPriorityQueue, SplQueue, SplStack, SplTempFileObject, UnderflowException, UnexpectedValueException
+
+sqlite3
+
+SQLite3 support => enabled
+SQLite3 module version => 7.2.1
+SQLite Library => 3.20.1
+
+Directive => Local Value => Master Value
+sqlite3.extension_dir => no value => no value
+
+standard
+
+Dynamic Library Support => enabled
+Path to sendmail => /usr/sbin/sendmail -t -i 
+
+Directive => Local Value => Master Value
+assert.active => 1 => 1
+assert.bail => 0 => 0
+assert.callback => no value => no value
+assert.exception => 0 => 0
+assert.quiet_eval => 0 => 0
+assert.warning => 1 => 1
+auto_detect_line_endings => 0 => 0
+default_socket_timeout => 60 => 60
+from => no value => no value
+session.trans_sid_hosts => no value => no value
+session.trans_sid_tags => a=href,area=href,frame=src,form= => a=href,area=href,frame=src,form=
+url_rewriter.hosts => no value => no value
+url_rewriter.tags => form= => form=
+user_agent => no value => no value
+
+tokenizer
+
+Tokenizer Support => enabled
+
+wddx
+
+WDDX Support => enabled
+WDDX Session Serializer => enabled
+
+xml
+
+XML Support => active
+XML Namespace Support => active
+EXPAT Version => expat_2.0.1
+
+xmlreader
+
+XMLReader => enabled
+
+xmlwriter
+
+XMLWriter => enabled
+
+xsl
+
+XSL => enabled
+libxslt Version => 1.1.28
+libxslt compiled against libxml Version => 2.8.0
+EXSLT => enabled
+libexslt Version => 1.1.28
+
+zip
+
+Zip => enabled
+Zip version => 1.15.1
+Libzip version => 1.3.2
+
+zlib
+
+ZLib Support => enabled
+Stream Wrapper => compress.zlib://
+Stream Filter => zlib.inflate, zlib.deflate
+Compiled Version => 1.2.8
+Linked Version => 1.2.8
+
+Directive => Local Value => Master Value
+zlib.output_compression => Off => Off
+zlib.output_compression_level => -1 => -1
+zlib.output_handler => no value => no value
+
+Additional Modules
+
+Module Name
+
+Environment
+
+Variable => Value
+TERM_PROGRAM => Apple_Terminal
+SHELL => /bin/bash
+TERM => xterm-256color
+TMPDIR => /var/folders/1m/4zkyy0qn6rv52ytl_v3x7lsr0000gn/T/
+Apple_PubSub_Socket_Render => /private/tmp/com.apple.launchd.8E86m2j3v7/Render
+TERM_PROGRAM_VERSION => 404
+TERM_SESSION_ID => 91065E15-EAA5-4F0C-B6C6-47950F36BC26
+USER => jagrutibhudiya
+SSH_AUTH_SOCK => /private/tmp/com.apple.launchd.pHktOYSwJL/Listeners
+PATH => /Applications/MAMP/bin/php/php7.2.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/mysql-8.0.11-macos10.13-x86_64/bin
+PWD => /Users/jagrutibhudiya/Desktop/accesslocator/hhaccessibility.github.io/app
+LANG => en_CA.UTF-8
+XPC_FLAGS => 0x0
+XPC_SERVICE_NAME => 0
+SHLVL => 1
+HOME => /Users/jagrutibhudiya
+LOGNAME => jagrutibhudiya
+SECURITYSESSIONID => 186a8
+_ => /Applications/MAMP/bin/php/php7.2.1/bin/php
+OLDPWD => /Users/jagrutibhudiya
+__CF_USER_TEXT_ENCODING => 0x1F5:0x0:0x52
+
+PHP Variables
+
+Variable => Value
+$_SERVER['TERM_PROGRAM'] => Apple_Terminal
+$_SERVER['SHELL'] => /bin/bash
+$_SERVER['TERM'] => xterm-256color
+$_SERVER['TMPDIR'] => /var/folders/1m/4zkyy0qn6rv52ytl_v3x7lsr0000gn/T/
+$_SERVER['Apple_PubSub_Socket_Render'] => /private/tmp/com.apple.launchd.8E86m2j3v7/Render
+$_SERVER['TERM_PROGRAM_VERSION'] => 404
+$_SERVER['TERM_SESSION_ID'] => 91065E15-EAA5-4F0C-B6C6-47950F36BC26
+$_SERVER['USER'] => jagrutibhudiya
+$_SERVER['SSH_AUTH_SOCK'] => /private/tmp/com.apple.launchd.pHktOYSwJL/Listeners
+$_SERVER['PATH'] => /Applications/MAMP/bin/php/php7.2.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/mysql-8.0.11-macos10.13-x86_64/bin
+$_SERVER['PWD'] => /Users/jagrutibhudiya/Desktop/accesslocator/hhaccessibility.github.io/app
+$_SERVER['LANG'] => en_CA.UTF-8
+$_SERVER['XPC_FLAGS'] => 0x0
+$_SERVER['XPC_SERVICE_NAME'] => 0
+$_SERVER['SHLVL'] => 1
+$_SERVER['HOME'] => /Users/jagrutibhudiya
+$_SERVER['LOGNAME'] => jagrutibhudiya
+$_SERVER['SECURITYSESSIONID'] => 186a8
+$_SERVER['_'] => /Applications/MAMP/bin/php/php7.2.1/bin/php
+$_SERVER['OLDPWD'] => /Users/jagrutibhudiya
+$_SERVER['__CF_USER_TEXT_ENCODING'] => 0x1F5:0x0:0x52
+$_SERVER['PHP_SELF'] => test.php
+$_SERVER['SCRIPT_NAME'] => test.php
+$_SERVER['SCRIPT_FILENAME'] => test.php
+$_SERVER['PATH_TRANSLATED'] => test.php
+$_SERVER['DOCUMENT_ROOT'] => 
+$_SERVER['REQUEST_TIME_FLOAT'] => 1527211028.7954
+$_SERVER['REQUEST_TIME'] => 1527211028
+$_SERVER['argv'] => Array
+(
+    [0] => test.php
+)
+
+$_SERVER['argc'] => 1
+$_ENV['TERM_PROGRAM'] => Apple_Terminal
+$_ENV['SHELL'] => /bin/bash
+$_ENV['TERM'] => xterm-256color
+$_ENV['TMPDIR'] => /var/folders/1m/4zkyy0qn6rv52ytl_v3x7lsr0000gn/T/
+$_ENV['Apple_PubSub_Socket_Render'] => /private/tmp/com.apple.launchd.8E86m2j3v7/Render
+$_ENV['TERM_PROGRAM_VERSION'] => 404
+$_ENV['TERM_SESSION_ID'] => 91065E15-EAA5-4F0C-B6C6-47950F36BC26
+$_ENV['USER'] => jagrutibhudiya
+$_ENV['SSH_AUTH_SOCK'] => /private/tmp/com.apple.launchd.pHktOYSwJL/Listeners
+$_ENV['PATH'] => /Applications/MAMP/bin/php/php7.2.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/mysql-8.0.11-macos10.13-x86_64/bin
+$_ENV['PWD'] => /Users/jagrutibhudiya/Desktop/accesslocator/hhaccessibility.github.io/app
+$_ENV['LANG'] => en_CA.UTF-8
+$_ENV['XPC_FLAGS'] => 0x0
+$_ENV['XPC_SERVICE_NAME'] => 0
+$_ENV['SHLVL'] => 1
+$_ENV['HOME'] => /Users/jagrutibhudiya
+$_ENV['LOGNAME'] => jagrutibhudiya
+$_ENV['SECURITYSESSIONID'] => 186a8
+$_ENV['_'] => /Applications/MAMP/bin/php/php7.2.1/bin/php
+$_ENV['OLDPWD'] => /Users/jagrutibhudiya
+$_ENV['__CF_USER_TEXT_ENCODING'] => 0x1F5:0x0:0x52
+
+PHP License
+This program is free software; you can redistribute it and/or modify
+it under the terms of the PHP License as published by the PHP Group
+and included in the distribution in the file:  LICENSE
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+If you did not receive a copy of the PHP license, or have any
+questions about PHP licensing, please contact license@php.net.
+ </body>
+</html>
