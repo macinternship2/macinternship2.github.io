@@ -17,6 +17,7 @@ WAMP, LAMP, MAMP, or XXAMP is recommended to cover the PHP and MySQL dependencie
 - The root user should have permissions to create, alter any tables and manipulate data in the hhaccessibility database.
 
 ## Commands:
+
 The following commands should be run from the hhaccessibility.github.io/app directory since that is where the gulpfile and artisan scripts exist.
 
 - php artisan migrate
