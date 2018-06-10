@@ -78,7 +78,7 @@ def get_locations(file_name):
 			location['is_sports'] = is_sports(location)
 			locations.append(location)
 
-	return locations
+	return location['is_sports']
 
 
 def download(file_name):
