@@ -2,6 +2,7 @@
 var time_limit = 5; // seconds
 var timer;
 var location_tag_descriptions = {};
+var previoud_touched_target;
 
 function goHidden() {
 	var $e = getHoverTextElement();
@@ -69,6 +70,14 @@ $(document).ready(function()
 	});
 	$location_tag_elements.focus(function(){
 		delayedHide(location_tag_descriptions[getLocationTagId($(this))]);
+	});
+	$location_tag_elements.bind('touchend',function(e){
+		delayedHide(location_tag_descriptions[getLocationTagId($(this))]);
+		if(!previoud_touched_target || previoud_touched_target != e.target){
+			e.preventDefault();
+			previoud_touched_target = e.target;
+		}
+		
 	});
 	$location_tag_elements.blur(hideHoverText);
 });
