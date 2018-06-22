@@ -7,6 +7,7 @@ use DateTime;
 use DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\AuthenticationException;
+use App\Libraries\Emailer;
 
 class BaseUser
 {
@@ -338,9 +339,9 @@ class BaseUser
 		$body = "Final step...\r\n".
 				"Confirm your email address to complete your Accesslocator account. It's easy — just click on the link below or simply copy and paste it into your browser.\r\n".
 				config('app.url')."/signup/confirmEmail/".$user->email."/".$user->email_verification_token;
-		$headers = "From: noreply@accesslocator.com\r\n";
-		$headers .= "Content-Type: text/plain; charset=\"utf-8\"\r\n";
-		mail($user->email, "Confirm your Accesslocator account, ".$user->first_name." ".$user->last_name, $body, $headers);
+		$subject = "Confirm your Accesslocator account, 
+		".$user->first_name." ".$user->last_name;
+		Emailer::send($user->email, $subject, $body);
 	}
 
 	public static function updateEmailConfirmationDate($user = null)
@@ -383,9 +384,7 @@ To reset your password, please click the link below and follow the instructions 
 
 EOT;
 		$body .= config('app.url')."/password-recovery/".$user->email."/".$password_recovery_token;
-		$headers = "From: password_security@accesslocator.com\r\n";
-		$headers .= "Content-Type: text/plain; charset=\"utf-8\"\r\n";
-		mail($user->email, "reset your Accesslocator account password", $body, $headers);
+		Emailer::send($user->email, "reset your Accesslocator account password", $body);
 		$user->password_recovery_token = $password_recovery_token;
 		$user->save();
 	}

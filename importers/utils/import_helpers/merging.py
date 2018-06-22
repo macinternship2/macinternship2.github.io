@@ -5,8 +5,11 @@ same location already exists.
 """
 import math
 import import_helpers.location_groups as location_groups
+import import_helpers.guid_generator as guid_generator
 import string
 import re
+import json
+
 
 def get_max_id(table_data):
 	return max([row['id'] for row in table_data])
@@ -191,12 +194,20 @@ location_location_tags, values, location_duplicates):
 		return
 
 	new_location = {
-		'id': get_max_id(locations) + 1,
+		'id': guid_generator.get_guid(),
 		'data_source_id': import_config['data_source_id']
 	}
+	if 'location_group_id' in import_config:
+		new_location['location_group_id'] = import_config['location_group_id']
+
 	new_location = set_every_key(locations, new_location)
 
 	tag_ids = []
+	if 'location_tag_names' in import_config:
+		for location_tag_name in import_config['location_tag_names']:
+				location_tag_id = get_id_for_location_tag(location_tags, location_tag_name)
+				tag_ids.append(location_tag_id)
+
 	i = 0
 	for column in import_config['columns']:
 		if 'location_field' in column:
@@ -208,13 +219,12 @@ location_location_tags, values, location_duplicates):
 
 		i += 1
 
-	new_location['location_group_id'] = location_groups.get_location_group_for(new_location['name'])
+	if 'location_group_id' not in new_location or not new_location['location_group_id']:
+		new_location['location_group_id'] = location_groups.get_location_group_for(new_location['name'])
 	locations.append(new_location)
-	location_location_tag_id = 1 + get_max_id(location_location_tags)
 	for tag_id in tag_ids:
 		location_location_tags.append({
-			'id': location_location_tag_id,
+			'id': guid_generator.get_guid(),
 			'location_tag_id': tag_id,
 			'location_id': new_location['id']
 		})
-		location_location_tag_id += 1

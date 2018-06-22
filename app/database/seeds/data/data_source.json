@@ -5,5 +5,6 @@
 {"id": 4, "name": "University of Windsor campus map", "description": "For information collected from the uwindsor.ca site's campus map at http://web2.uwindsor.ca/pac/campusmap/index.php"},
 {"id": 5, "name": "Yelp.com", "description": "For information taken from yelp.com and yelp.ca"},
 {"id": 6, "name": "Google Places", "description": "For information downloaded using Google Places API's"},
-{"id": 7, "name": "AccessLocator End Users", "description": "For information entered by end users while using AccessLocator"}
+{"id": 7, "name": "AccessLocator End Users", "description": "For information entered by end users while using AccessLocator"},
+{"id": 8, "name": "Mandarin Restaurant Website", "description": "For information downloaded from https://mandarinrestaurant.com"}
 ]

@@ -8,14 +8,13 @@ use App\Libraries\StringMatcher;
 use App\Libraries\StringMatcherRepository;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Auth\AuthenticationException;
 use DB;
 use Webpatser\Uuid\Uuid;
 
 
-class LocationManagementController extends Controller {
+class LocationManagementController extends \Illuminate\Routing\Controller {
 	public function getLocationsNear($longitude, $latitude)
 	{
 		if ( !is_numeric($longitude) || !is_numeric($latitude) || $longitude === null || $latitude === null ) {

@@ -3,9 +3,6 @@
 StringMatcherTest tests aspects of helpers/StringMatcher.php.
 */
 use App\Libraries\StringMatcher;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class StringMatcherTest extends TestCase
 {

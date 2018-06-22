@@ -1,8 +1,8 @@
-# Accessibility Web App
+# AccessLocator Web App
 
 Before developing code on the project, you should install the following dependencies:
 
-- MySQL
+- MySQL 5.7+
 - PHP 7+
 - composer (https://getcomposer.org/download/)
 - npm
@@ -44,7 +44,7 @@ CSS is generated off of SASS files(*.scss).  The main source file for css/app.cs
 Database table classes for use with the Eloquent ORM are in the app folder.  That's hhaccessibility.github.io/app/app to avoid confusion.
 
 ### Controllers and Routes
-Routes are defined in the routes directory.  routes/web.php defines all the custom routes for now.
+Routes are defined in the routes directory.
 
 Controller classes are defined in app\Http\Controllers.
 

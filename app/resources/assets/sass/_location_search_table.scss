@@ -246,3 +246,31 @@
 		}
 	}
 }
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+	.location-search {
+		.form-container {
+			text-align: center;
+		}
+	}
+}
+
+@media only screen and (min-width: 992px) {
+	.location-search {
+		&.warned .data {
+			max-height: calc(100vh - 225px);
+		}
+		
+		.warning {
+			font-size: 16px;
+			margin-bottom: 5px;
+			text-align: left;
+		}
+
+		.disform {
+			.input-group > input.form-control {
+				width: 250px;
+			}
+		}
+	}
+}

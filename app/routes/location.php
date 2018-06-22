@@ -1,7 +1,5 @@
 <?php
 
-use App\Location;
-
 Route::get('location-search', 'LocationSearchController@search');
 Route::get('get-nearby-locations/{longitude}/{latitude}', 'LocationManagementController@getLocationsNear');
 Route::get('delete-my-location/{location_id}', 'LocationManagementController@deleteMyLocation');
@@ -19,7 +17,3 @@ Route::get('location-comprehensive-ratings/{location_id}', 'LocationReportContro
 Route::get('location-comprehensive-ratings/{location_id}/{rating_system}', 'LocationReportController@showComprehensiveRatings');
 Route::get('location-reporting/{location_id}/{question_category_id}', 'LocationReportController@show2');
 Route::post('api/set-search-radius', 'LocationSearchController@setSearchRadius');
-
-Route::get('api/locations', function (Request $request) {
-    return Location::all();
-});

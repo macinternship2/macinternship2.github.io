@@ -57,14 +57,32 @@ function selectAllToggle()
 		}
 	})
 }
+
+function validatePhoto(file) {
+	var fileExtensions = ['jpeg', 'png'];
+	var isValid = false;
+	fileExtensions.forEach(function (extension) {
+		if (file.type.match('image/'+extension)) {
+			isValid = true;
+		}
+	});
+	return isValid;
+}
+
 // uploads the profile photo by submitting the image upload form
 // Called after selecting a photo and hitting "Open"
-function upload()
+function upload(event)
 {
-	// indicate that the uploading is starting.
-	$element = $('.photo-display .progress-element').addClass('uploading');
-	
-    $("#photo-upload").submit();
+	var file = event.target.files[0];
+	if (file.size > 5000 * 1024) {
+		document.getElementById("profile_error").innerText = "Photo should be smaller than 5MB.";
+	} else if (!validatePhoto(file)) {
+		document.getElementById("profile_error").innerText = "Photo should be jpeg or png format.";
+	} else {
+        // indicate that the uploading is starting.
+        $element = $('.photo-display .progress-element').addClass('uploading');
+        $("#photo-upload").submit();
+	}
 }
 
 // Opens a dialog for the user to select an image
@@ -107,11 +125,18 @@ function getCountryElement()
 function updateRegionOptions()
 {
 	var country_id = parseInt(getCountryElement().val());
-	var $datalist = $('#regions');
-	$datalist.empty();
+	var $home_region = $('#home_region');
+	$home_region.empty();
 	regions.forEach(function(region) {
 		if ( region.country_id === country_id )
-			$datalist.append($('<option />').text(region.name));
+			if ($home_region.data('value') === region.name)
+			{
+				$home_region.append($('<option />').val(region.name).attr('selected', 'selected').text(region.name));
+			}
+			else
+			{
+				$home_region.append($('<option/>').val(region.name).text(region.name));
+			}
 	});
 }
 

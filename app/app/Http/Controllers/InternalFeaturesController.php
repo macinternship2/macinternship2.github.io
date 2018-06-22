@@ -4,21 +4,14 @@ use App\BaseUser;
 use App\User;
 use App\Role;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Auth\AuthenticationException;
 use DB;
 
-// FIXME: move this into central place to be used by
-// LocationSearchController and InternalFeaturesController.
-function compareByName($named1, $named2)
-{
-	return strcasecmp($named1->name, $named2->name);
-}
 
-class InternalFeaturesController extends Controller
+class InternalFeaturesController extends \Illuminate\Routing\Controller
 {
 	private static function isDeletableEmailAddress($emailAddress)
 	{
@@ -91,7 +84,7 @@ class InternalFeaturesController extends Controller
 		$location_groups = array_merge(
 			$location_groups_without_locations,
 			$location_groups_with_locations);
-		usort($location_groups, 'App\Http\Controllers\compareByName');
+		usort($location_groups, array("App\Libraries\Utils", "compareByName"));
 		$view_data = [
 			'location_groups' => $location_groups
 		];

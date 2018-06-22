@@ -4,6 +4,7 @@ use App\LocationTag;
 use App\Location;
 use App\BaseUser;
 use App\Libraries\Gis;
+use App\Libraries\Utils;
 use App\Question;
 use App\AnswerRepository;
 use DB;
@@ -19,7 +20,7 @@ function compareByDistance($location1, $location2)
 	if ( $distance1 < $distance2 )
 		return -1;
 	else if ( $distance1 === $distance2 )
-		return compareByName($location1, $location2);
+		return Utils::compareByName($location1, $location2);
 	else
 		return 1;
 }
@@ -32,11 +33,6 @@ function compareByRating($location1, $location2)
 		return compareByDistance($location1, $location2);
 	else
 		return -1;
-}
-
-function compareByName($location1, $location2)
-{
-	return strcasecmp($location1->name, $location2->name);
 }
 
 function updateDistances(array $locations)
@@ -187,7 +183,7 @@ function getSortedLocations($locationsQuery, $view, $order_by_field_name, $ratin
 	if ( $view === 'table' ) {
 		AnswerRepository::updateRatings($locations, $ratingSystem);
 		if ( $order_by_field_name === 'name' )
-			usort($locations, 'App\Http\Controllers\compareByName');
+			usort($locations, array("App\Libraries\Utils", "compareByName"));
 		else if ( $order_by_field_name === 'distance' )
 			usort($locations, 'App\Http\Controllers\compareByDistance');
 		else if ( $order_by_field_name === 'rating' )
@@ -340,6 +336,11 @@ class LocationSearchController extends Controller {
 	 * set search radius
 	 */
 	public function setSearchRadius(Request $request) {
+		if (!Input::has('distance')) {
+			return Response::json([
+				'message' => 'distance must be specified.'
+			], 422);
+		}
 		$distance = Input::get('distance');
 		if( is_numeric($distance) ) {
 			$f_distance = floatval( $distance );
@@ -360,5 +361,10 @@ class LocationSearchController extends Controller {
 				'message' => 'radius must be a number'
 			], 422);
 		}
+	}
+
+	public function all()
+	{
+		return Location::all();
 	}
 }

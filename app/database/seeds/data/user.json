@@ -10,6 +10,16 @@
         "last_name": "Smith"
     },
     {
+        "email": "mandarin.restaurant@fake.com",
+        "email_verification_time": "2018-06-02 00:00:00",
+        "first_name": "Mandarin",
+        "home_city": "Restaurant",
+        "home_country_id": 39,
+        "home_region": "Ontario",
+        "id": "00000000-0000-0000-0000-110000000001",
+        "last_name": "Smith"
+    },
+    {
         "email": "osm@fake.com",
         "email_verification_time": "2017-04-30 00:00:00",
         "first_name": "Open",

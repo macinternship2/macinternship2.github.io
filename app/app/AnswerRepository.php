@@ -39,7 +39,12 @@ class AnswerRepository
 		$totalRating = 0;
 		foreach ($question_ids as $question_id)
 		{
-			$totalRating += $ratings['' . $question_id];
+			$question_key = '' . $question_id;
+			$rating = 0;
+			if (isset($ratings[$question_key])) {
+				$rating = $ratings[$question_key];
+			}
+			$totalRating += $rating;
 		}
 		return $totalRating / $num_questions;
 	}
@@ -64,7 +69,12 @@ class AnswerRepository
 					$totalRating = 0;
 					foreach ($question_ids as $question_id)
 					{
-						$totalRating += $ratings['' . $question_id];
+						$rating = 0;
+						$question_id_key = '' . $question_id;
+						if (isset($ratings[$question_id_key])) {
+							$rating = $ratings[$question_id_key];
+						}
+						$totalRating += $rating;
 					}
 					$location->rating = $totalRating / $num_questions;
 				}
@@ -273,5 +283,43 @@ class AnswerRepository
 		}
 		AnswerRepository::destroyUncommittedChanges();
 	}
+	
+	public static function updateRatingsCache($location_id, $questions)
+	{
+		foreach ($questions as $question)
+		{
+			$question->getAccessibilityRating($location_id, 'universal');
+		}
+		
+	}
 
+	public static function clearUnratedLocations()
+	{
+		$location_ids = Location::select('id')->where('ratings_cache', '=', null)->get()->toArray();
+		$location_ids = array_map(function($e) {
+			return $e['id'];
+		}, $location_ids);
+		$answered_locations = UserAnswer::select('location_id')->distinct()->get()->toArray();
+		$answered_locations = array_map(function($e) {
+			return $e['location_id'];
+		}, $answered_locations);
+
+		$location_ids = array_diff($location_ids, $answered_locations);
+
+		if (count($location_ids) > 0)
+		{
+			$question_ids = Question::select('id')->get()->toArray();
+			$rating_data = [];
+			foreach ($question_ids as $question_id)
+			{
+				$rating_data[$question_id['id']] = 0;
+			}
+			$zero_rating_cache = json_encode($rating_data);
+			Location::whereIn('id', $location_ids)->update([
+					'ratings_cache' => $zero_rating_cache,
+					'universal_rating' => 0
+				]);
+		}
+		return count($location_ids);
+	}
 }

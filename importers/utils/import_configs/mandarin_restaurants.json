@@ -1,0 +1,26 @@
+{
+	"data_source_id": 8,
+	"import_user_id": "00000000-0000-0000-0000-110000000001",
+	"is_first_row_titles": true,
+	"location_group_id": 80,
+	"location_tag_names": ["Restaurant"],
+	"columns": [
+		{"location_field": "name"},
+		{},
+		{"location_field": "latitude"},
+		{"location_field": "longitude"},
+		{"location_field": "address"},
+		{"location_field": "external_web_url"},
+		{"location_field": "phone_number"},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{}
+	]
+}

@@ -6,13 +6,12 @@ use App\Country;
 use App\AnswerRepository;
 use App\Region;
 use App\Http\Controllers\ProfilePhotoUploadController;
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use DB;
 
-class ProfileController extends Controller {
+class ProfileController extends \Illuminate\Routing\Controller {
 	public function getRegions()
 	{
 		$regions = DB::table('region')->get();
@@ -65,7 +64,6 @@ class ProfileController extends Controller {
 		$validation_rules = array(
 			'first_name'           => 'required|max:255',
 			'last_name'            => 'required|max:255',
-			'email'                => 'required|email|max:255',
 			'country_id'           => 'integer|exists:country,id',
 			'home_city'            => 'max:255',
 			'home_region'          => 'max:255',
@@ -143,9 +141,9 @@ class ProfileController extends Controller {
 			*/
 			$user->personalizedRatings()->detach();
 		}
-		
+
 		$user->save();
-		
+
 		return ProfileController::getProfileView();
 	}
 

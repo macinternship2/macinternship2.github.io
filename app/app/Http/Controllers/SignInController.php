@@ -4,13 +4,12 @@ use App\User;
 use App\BaseUser;
 use App\AnswerRepository;
 use Auth;
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 
-class SignInController extends Controller {
+class SignInController extends \Illuminate\Routing\Controller {
 	
 	public function showForm(Request $request)
 	{

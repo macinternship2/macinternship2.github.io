@@ -1,6 +1,6 @@
 {
 	"data_source_id": 4,
-	"import_user_id": 11,
+	"import_user_id": "00000000-0000-0000-0000-000000000011",
 	"is_first_row_titles": true,
 	"columns": [
 		{"location_field": "name"},

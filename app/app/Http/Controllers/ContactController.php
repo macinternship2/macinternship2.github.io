@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\User;
+use App\Libraries\Emailer;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -32,9 +33,7 @@ class ContactController extends Controller {
 		$to_email = 'accesslocator@gmail.com';
 		$subject = 'app accesslocator com contact message';
 		$body = "Hello,\r\nYou have a message from: ".$email.":\r\n\r\n".$message;
-		$headers = "From: noreply@accesslocator.com\r\n";
-		$headers .= "Content-Type: text/plain; charset=\"utf-8\"\r\n";
-		mail($to_email, $subject, $body, $headers);
+		Emailer::send($to_email, $subject, $body);
 		return view('pages.contact.message-sent');
 	}
 }

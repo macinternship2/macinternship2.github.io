@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +11,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+Route::post('populate-ratings-cache', 'LocationRatingCacheController@populateRatingsCache');
+Route::get('question-explanation/{question_id}', 'QuestionExplanationController@getExplanation');	
+Route::get('regions', 'ProfileController@getRegions');
+Route::get('locations', 'LocationSearchController@all');
