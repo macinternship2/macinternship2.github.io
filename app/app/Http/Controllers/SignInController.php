@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 
 class SignInController extends \Illuminate\Routing\Controller {
 	
@@ -27,6 +29,7 @@ class SignInController extends \Illuminate\Routing\Controller {
 		'confirmmessage' => '', 'message' => $message, 'after_signin_redirect' => $after_signin_redirect]);
 	}
 
+	
     /**
      * Handle an authentication attempt.
      *
@@ -51,6 +54,11 @@ class SignInController extends \Illuminate\Routing\Controller {
 				if (Input::has('after_signin_redirect')) {
 					return redirect()->intended($request->input('after_signin_redirect'));
 				}
+				$remember = $request->input('remember');
+				if ($remember)
+				{
+					setcookie('email', base64_encode($email), time() + 60*60*24*7); 
+				}
 				return redirect()->intended('profile');
 			}
 			else
@@ -62,10 +70,13 @@ class SignInController extends \Illuminate\Routing\Controller {
 		return Redirect::to('signin')->withErrors($validator)->withInput();	
     }
 
+	
 	public function signout(Request $request)
 	{
 		BaseUser::signout();
 		AnswerRepository::destroyUncommittedChanges();
+		unset($_COOKIE['email']);
+		setcookie("email","",time()-1);
 		return redirect()->intended('/');
 	}
 }

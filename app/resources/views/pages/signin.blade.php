@@ -33,6 +33,9 @@
 						
                         <div class="col-xs-12">
 							<div class="remember-password">
+								<label>	
+									<input type="checkbox" name="remember"> Remember Me	
+								</label>
 								<a class="pull-right" href="/password-recovery"> Forgot Password? </a>
 							</div>
                         </div>
