@@ -60,10 +60,21 @@ class BaseUser
 	{
 		if (!Session::has('email'))
 		{
-			$value = Cookie::get('email');
-			if ($value!=null)
+			$email = Cookie::get('email');
+			if ($email!=null)
 			{
-				Session::put('email', $value);
+				$password = Cookie::get('password');
+				if (BaseUser::authenticate($email, $password))
+				{
+					Session::put('email', $email);
+				}
+				else
+				{
+					$cookie = Cookie::forget('email'); 
+					Cookie::queue($cookie);
+					$cookie = Cookie::forget('password'); 
+					Cookie::queue($cookie);
+				}
 			}
 		}
 		return Session::has('email');

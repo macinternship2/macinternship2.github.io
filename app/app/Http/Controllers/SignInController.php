@@ -46,6 +46,7 @@ class SignInController extends \Illuminate\Routing\Controller {
 		if (!$validator->fails())
 		{
 			$email = $request->input('email');
+			$password = $request->input('password');
 			if (BaseUser::authenticate($email, $request->input('password')))
 			{
 				if(!BaseUser::checkEmail($email))
@@ -57,7 +58,7 @@ class SignInController extends \Illuminate\Routing\Controller {
 				$remember = $request->input('remember');
 				if ($remember)
 				{
-					return redirect()->intended('profile')->withCookie(cookie('email', $email, 24*7*60));
+					return redirect()->intended('profile')->withCookie(cookie('email', $email, 24*7*60))->withCookie(cookie('password', $password, 24*7*60));
 
 				}
 				return redirect()->intended('profile');
@@ -77,6 +78,7 @@ class SignInController extends \Illuminate\Routing\Controller {
 		BaseUser::signout();
 		AnswerRepository::destroyUncommittedChanges();
 		$cookie = Cookie::forget('email');
-		return redirect()->intended('/')->withCookie($cookie);
+		$cookie1 = Cookie::forget('password');
+		return redirect()->intended('/')->withCookie($cookie)->withCookie($cookie1);
 	}
 }
