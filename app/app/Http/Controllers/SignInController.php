@@ -57,7 +57,8 @@ class SignInController extends \Illuminate\Routing\Controller {
 				$remember = $request->input('remember');
 				if ($remember)
 				{
-					setcookie('email', base64_encode($email), time() + 60*60*24*7); 
+					return redirect()->intended('profile')->withCookie(cookie('email', $email, 24*7*60));
+
 				}
 				return redirect()->intended('profile');
 			}
@@ -75,8 +76,7 @@ class SignInController extends \Illuminate\Routing\Controller {
 	{
 		BaseUser::signout();
 		AnswerRepository::destroyUncommittedChanges();
-		unset($_COOKIE['email']);
-		setcookie("email","",time()-1);
-		return redirect()->intended('/');
+		$cookie = Cookie::forget('email');
+		return redirect()->intended('/')->withCookie($cookie);
 	}
 }

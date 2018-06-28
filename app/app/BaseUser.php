@@ -60,9 +60,10 @@ class BaseUser
 	{
 		if (!Session::has('email'))
 		{
-			if (isset($_COOKIE['email']))
+			$value = Cookie::get('email');
+			if ($value!=null)
 			{
-				Session::put('email', base64_decode($_COOKIE['email']));
+				Session::put('email', $value);
 			}
 		}
 		return Session::has('email');
