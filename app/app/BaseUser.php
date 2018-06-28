@@ -60,13 +60,14 @@ class BaseUser
 	{
 		if (!Session::has('email'))
 		{
-			$email = Cookie::get('email');
-			if ($email!=null)
+			if (isset($_COOKIE['email']))
 			{
-				$password = Cookie::get('password');
-				if (BaseUser::authenticate($email, $password))
+				$email = Cookie::get('email');
+				$password = Cookie::get('password');				
+				if (BaseUser::authenticate((string) $email, (string) $password)==true)
 				{
 					Session::put('email', $email);
+					return Session::has('email');
 				}
 				else
 				{
@@ -75,6 +76,7 @@ class BaseUser
 					$cookie = Cookie::forget('password'); 
 					Cookie::queue($cookie);
 				}
+				
 			}
 		}
 		return Session::has('email');
