@@ -1,10 +1,12 @@
 <?php namespace App\Http\Controllers;
 
 use App\BaseUser;
+use App\Mail\RecoveryPasswordMail;
 use App\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 
@@ -32,7 +34,20 @@ class PasswordRecoveryController extends Controller {
 		if ( !$matching_user ) {
 			return view('pages.password_recovery.unmatched_email');
 		}
-		BaseUser::sendPasswordRecoveryEmail($matching_user);
+
+		//Generate Password Recovery Link
+        $token = str_random(60);
+		$recoveryLink = config('app.url')."/password-recovery/".$matching_user->email."/".$token;
+		$matching_user->password_recovery_token = $token;
+		$matching_user->save();
+
+		//Send the recovery email
+		Mail::send(new RecoveryPasswordMail(
+			$matching_user->email,
+			$recoveryLink,
+			'passioninfinite1795@gmail.com'
+		));
+
 		return view('pages.password_recovery.email_sent');
 	}
 

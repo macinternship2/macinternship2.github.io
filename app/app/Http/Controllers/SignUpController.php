@@ -1,8 +1,10 @@
 <?php namespace App\Http\Controllers;
 
+use App\Mail\ConfirmationMail;
 use App\User;
 use App\UserRole;
 use App\BaseUser;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -41,13 +43,24 @@ class SignUpController extends Controller {
 			$newUser->password_hash = User::generateSaltedHash($request->input('password'));
 			$newUser->location_search_text = BaseUser::getAddress();
 			$newUser->email_verification_token = str_random(60); //generate email verification token
-			BaseUser::sendVerificationEmail($newUser);
-			$newUser->save();
+            $newUser->save();
 
-			$newUserRole = new UserRole;
-			$newUserRole->role_id = 2;
-			$newUserRole->user_id = $newUser->id;
-			$newUserRole->save();
+            //Attach the role to the user.
+            $newUserRole = new UserRole;
+            $newUserRole->role_id = 2;
+            $newUserRole->user_id = $newUser->id;
+            $newUserRole->save();
+
+            // Generate Confirmation Link after saving the user.
+            $confirmationLink = BaseUser::generateConfirmationLink($newUser);
+
+            //Send the email to the user.
+            Mail::send(new ConfirmationMail(
+                $newUser->first_name,
+                $newUser->email,
+                $confirmationLink
+            ));
+
 			return view('pages.signup.success',[
 				'email' => $email,
 				'confirmmessage' => 'A verification code has been sent to ' . $email . '. Check your email inbox or SPAM folder to confirm.',
@@ -56,6 +69,7 @@ class SignUpController extends Controller {
 		}
 		return view('pages.signup.form');
     }
+
 	public function confirmEmail($user_email, $email_verification_token) {
 		$email = $user_email;
 		$confirmCode = $email_verification_token;

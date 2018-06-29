@@ -7,7 +7,6 @@ use DateTime;
 use DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\AuthenticationException;
-use App\Libraries\Emailer;
 
 class BaseUser
 {
@@ -330,18 +329,13 @@ class BaseUser
 		return '';
 	}
 
-	/**
-	* send verification email to user's email
-	*
-	*/
-	public static function sendVerificationEmail($user)
-	{
-		$body = "Final step...\r\n".
-				"Confirm your email address to complete your Accesslocator account. It's easy — just click on the link below or simply copy and paste it into your browser.\r\n".
-				config('app.url')."/signup/confirmEmail/".$user->email."/".$user->email_verification_token;
-		$subject = "Confirm your Accesslocator account, 
-		".$user->first_name." ".$user->last_name;
-		Emailer::send($user->email, $subject, $body);
+    /**
+	 * Generates the Confirmation Link for the New User.
+     * @param $newUser
+     * @return string
+     */
+    public static function generateConfirmationLink($newUser) {
+		return config('app.url')."/signup/confirmEmail/".$newUser->email."/".$newUser->email_verification_token;
 	}
 
 	public static function updateEmailConfirmationDate($user = null)
@@ -369,24 +363,6 @@ class BaseUser
 		}
 
 		return false;
-	}
-	/**
-	* send password recovery verification email to user's mailbox
-	*
-	*/
-	public static function sendPasswordRecoveryEmail($user)
-	{
-
-		$password_recovery_token = str_random(60); //generate email verification token
-		$body = <<<EOT
-This e-mail is in response to your recent request to recover a forgotten password.
-To reset your password, please click the link below and follow the instructions provided.
-
-EOT;
-		$body .= config('app.url')."/password-recovery/".$user->email."/".$password_recovery_token;
-		Emailer::send($user->email, "reset your Accesslocator account password", $body);
-		$user->password_recovery_token = $password_recovery_token;
-		$user->save();
 	}
 
 	// check if user's email verificated while loging in

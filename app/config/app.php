@@ -139,13 +139,6 @@ return [
 	| Used for Google Maps JavaScript api
 	*/
 	'google_map_api_key' => env('GOOGLE_MAP_API_KEY', ''),
-
-	'gmail_debug_level' => intval(env('GMAIL_DEBUG_LEVEL', '0')),
-	'gmail_sender' => env('GMAIL_USERNAME', ''),
-	'gmail_password' => env('GMAIL_PASSWORD', ''),
-	'gmail_from_address' => env('GMAIL_FROM_ADDRESS', ''),
-	'gmail_from_name' => env('GMAIL_FROM_NAME', ''),
-
 	
 	/*
 	| Used for turning off maps while developing so there is no need for 
