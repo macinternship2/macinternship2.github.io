@@ -7,6 +7,7 @@ use DateTime;
 use DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Facades\Cookie;
 
 class BaseUser
 {
@@ -57,6 +58,27 @@ class BaseUser
 	*/
 	public static function isSignedIn()
 	{
+		if (!Session::has('email'))
+		{
+			if (isset($_COOKIE['email']))
+			{
+				$email = Cookie::get('email');
+				$password = Cookie::get('password');				
+				if (BaseUser::authenticate((string) $email, (string) $password)==true)
+				{
+					Session::put('email', $email);
+					return Session::has('email');
+				}
+				else
+				{
+					$cookie = Cookie::forget('email'); 
+					Cookie::queue($cookie);
+					$cookie = Cookie::forget('password'); 
+					Cookie::queue($cookie);
+				}
+				
+			}
+		}
 		return Session::has('email');
 	}
 
