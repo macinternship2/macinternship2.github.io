@@ -4,15 +4,15 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\Log;
 
-class Emailer 
+class Emailer
 {
-	// Used in SignUpController
-	public static function send($to, $subject, $msg, $isUsingHTML = false)
-	{
-		if (config('app.gmail_sender') === '') {
-			// failed because email is not configured.
-			return false;
-		}
+    // Used in SignUpController
+    public static function send($to, $subject, $msg, $isUsingHTML = false)
+    {
+        if (config('app.gmail_sender') === '') {
+            // failed because email is not configured.
+            return false;
+        }
 
 		//Create a new PHPMailer instance
 		$mail = new PHPMailer;

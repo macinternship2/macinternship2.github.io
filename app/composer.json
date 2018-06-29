@@ -18,7 +18,8 @@
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*"
+        "symfony/dom-crawler": "3.1.*",
+        "squizlabs/php_codesniffer": "3.*"
     },
     "autoload": {
         "classmap": [
@@ -47,7 +48,9 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
-        ]
+        ],
+        "cs": "./vendor/bin/phpcs --standard=phpcs.xml",
+        "cs-fix": "./vendor/bin/phpcbf --standard=phpcs.xml"
     },
     "config": {
         "preferred-install": "dist"
