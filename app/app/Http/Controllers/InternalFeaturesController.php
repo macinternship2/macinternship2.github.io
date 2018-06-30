@@ -96,7 +96,7 @@ class InternalFeaturesController extends \Illuminate\Routing\Controller
             throw new AuthenticationException('Must be internal user');
         }
         $user = User::find($user_id);
-        $home_country_name = ( $user->home_country_id ? $user->home_country()->first()->name : '');
+        $home_country_name = ( $user->home_country_id ? $user->homeCountry()->first()->name : '');
         $num_rating_submissions = count(DB::table('user_answer')
             ->where('answered_by_user_id', '=', $user_id)
             ->groupBy(['when_submitted', 'location_id'])
