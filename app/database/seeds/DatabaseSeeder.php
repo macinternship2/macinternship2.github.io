@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Database\Seeds\UserTableSeeder;
+use Database\Seeds\LocationImageSeeder;
 
 require_once('SeedHelper.php');
 
@@ -42,6 +43,7 @@ class DatabaseSeeder extends Seeder
 		DatabaseSeeder::insertDataToTables($tables_to_seed_using_json);
 
 		$this->call('UserTableSeeder');
+		$this->call('LocationImageSeeder');
 
 		DatabaseSeeder::insertDataToTables($user_data_tables);
     }

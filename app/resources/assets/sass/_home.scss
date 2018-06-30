@@ -29,6 +29,7 @@ html > body #main > .home-page {
 		}
 	}
 	
+
 	.intro {
 		width: 410px;
 		padding-left: 78px;
@@ -59,7 +60,8 @@ html > body #main > .home-page {
 		padding-top: 30px;
 		margin-left: auto;
 		margin-right: auto;
-
+		
+		
 		.sign-in-sign-up {
 			font-weight: bold;
 		}
@@ -88,18 +90,20 @@ html > body #main > .home-page {
 	}
 	
 	.signin-signup {
-		
-		a {
+		display: flex;
+		justify-content: space-between;
+		a {			
 			@extend %dark-link;
-		
 			border: 1px solid rgba($base_colour1, 0.1);
-			display: block;
-			padding: 16px 30px;
+			display: inline-block;
+			padding: 16px 20px;
 			background-color: rgba($base_colour1, 0.75);
+			height: 85px;
+			width: 49%;
 
 			table {
 				width: 100%;
-				
+				height:100%;
 				.user-icon {
 					width: 33px;
 				}
