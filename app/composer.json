@@ -54,6 +54,10 @@
             "@composer cs-tests",
             "@composer tests"
         ],
+        "fix-cs": [
+            "@composer cs-fix",
+            "@composer cs-tests-fix"
+        ],
         "cs": "./vendor/bin/phpcs --standard=phpcs.xml",
         "cs-fix": "./vendor/bin/phpcbf --standard=phpcs.xml",
         "cs-tests": "./vendor/bin/phpcs --standard=phpcs.tests.xml",
