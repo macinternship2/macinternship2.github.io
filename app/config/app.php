@@ -1,34 +1,5 @@
 <?php
 
-if ( !function_exists('getSiteURL') )
-{
-	function getSiteURL()
-	{
-		if (isset($_SERVER['HTTPS']) &&
-			($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
-			isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
-			$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-		  $protocol = 'https://';
-		}
-		else {
-		  $protocol = 'http://';
-		}
-		if (isset($_SERVER['HTTP_HOST']))
-		{
-			$host = $_SERVER['HTTP_HOST'];
-		}
-		else
-		{
-			$host = env('APP_URL', 'http://localhost:8000');
-			if (strpos($host, '://') !== FALSE )
-			{
-				$host = substr($host, strpos($host, '://') + 3);
-			}
-		}
-		
-		return $protocol . $host;
-	}
-}
 
 return [
 
@@ -81,7 +52,7 @@ return [
     |
     */
 
-    'url' => getSiteURL(),
+    'url' => env('APP_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -134,16 +105,16 @@ return [
     */
 
     'key' => env('APP_KEY'),
-	
-	/*
-	| Used for Google Maps JavaScript api
-	*/
-	'google_map_api_key' => env('GOOGLE_MAP_API_KEY', ''),
-	
-	/*
-	| Used for turning off maps while developing so there is no need for 
-	*/
-	'turn_off_maps' => env('TURN_OFF_MAPS', '0') === '1' || empty(env('GOOGLE_MAP_API_KEY', '')),
+    
+    /*
+    | Used for Google Maps JavaScript api
+    */
+    'google_map_api_key' => env('GOOGLE_MAP_API_KEY', ''),
+    
+    /*
+    | Used for turning off maps while developing so there is no need for
+    */
+    'turn_off_maps' => env('TURN_OFF_MAPS', '0') === '1' || empty(env('GOOGLE_MAP_API_KEY', '')),
 
     'cipher' => 'AES-256-CBC',
 
@@ -191,7 +162,7 @@ return [
         Illuminate\Filesystem\FilesystemServiceProvider::class,
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
-		Collective\Html\HtmlServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
         Illuminate\Mail\MailServiceProvider::class,
         Illuminate\Notifications\NotificationServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
@@ -213,7 +184,7 @@ return [
         /*
          * Application Service Providers...
          */
-		App\Providers\ShareBaseUserWithViewsProvider::class,
+        App\Providers\ShareBaseUserWithViewsProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
@@ -251,11 +222,11 @@ return [
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'Event' => Illuminate\Support\Facades\Event::class,
         'File' => Illuminate\Support\Facades\File::class,
-		'Form' => Collective\Html\FormFacade::class,
+        'Form' => Collective\Html\FormFacade::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
-		'Html' => Collective\Html\HtmlFacade::class,
-		'Input' => Illuminate\Support\Facades\Input::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
         'Lang' => Illuminate\Support\Facades\Lang::class,
         'Log' => Illuminate\Support\Facades\Log::class,
         'Mail' => Illuminate\Support\Facades\Mail::class,
@@ -271,7 +242,7 @@ return [
         'Session' => Illuminate\Support\Facades\Session::class,
         'Storage' => Illuminate\Support\Facades\Storage::class,
         'URL' => Illuminate\Support\Facades\URL::class,
-		'Uuid' => Webpatser\Uuid\Uuid::class,
+        'Uuid' => Webpatser\Uuid\Uuid::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
