@@ -49,8 +49,14 @@
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
         ],
+        "all": [
+            "@composer cs",
+            "@composer cs-tests"
+        ],
         "cs": "./vendor/bin/phpcs --standard=phpcs.xml",
-        "cs-fix": "./vendor/bin/phpcbf --standard=phpcs.xml"
+        "cs-fix": "./vendor/bin/phpcbf --standard=phpcs.xml",
+        "cs-tests": "./vendor/bin/phpcs --standard=phpcs.tests.xml",
+        "cs-tests-fix": "./vendor/bin/phpcbf --standard=phpcs.tests.xml"
     },
     "config": {
         "preferred-install": "dist"

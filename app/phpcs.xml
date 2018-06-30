@@ -9,5 +9,6 @@
     <exclude-pattern>*/public/*</exclude-pattern>
     <exclude-pattern>*/database/*</exclude-pattern>
     <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/bootstrap/*</exclude-pattern>
     <exclude-pattern>./app/Http/Controllers/LocationSearchController.php</exclude-pattern>
 </ruleset>
