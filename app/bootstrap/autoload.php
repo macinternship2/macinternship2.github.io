@@ -1,5 +1,6 @@
 <?php
 
+//phpcs:disable
 define('LARAVEL_START', microtime(true));
 
 /*

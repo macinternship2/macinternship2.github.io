@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset name="AccessLocator">
+    <rule ref="PSR2">
+        <exclude name="Generic.Files.LineEndings.InvalidEOLChar"/>
+    </rule>
+    <file>./</file>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/tests/*</exclude-pattern>
+    <exclude-pattern>*/storage/*</exclude-pattern>
+    <exclude-pattern>*/resources/views/*</exclude-pattern>
+    <exclude-pattern>*/public/*</exclude-pattern>
+    <exclude-pattern>*/database/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/bootstrap/*</exclude-pattern>
+    <exclude-pattern>./app/Http/Controllers/LocationSearchController.php</exclude-pattern>
+</ruleset>

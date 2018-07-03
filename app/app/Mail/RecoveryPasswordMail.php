@@ -11,7 +11,9 @@ class RecoveryPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $toEmail, $fromEmail, $recoveryLink;
+    public $toEmail;
+    public $fromEmail;
+    public $recoveryLink;
 
     /**
      * Create a new message instance.
