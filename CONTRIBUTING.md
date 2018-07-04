@@ -5,4 +5,4 @@ Anyone wanting to contribute as a software developer to AccessLocator should do 
 
 If you want to contribute in any capacity that doesn't involve updating code, please contact us through http://accesslocator.com/contact.
 We're always looking for people who can point out problems, improvements through manual testing.
-We'll be looking for help with marketing and promotions in fall 2018 so let us know if you can help us with marketing strategies.
+We'll be looking for help with marketing and promotions in fall 2018 so let us know if you can help us with marketing strategies. 
