@@ -2,15 +2,19 @@
 
 namespace App;
 
-use Eloquent;
-use DB;
+use Illuminate\Database\Eloquent\Model;
 
-class Region extends Eloquent
+class Region extends Model
 {
     protected $fillable = [
         'name', 'country_id',
     ];
+
     public $timestamps = false;
 
     protected $table = 'region';
+
+    public function country() {
+        return $this->belongsTo(Country::class);
+    }
 }
