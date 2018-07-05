@@ -8,7 +8,6 @@
        "php": ">=7.0",
        "laravel/framework": "5.3.*",
        "laravelcollective/html": "5.*",
-       "hybridauth/hybridauth": "2.10.0",
        "anhskohbo/no-captcha": "^2.2",
         "webpatser/laravel-uuid": "^3.0",
         "doctrine/dbal": "^2.5"
