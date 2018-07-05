@@ -12,7 +12,7 @@
 @section('content')
 <div class="profile row">
 	<div class="col-md-3 col-sm-4 col-xs-12">
-		@if ($has_profile_photo)
+		@if ($profile_photo != null)
 			<div class="photo-display">
 			    <p class="remove-photo"><a href="/profile-photo-delete">Remove Photo</a></p>
 				<div id="profile-photo-rotate" onclick="rotateImage()"><i class="fa fa-repeat fa-4x"></i></div>
@@ -235,5 +235,4 @@
 
 	</div>
 </div>
-
 @stop
