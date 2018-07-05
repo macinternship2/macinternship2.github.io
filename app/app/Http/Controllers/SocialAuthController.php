@@ -1,121 +1,143 @@
 <?php namespace App\Http\Controllers;
 
+use App\Helpers\UserHelper;
+use App\OAuth\Facebook;
+use App\OAuth\Google;
+use App\Role;
 use App\User;
-use App\UserRole;
-use App\BaseUser;
-use Exception;
-use Redirect;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Hybrid_Auth;
-use Hybrid_Endpoint;
 use App\Country;
-use Illuminate\Support\Facades\Input;
+use Webpatser\Uuid\Uuid;
 
 class SocialAuthController extends Controller
 {
-
-    public function getSocialLogin($providerName)
+    public function authenticate(Request $request)
     {
-        $providerName = trim($providerName);
-        if (!in_array($providerName, array('Facebook', 'Google'))) {
-            return view('pages.signin')
-                ->withErrors('$providerName not found. You can try again.')
-                ->with('email', '');
+        $validator = \Validator::make($request->all(), [
+            'provider' => 'required|in:google,facebook',
+            'access_token' => 'required_if:provider,facebook',
+            'code' => 'required_if:provider,google'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/signin');
         }
-        try {
-            $auth = new Hybrid_Auth(config_path('hybridauth.php'));
-            $provider = $auth->authenticate($providerName);
-            $profile = $provider->getUserProfile();
-            $provider->logout();
-            if ($providerName === "Google") {
-                $this->createNewUserWithGoogle($profile);
-            } elseif ($providerName === "Facebook") {
-                $this->createNewUserWithFacebook($profile);
+
+        if (($request->get('provider') == 'facebook') && $request->has('error')) {
+            return redirect('/sigin')->withErrors([
+                'social_auth_error' => 'Looks like there is some problem!'
+            ]);
+        }
+
+        if (($request->get('provider') == 'google') && $request->has('error')) {
+            return redirect('/sigin')->withErrors([
+                'social_auth_error' => 'Looks like there is some problem!'
+            ]);
+        }
+
+        switch ($request->get('provider')) {
+            case 'facebook':
+                return $this->signInWithFacebook($request);
+                break;
+            case 'google':
+                return $this->signInWithGoogle($request);
+                break;
+        }
+    }
+
+    private function signInWithGoogle(Request $request)
+    {
+        $accessToken = Google::getAccessToken($request->get('code'));
+        if (!is_null($accessToken)) {
+            $google = new Google($accessToken);
+            $userData = $google->getUserInfo();
+            $user = User::query()->where('email', $userData['email'])
+                ->whereNotNull('email_verification_time')
+                ->first();
+
+            if ($user) {
+                Auth::login($user);
+                return redirect('profile');
             } else {
-                throw new Exception('Unrecognized provider name '.$providerName);
+                $user = new User();
+                $fillables = ['first_name', 'last_name', 'email', 'zip', 'region'];
+                foreach ($fillables as $fillable) {
+                    if (isset($userData[$fillable])) {
+                        $user->setAttribute($fillable, $userData[$fillable]);
+                    } else {
+                        $user->setAttribute($fillable, null);
+                    }
+                }
+                $country = isset($userData['country']) ? $userData['country'] : null;
+                $user->setAttribute('location_search_text', UserHelper::build()->getDefaultAddress());
+                $user->setAttribute('email_verification_time', Carbon::now()->toDateTimeString());
+                $user->save();
+
+                if ($country) {
+                    $findCountry = Country::query()->where('name', 'like', $country)->first();
+                    $user->homeCountry()->associate($findCountry);
+                    $user->save();
+                }
+                $role = Role::query()->findOrFail(Role::GENERAL_SEARCH_AND_REVIEW);
+                $user->roles()->attach($role, ['id' => Uuid::generate(4)->string]);
+                $user->save();
+                Auth::login($user);
+                return redirect()->intended('profile');
             }
-            BaseUser::signIn($profile->email);
-            BaseUser::updateEmailConfirmationDate();
-            if (Input::has('after_signin_redirect')) {
-                $after_signin_redirect = Input::get('after_signin_redirect');
-                return redirect($after_signin_redirect);
-            }
-            return redirect()->intended('profile');
-        } catch (Exception $e) {
-            return view('pages.signin')
-                ->withErrors('Ooops, there is a problem(' . $e->getMessage() . ')! You can try again.')
-                ->with('email', '');
         }
     }
 
-    private function createNewUserWithFacebook($profile)
+    private function signInWithFacebook(Request $request)
     {
-        $email = $profile->email;
-        //facebook email field is not guaranteed to have since users may login facebook by their phone number.
-        if (empty($email)) {
-            return view('pages.signin')
-                ->withErrors('Ooophs, we could not load your email from your facebook profile.')
-                ->with('email', '');
-        }
-        $isExist = User::where("email", "=", $email)->count();
-        if ($isExist === 0) {
-            $newUser = new User;
-            $newUser->email = $email;
-            $newUser->first_name = $profile->firstName;
-            $newUser->last_name = $profile->lastName;
-            $newUser->home_zipcode = $profile->zip;
-            $newUser->home_region = $profile->region;
-            $country = $profile->country;
-            if (!empty($country)) {
-                $country_id = Country::where("name", "like", $profile->country)->first()->id;
-                $newUser->home_country_id = $country_id;
-            }
-            $newUser->location_search_text = BaseUser::getAddress();
-            $newUser->save();
+        $accessToken = $request->get('access_token');
+        $facebook = new Facebook($accessToken);
+        $userData = $facebook->getUserInfo();
 
-            $newUserRole = new UserRole;
-            $newUserRole->role_id = 2;
-            $newUserRole->user_id = $newUser->id;
-            $newUserRole->save();
+        $user = User::query()->where('email', $userData['email'])
+            ->whereNotNull('email_verification_time')
+            ->first();
+
+        if ($user) {
+            Auth::login($user);
+            return redirect('/profile');
+        } else {
+            $user = new User();
+            $fillables = ['first_name', 'last_name', 'email', 'zip', 'region'];
+            foreach ($fillables as $fillable) {
+                if (isset($userData[$fillable])) {
+                    $user->setAttribute($fillable, $userData[$fillable]);
+                } else {
+                    $user->setAttribute($fillable, null);
+                }
+            }
+            $country = isset($userData['country']) ? $userData['country'] : null;
+            $user->setAttribute('location_search_text', UserHelper::build()->getDefaultAddress());
+            $user->setAttribute('email_verification_time', Carbon::now()->toDateTimeString());
+            $user->save();
+
+            if ($country) {
+                $findCountry = Country::query()->where('name', 'like', $country)->first();
+                $user->homeCountry()->associate($findCountry);
+                $user->save();
+            }
+            $role = Role::query()->findOrFail(Role::GENERAL_SEARCH_AND_REVIEW);
+            $user->roles()->attach($role, ['id' => Uuid::generate(4)->string]);
+            $user->save();
+            Auth::login($user);
+            return redirect('/profile');
         }
     }
 
-    private function createNewUserWithGoogle($profile)
+    public function callbackUrl(Request $request, $provider)
     {
-        $email = $profile->email;
-        $isExist = User::where("email", "=", $email)->count();
-        if ($isExist === 0) {
-            $newUser = new User;
-            $newUser->email = $email;
-            $newUser->first_name = $profile->firstName;
-            $newUser->last_name = $profile->lastName;
-            $newUser->home_zipcode = $profile->zip;
-            $newUser->home_region = $profile->region;
-            $country = $profile->country;
-            if (!empty($country)) {
-                $country_id = Country::where("name", "like", $profile->country)->first()->id;
-                $newUser->home_country_id = $country_id;
-            }
-            $newUser->location_search_text = BaseUser::getAddress();
-            $newUser->save();
-
-            $newUserRole = new UserRole;
-            $newUserRole->role_id = 2;
-            $newUserRole->user_id = $newUser->id;
-            $newUserRole->save();
-        }
-    }
-    // first time login need user's permission to access their account informaiton
-    public function getSocialLoginCallBack()
-    {
-
-        try {
-            Hybrid_Endpoint::process();
-        } catch (Exception $e) {
-            echo "Ooophs, we got an error: " . $e->getMessage();
-            echo " Error code: " . $e->getCode();
-            return Redirect::to('signin');
+        switch ($provider) {
+            case 'facebook':
+                return redirect(Facebook::getCallbackUrl($request->header('X-CSRF-TOKEN')));
+            case 'google':
+                return redirect(Google::getCallbackUrl($request->header('X-CSRF-TOKEN')));
         }
     }
 }
