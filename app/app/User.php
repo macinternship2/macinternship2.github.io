@@ -2,12 +2,10 @@
 
 namespace App;
 
-use Eloquent;
-use Illuminate\Support\Facades\Hash;
-use DB;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Eloquent
+class User extends Authenticatable
 {
     protected $fillable = [
         'email', 'password_hash', 'search_radius_km',
@@ -15,19 +13,17 @@ class User extends Eloquent
         'home_city','home_zipcode','home_region',"home_country_id",
         'email_verification_token','email_verification_time'
     ];
+
     public $timestamps = false;
     
     protected $table = 'user';
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
+
     public $incrementing = false;
 
     public function __construct()
     {
-        $this->attributes = array('id' => Uuid::generate(4)->string);
+        parent::__construct();
+        $this->attributes['id'] = Uuid::generate(4)->string;
     }
     
     public function roles()
@@ -68,7 +64,7 @@ class User extends Eloquent
     
     public function homeCountry()
     {
-        return $this->belongsTo('App\Country');
+        return $this->belongsTo('App\Country', 'home_country_id');
     }
     
     /**
@@ -92,9 +88,8 @@ class User extends Eloquent
     {
         return $this->belongsToMany(Location::class, 'user_location');
     }
-    
-    public static function generateSaltedHash($password)
-    {
-        return Hash::make($password);
+
+    public function isInternal() {
+        return in_array(Role::INTERNAL, $this->roles()->pluck('role.id')->toArray());
     }
 }
