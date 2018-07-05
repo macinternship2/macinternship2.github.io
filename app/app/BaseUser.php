@@ -156,16 +156,6 @@ class BaseUser
         }
     }
 
-    public static function isInternal()
-    {
-        if (!BaseUser::isSignedIn()) {
-            return false;
-        }
-
-        $user = BaseUser::getDbUser();
-        return $user->hasRole(Role::INTERNAL);
-    }
-
     /**
     Calculates distance that a direct flight would take across the spherical
     surface of Earth.
@@ -305,15 +295,6 @@ class BaseUser
         return '';
     }
 
-    /**
-     * Generates the Confirmation Link for the New User.
-     * @param $newUser
-     * @return string
-     */
-    public static function generateConfirmationLink($newUser)
-    {
-        return config('app.url')."/signup/confirmEmail/".$newUser->email."/".$newUser->email_verification_token;
-    }
 
     public static function updateEmailConfirmationDate($user = null)
     {

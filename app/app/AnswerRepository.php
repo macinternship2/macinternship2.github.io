@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Auth;
 use Session;
 use App\ReviewComment;
 use App\UserAnswer;
@@ -157,7 +158,7 @@ class AnswerRepository
     {
         $unsubmitted_ids = AnswerRepository::getUncommittedReviewedLocations();
         $location_ids = $unsubmitted_ids;
-        $user = BaseUser::getDbUser();
+        $user = Auth::user();
         // Find the distinct location ids from this query:
         $rated_locations = UserAnswer::where('answered_by_user_id', '=', $user->id)
             ->distinct()->get(['location_id'])->toArray();
