@@ -1,59 +1,53 @@
 <?php namespace App\Http\Controllers;
 
 use App\BaseUser;
+use App\Helpers\UserHelper;
+use App\Location;
 use App\QuestionCategory;
 use App\Country;
 use App\AnswerRepository;
 use App\Region;
 use App\Http\Controllers\ProfilePhotoUploadController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use DB;
 
-class ProfileController extends \Illuminate\Routing\Controller
+class ProfileController extends Controller
 {
     public function getRegions()
     {
-        $regions = DB::table('region')->get();
+        $regions = Region::query()->get();
         return $regions;
     }
     
-    public static function getProfileView($validator = null)
+    public function getProfileView()
     {
-        $user = BaseUser::getDbUser();
+        $user = Auth::user();
         $question_categories = QuestionCategory::with('questions')->orderBy('name', 'ASC')->get();
         $countries = Country::orderBy('name')->get();
-        $enabled_countries = Country::whereIn('id', function ($query) {
-            $query->select('country_id')
-            ->from(with(new Region)->getTable());
-        })->get(['id']);
-        $enabled_country_ids = [];
-        foreach ($enabled_countries as $country_id) {
-            $enabled_country_ids []= $country_id->id;
-        }
+
+        $enabled_country_ids = Country::query()->whereHas('regions')->pluck('id')->toArray();
         $required_questions = $user->requiredQuestions()->get();
-        $num_locations_added_by_me = DB::table('location')->where('creator_user_id', '=', $user->id)->count();
-        $user->search_radius_km = BaseUser::getSearchRadius();
+
+        $num_locations_added_by_me = Location::query()->where('creator_user_id', '=', $user->id)->count();
+        $user->search_radius_km = UserHelper::build()->getSearchRadius($user);
+
         $view_data = [
             'user' => $user,
             'question_categories' => $question_categories,
-            'address_default' => BaseUser::getDefaultAddress(),
+            'address_default' => UserHelper::build()->getDefaultAddress(),
             'countries' => $countries,
             'required_questions' => $required_questions,
-            'has_profile_photo' => ProfilePhotoUploadController::hasProfilePhoto(),
+            'profile_photo' => UserHelper::build()->getProfilePhoto($user),
             'num_reviews' => count(AnswerRepository::getReviewedLocations()['location_ids']),
             'num_locations_added_by_me' => $num_locations_added_by_me,
-            'is_internal_user' => BaseUser::isInternal(),
+            'is_internal_user' => $user->isInternal(),
             'enabled_country_ids' => $enabled_country_ids,
-            'max_search_radius_km' => BaseUser::getMaximumSearchRadiusKM()
+            'max_search_radius_km' => UserHelper::MAX_SEARCH_RADIUS_KM
             ];
-
-        if ($validator === null) {
-            return view('pages.profile.profile', $view_data);
-        } else {
-            return view('pages.profile.profile', $view_data)->withErrors($validator);
-        }
+        return view('pages.profile.profile', $view_data);
     }
 
     public function save(Request $request)
@@ -141,19 +135,5 @@ class ProfileController extends \Illuminate\Routing\Controller
         $user->save();
 
         return ProfileController::getProfileView();
-    }
-
-    /**
-     * Either shows profile view or redirects browser to sign in.
-     *
-     * @return Response
-     */
-    public function index(Request $request)
-    {
-        if (BaseUser::isSignedIn()) {
-            return ProfileController::getProfileView();
-        } else {
-            return redirect()->intended('signin');
-        }
     }
 }
