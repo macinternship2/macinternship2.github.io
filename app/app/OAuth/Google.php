@@ -38,23 +38,25 @@ class Google
         }
     }
 
-    public static function getCallbackUrl($token) {
+    public static function getCallbackUrl($token)
+    {
         return self::AUTH_URL
             ."?client_id=".env('GOOGLE_APP_ID')
-            ."&redirect_uri=".env('APP_URL').":8000"."/social_auth?provider=google"
+            ."&redirect_uri=".env('APP_URL')."/social_auth?provider=google"
             ."&response_type=code"
             ."&state=$token"
             ."&scope=email";
     }
 
-    public static function getAccessToken($code) {
+    public static function getAccessToken($code)
+    {
         $client = new Client();
         $response = $client->post(self::ACCESS_TOKEN_URL, [
            'query' => [
                'code' => $code,
                'client_id' => env('GOOGLE_APP_ID'),
                'client_secret' => env('GOOGLE_APP_SECRET'),
-               'redirect_uri' => env('APP_URL').":8000/social_auth?provider=google",
+               'redirect_uri' => env('APP_URL')."/social_auth?provider=google",
                'grant_type' => 'authorization_code'
            ]
         ]);

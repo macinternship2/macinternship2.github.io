@@ -14,7 +14,8 @@ class Region extends Model
 
     protected $table = 'region';
 
-    public function country() {
+    public function country()
+    {
         return $this->belongsTo(Country::class);
     }
 }

@@ -73,7 +73,8 @@ class AuthController extends Controller
      * @param $token
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function confirmEmail($userEmail, $token) {
+    public function confirmEmail($userEmail, $token)
+    {
         $user = User::query()->where('email', $userEmail)
             ->where('email_verification_token', $token)
             ->first();
@@ -93,7 +94,8 @@ class AuthController extends Controller
      * Shows the Sign In form.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showSignInForm() {
+    public function showSignInForm()
+    {
         return view('pages.signin');
     }
 
@@ -102,7 +104,8 @@ class AuthController extends Controller
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function signIn(Request $request) {
+    public function signIn(Request $request)
+    {
         $validator = \Validator::make($request->all(), [
             'email' => 'required|email|max:255|exists:user,email',
             'password' => 'required'
@@ -139,7 +142,8 @@ class AuthController extends Controller
      * Signs out the authenticated user.
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function signOut() {
+    public function signOut()
+    {
         Auth::logout();
         return redirect('/signin');
     }

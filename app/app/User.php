@@ -89,7 +89,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Location::class, 'user_location');
     }
 
-    public function isInternal() {
+    public function isInternal()
+    {
         return in_array(Role::INTERNAL, $this->roles()->pluck('role.id')->toArray());
     }
 }

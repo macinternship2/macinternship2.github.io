@@ -12,8 +12,8 @@ Route::group(['prefix' => 'signup', 'middleware' => 'guest'], function () {
 });
 
 Route::group(['prefix' => 'social_auth', 'middleware' => 'guest'], function () {
-   Route::get('/', 'SocialAuthController@authenticate');
-   Route::get('/callback/{provider}', 'SocialAuthController@callbackUrl');
+    Route::get('/', 'SocialAuthController@authenticate');
+    Route::get('/callback/{provider}', 'SocialAuthController@callbackUrl');
 });
 
 Route::get('signout', 'AuthController@signOut')->middleware('auth');

@@ -14,11 +14,11 @@ use Webpatser\Uuid\Uuid;
 
 class SocialAuthController extends Controller
 {
-    public function authenticate(Request $request) {
+    public function authenticate(Request $request)
+    {
         $validator = \Validator::make($request->all(), [
             'provider' => 'required|in:google,facebook',
-            'access_token' => 'required_if:provider,facebook',
-            'code' => 'required_if:provider,google'
+            'code' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -47,7 +47,8 @@ class SocialAuthController extends Controller
         }
     }
 
-    private function signInWithGoogle(Request $request) {
+    private function signInWithGoogle(Request $request)
+    {
         $accessToken = Google::getAccessToken($request->get('code'));
         if (!is_null($accessToken)) {
             $google = new Google($accessToken);
@@ -59,8 +60,7 @@ class SocialAuthController extends Controller
             if ($user) {
                 Auth::login($user);
                 return redirect('profile');
-            }
-            else {
+            } else {
                 $user = new User();
                 $fillables = ['first_name', 'last_name', 'email', 'zip', 'region'];
                 foreach ($fillables as $fillable) {
@@ -89,48 +89,53 @@ class SocialAuthController extends Controller
         }
     }
 
-    private function signInWithFacebook(Request $request) {
-        $accessToken = $request->get('access_token');
-        $facebook = new Facebook($accessToken);
-        $userData = $facebook->getUserInfo();
+    private function signInWithFacebook(Request $request)
+    {
+        $accessToken = Facebook::getAccessToken($request->get('code'));
+        if (!is_null($accessToken)) {
+            $facebook = new Facebook($accessToken);
+            $userData = $facebook->getUserInfo();
 
-        $user = User::query()->where('email', $userData['email'])
-            ->whereNotNull('email_verification_time')
-            ->first();
+            $user = User::query()->where('email', $userData['email'])
+                ->whereNotNull('email_verification_time')
+                ->first();
 
-        if ($user) {
-            Auth::login($user);
-            return redirect('/profile');
-        }
-        else {
-            $user = new User();
-            $fillables = ['first_name', 'last_name', 'email', 'zip', 'region'];
-            foreach ($fillables as $fillable) {
-                if (isset($userData[$fillable])) {
-                    $user->setAttribute($fillable, $userData[$fillable]);
-                } else {
-                    $user->setAttribute($fillable, null);
+            if ($user) {
+                Auth::login($user);
+                return redirect('/profile');
+            } else {
+                $user = new User();
+                $fillables = ['first_name', 'last_name', 'email', 'zip', 'region'];
+                foreach ($fillables as $fillable) {
+                    if (isset($userData[$fillable])) {
+                        $user->setAttribute($fillable, $userData[$fillable]);
+                    } else {
+                        $user->setAttribute($fillable, null);
+                    }
                 }
-            }
-            $country = isset($userData['country']) ? $userData['country'] : null;
-            $user->setAttribute('location_search_text', UserHelper::build()->getDefaultAddress());
-            $user->setAttribute('email_verification_time', Carbon::now()->toDateTimeString());
-            $user->save();
-
-            if ($country) {
-                $findCountry = Country::query()->where('name', 'like', $country)->first();
-                $user->homeCountry()->associate($findCountry);
+                $country = isset($userData['country']) ? $userData['country'] : null;
+                $user->setAttribute('location_search_text', UserHelper::build()->getDefaultAddress());
+                $user->setAttribute('email_verification_time', Carbon::now()->toDateTimeString());
                 $user->save();
+
+                if ($country) {
+                    $findCountry = Country::query()->where('name', 'like', $country)->first();
+                    $user->homeCountry()->associate($findCountry);
+                    $user->save();
+                }
+                $role = Role::query()->findOrFail(Role::GENERAL_SEARCH_AND_REVIEW);
+                $user->roles()->attach($role, ['id' => Uuid::generate(4)->string]);
+                $user->save();
+                Auth::login($user);
+                return redirect('/profile');
             }
-            $role = Role::query()->findOrFail(Role::GENERAL_SEARCH_AND_REVIEW);
-            $user->roles()->attach($role, ['id' => Uuid::generate(4)->string]);
-            $user->save();
-            Auth::login($user);
-            return redirect('/profile');
+        } else {
+            return redirect('signin');
         }
     }
 
-    public function callbackUrl(Request $request, $provider) {
+    public function callbackUrl(Request $request, $provider)
+    {
         switch ($provider) {
             case 'facebook':
                 return redirect(Facebook::getCallbackUrl($request->header('X-CSRF-TOKEN')));

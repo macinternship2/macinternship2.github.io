@@ -10,7 +10,8 @@ class UserHelper
      * Builds the instance of UserHelper.
      * @return \Illuminate\Foundation\Application|mixed
      */
-    public static function build() {
+    public static function build()
+    {
         return app(UserHelper::class);
     }
 
@@ -53,9 +54,9 @@ class UserHelper
      * @param $user
      * @return null|string
      */
-    public function getProfilePhoto($user) {
+    public function getProfilePhoto($user)
+    {
         $imageUrl = storage_path('app/private/user_profile_images/user_'.$user->id.'.jpg');
         return file_exists($imageUrl) ? $imageUrl : null;
     }
-
 }

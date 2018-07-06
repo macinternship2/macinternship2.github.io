@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'profile', 'middleware' => ['auth']], function (){
+Route::group(['prefix' => 'profile', 'middleware' => ['auth']], function () {
     Route::get('/', 'ProfileController@getProfileView');
     Route::post('/', 'ProfileController@save');
 });
