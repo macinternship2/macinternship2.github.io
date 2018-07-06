@@ -29,7 +29,7 @@ class Facebook
         $response = $client->get(self::getUrl('me'), [
            'query' => [
                'access_token' => $this->accessToken,
-               'fields' => 'email'
+               'fields' => 'email,first_name,last_name,location'
            ]
         ]);
 

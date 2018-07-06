@@ -62,7 +62,7 @@ class SocialAuthController extends Controller
                 return redirect('profile');
             } else {
                 $user = new User();
-                $fillables = ['first_name', 'last_name', 'email', 'zip', 'region'];
+                $fillables = ['first_name', 'last_name', 'email', 'home_zipcode', 'home_region'];
                 foreach ($fillables as $fillable) {
                     if (isset($userData[$fillable])) {
                         $user->setAttribute($fillable, $userData[$fillable]);
@@ -105,7 +105,7 @@ class SocialAuthController extends Controller
                 return redirect('/profile');
             } else {
                 $user = new User();
-                $fillables = ['first_name', 'last_name', 'email', 'zip', 'region'];
+                $fillables = ['first_name', 'last_name', 'email', 'home_zipcode', 'home_region'];
                 foreach ($fillables as $fillable) {
                     if (isset($userData[$fillable])) {
                         $user->setAttribute($fillable, $userData[$fillable]);
