@@ -64,7 +64,7 @@ class User extends Authenticatable
     
     public function homeCountry()
     {
-        return $this->belongsTo('App\Country', 'home_country_id');
+        return $this->belongsTo(Country::class, 'home_country_id');
     }
     
     /**

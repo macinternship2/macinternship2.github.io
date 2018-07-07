@@ -7,7 +7,8 @@ use App\QuestionCategory;
 use App\Country;
 use App\AnswerRepository;
 use App\Region;
-use App\Http\Controllers\ProfilePhotoUploadController;
+use App\Http\Controllers\ProfilePhotoController;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -50,90 +51,50 @@ class ProfileController extends Controller
         return view('pages.profile.profile', $view_data);
     }
 
-    public function save(Request $request)
+    public function updateProfile(Request $request)
     {
-        if (!BaseUser::isSignedIn()) {
-            return redirect()->intended('signin');
-        }
-
-        $validation_rules = array(
-            'first_name'           => 'required|max:255',
-            'last_name'            => 'required|max:255',
-            'country_id'           => 'integer|exists:country,id',
-            'home_city'            => 'max:255',
-            'home_region'          => 'max:255',
-            'location_search_text' => 'max:255',
+        $user = User::query()->findOrFail(Auth::user()->id);
+        $validator = \Validator::make($request->all(), [
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'home_country_id' => 'integer|exists:country,id',
+            'home_city' => 'string|nullable|max:255',
+            'home_region' => 'string|nullable|max:255',
+            'location_search_text' => 'string|nullable|max:255',
             'search_radius_km'     => 'numeric|min:0.01|max:20040'
-        );
-        $validator = Validator::make(Input::all(), $validation_rules);
-        
+        ]);
+
         if ($validator->fails()) {
-            return ProfileController::getProfileView($validator);
-        }
-        
-        $user = BaseUser::getDbUser();
-        if ($request->home_country_id === '') {
-            $user->home_country_id = null;
-        } else {
-            $user->home_country_id = intval($request->home_country_id);
-        }
-        
-        $user->home_region = $request->home_region;
-        $user->home_city = $request->home_city;
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->location_search_text = $request->location_search_text;
-        if (!is_numeric($request->search_radius_km)) {
-            $user->search_radius_km = null;
-        } else {
-            // Sanitize to within the valid range.
-            $range = min(floatval(trim($request->search_radius_km)), BaseUser::getMaximumSearchRadiusKM());
-            $user->search_radius_km = max(0.01, $range);
-        }
-        $user->uses_screen_reader = isset($request->uses_screen_reader) ? 1 : 0;
-
-        $current_user_questions = $user->requiredQuestions()->get();
-        
-        // questions/accessibility needs that aren't required yet by $user.
-        $questions_to_add = [];
-        
-        // Existing questions/accessibility needs that are required so no update needed on.
-        $questions_matched = [];
-        
-        // Save the user_question data.
-        foreach (Input::all() as $name => $value) {
-            if (strpos($name, 'question_') === 0) {
-                $question_id = substr($name, strlen('question_'));
-                if (is_numeric($question_id)) {
-                    $question_id = intval($question_id);
-                    if ($user->isQuestionRequired($current_user_questions, $question_id)) {
-                        $questions_matched []= $question_id;
-                    } else {
-                        $questions_to_add []= $question_id;
-                    }
-                }
-            }
-        }
-        $questions_updated = !empty($questions_to_add);
-        foreach ($questions_to_add as $new_question_id) {
-            $user->requiredQuestions()->attach($new_question_id);
-        }
-        foreach ($current_user_questions as $existing_question) {
-            if (!in_array($existing_question->id, $questions_matched)) {
-                $user->requiredQuestions()->detach($existing_question->id);
-                $questions_updated = true;
-            }
-        }
-        if ($questions_updated) {
-            /*
-            If the accessibility needs changed,
-            the personalized ratings need to be recalculated.
-            */
-            $user->personalizedRatings()->detach();
+            return redirect('/profile')->withErrors($validator->errors());
         }
 
+        $updateables = ['first_name', 'last_name', 'home_city', 'home_region', 'location_search_text'];
+        foreach ($updateables as $updateable) {
+            if ($request->exists($updateable)) {
+                $user->setAttribute($updateable, $request->get($updateable));
+            }
+        }
         $user->save();
 
-        return ProfileController::getProfileView();
+        if ($request->has('home_country_id')) {
+            $country = Country::query()->findOrFail($request->get('home_country_id'));
+            $user->homeCountry()->associate($country);
+            $user->save();
+        }
+        if ($request->has('search_radius_km')) {
+            $searchRadius = $request->get('search_radius_km');
+            $range = min($searchRadius, UserHelper::MAX_SEARCH_RADIUS_KM);
+            $user->setAttribute('search_radius_km', max(0.01, $range));
+            $user->save();
+        }
+        $user->setAttribute('uses_screen_reader', $request->has('uses_screen_reader'));
+        $user->save();
+
+        if ($request->has('question')) {
+            $user->requiredQuestions()->sync($request->get('question'));
+            $user->save();
+        }
+
+        return redirect()->action('ProfileController@getProfileView');
     }
 }

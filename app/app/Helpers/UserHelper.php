@@ -57,6 +57,6 @@ class UserHelper
     public function getProfilePhoto($user)
     {
         $imageUrl = storage_path('app/private/user_profile_images/user_'.$user->id.'.jpg');
-        return file_exists($imageUrl) ? $imageUrl : null;
+        return file_exists($imageUrl) ? file_get_contents($imageUrl) : null;
     }
 }

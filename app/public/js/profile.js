@@ -49,10 +49,10 @@ function selectAllToggle()
 	$('button.select-all').click(function(){
 		var $checkboxes = $(this).closest("div.category").find("input:checkbox");
 		if ( $(this).text() === "Select All" ) {
-			$checkboxes.prop('checked', true);
+			$checkboxes.prop('checked', true).trigger('change');
 			$(this).text('Unselect All');
 		} else {
-			$checkboxes.removeAttr('checked');
+			$checkboxes.prop('checked', false).trigger('change');
 			$(this).text('Select All');
 		}
 	})
@@ -152,7 +152,7 @@ function rotateImage()
 		'data': {
 			'_token': token
 		},
-		'url': '/profile-photo-rotate',
+		'url': '/profile-photo/rotate',
 		'success': function() {
 			randomizePhotoURL().then(showRotateFeature);
 		}

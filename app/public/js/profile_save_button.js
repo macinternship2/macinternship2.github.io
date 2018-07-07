@@ -1,20 +1,20 @@
-var defaultFormValue;
-
-// submitted is true if the user profile form is being submitted.
-var submitted = false;
-
-function isProfileChanged()
-{
-   return $("#profileForm").serialize() !== defaultFormValue;
-}
-
-$(document).ready(function() {
-  	$("#profileForm").change(formChange).submit(function() {
+$(function () {
+	var $profileForm = $("#profileForm");
+    var initialFormState = $profileForm.serialize();
+    var submitted = false;
+    var changed = false;
+	$profileForm.change(function () {
+		changed = $profileForm.serialize() !== initialFormState;
+		$("#submitButton").prop('disabled', !changed);
+    }).submit(function () {
 		submitted = true;
-	});
-  	defaultFormValue = $("#profileForm").serialize();
-	
-	function formChange() {
-		$("#submitButton").prop("disabled", !isProfileChanged());
-	}
+    });
+
+   	window.onbeforeunload = function load() {
+        var $submitBtn = $('#submitButton');
+        if (!$submitBtn.is(':disabled') && !submitted) {
+			return true;
+		}
+		return;
+    };
 });

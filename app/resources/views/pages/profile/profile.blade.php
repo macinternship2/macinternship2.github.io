@@ -5,7 +5,6 @@
   <script src="/css/jquery/jquery-ui.js"></script>
   <script src="/js/profile.js"></script>
   <script src="/js/profile_save_button.js"></script>
-  <script src="/js/profile_save_prompt.js"></script>
   <script src="/js/utils.js"></script>
   <script src="/js/question_explanation.js"></script>
 @stop
@@ -14,7 +13,13 @@
 	<div class="col-md-3 col-sm-4 col-xs-12">
 		@if ($profile_photo != null)
 			<div class="photo-display">
-			    <p class="remove-photo"><a href="/profile-photo-delete">Remove Photo</a></p>
+			    <div class="remove-photo">
+					<form id="remove_photo_form" method="post" action="/profile-photo">
+						{!! csrf_field() !!}
+						<input type="hidden" name="_method" value="DELETE"/>
+						<a onclick="document.getElementById('remove_photo_form').submit();">Remove Photo</a>
+					</form>
+				</div>
 				<div id="profile-photo-rotate" onclick="rotateImage()"><i class="fa fa-repeat fa-4x"></i></div>
 				<div class="photo-changer" onclick="selectImageFile()">
 					<div class="uploaded-photo">
@@ -33,7 +38,7 @@
         </div>
         @endif
 		<p class="text-danger text-center" id="profile_error"></p>
-		<form id="photo-upload" method="post" action="/profile-photo-upload" enctype="multipart/form-data">
+		<form id="photo-upload" method="post" action="/profile-photo/upload" enctype="multipart/form-data">
 			{!! csrf_field() !!}
             <input class="hidden-uploader" type="file" name="profile_photo" onchange="upload(event)">
 		</form>
@@ -45,6 +50,7 @@
         <h1>{{ $user->first_name.' '.$user->last_name }}</h1>
 		<form id="profileForm" method="post" action="/profile">
 			{!! csrf_field() !!}
+			<input type="hidden" name="_method" value="PUT">
 			@include('pages.validation_messages', array('errors'=>$errors))
 			<h2>Personal</h2>
 			<div class="box">
@@ -194,9 +200,9 @@
 								<div class="checkbox">
 									<label>
 										@if ($user->isQuestionRequired($required_questions, $question->id))
-										<input name="question_{{ $question->id }}" type="checkbox" checked>
+										<input name="question[]" value="{{$question->id}}" type="checkbox" checked>
 										@else
-										<input name="question_{{ $question->id }}" type="checkbox">
+										<input name="question[]" value="{{ $question->id }}" type="checkbox">
 										@endif
 									</label>
 									<div>
