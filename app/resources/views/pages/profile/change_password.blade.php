@@ -4,11 +4,12 @@
 	<h1>Change Password</h1>
 	
 	<div class="password-change-form">
-		<form method="post" action="/change-password">
+		<form method="post" action="/user/change-password">
 			{!! csrf_field() !!}
-			@include('pages.validation_messages', array('errors'=>$errors))					
+			@include('pages.validation_messages', array('errors'=>$errors))
 			<div class="row">
 				<div class="col-xs-12">
+					<input type="hidden" name="_method" value="put">
 					<input class="clean" type="password" name="current_password"
 						placeholder="Current Password"
 						value="">
@@ -19,7 +20,7 @@
 						value="">
 				</div>
 				<div class="col-xs-12">
-					<input class="clean" type="password" name="password_confirm"
+					<input class="clean" type="password" name="confirm_new_password"
 						placeholder="Password Confirmation"
 						value="">
 				</div>

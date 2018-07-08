@@ -38,13 +38,14 @@
 								<p class="text-danger">{{$errors->get('password')[0]}}</p>
 							@endif
 						</div>
-						
                         <div class="col-xs-12">
 							<div class="remember-password">
-								<a class="pull-right" href="/password-recovery"> Forgot Password? </a>
+								<input type="checkbox" name="remember_me" />
+								<span>Remember Me</span>
+								<a class="pull-right" href="/user/password-recovery">Forgot Password?</a>
+								<a class="pull-right" href="/user/verification-mail">Didn't get verification email?</a>
 							</div>
                         </div>
-                                                
 					</div>
 					<div>
 						<input class="clean" type="submit" value="Sign in">

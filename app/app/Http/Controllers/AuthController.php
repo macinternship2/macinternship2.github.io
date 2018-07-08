@@ -80,7 +80,10 @@ class AuthController extends Controller
             ->first();
 
         if ($user) {
-            $user->update(['email_verification_time' => Carbon::now()->toDateTimeString()]);
+            $user->update([
+                'email_verification_time' => Carbon::now()->toDateTimeString(),
+                'email_verification_token' => null
+            ]);
         } else {
             return redirect('/signin');
         }

@@ -52,6 +52,11 @@
 			{!! csrf_field() !!}
 			<input type="hidden" name="_method" value="PUT">
 			@include('pages.validation_messages', array('errors'=>$errors))
+			@if (Session::has('password_success_message'))
+				<div class="alert alert-success">
+					{{Session::get('password_success_message')}}
+				</div>
+			@endif
 			<h2>Personal</h2>
 			<div class="box">
 				<div class="form-group">
@@ -90,7 +95,7 @@
 							<label>Password</label>
 						</div>
 						<div class="col-sm-8 col-xs-7">
-							<a class="btn btn-default" href="/change-password">Change password</a>
+							<a class="btn btn-default" href="/user/change-password">Change password</a>
 						</div>
 					</div>
 				</div>
