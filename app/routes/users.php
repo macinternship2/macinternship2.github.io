@@ -1,9 +1,9 @@
 <?php
-Route::group(['prefix' => 'user', 'middleware' => ['auth']], function() {
+Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
     Route::get('/change-password', 'UserController@getChangePasswordView');
     Route::put('/change-password', 'UserController@updatePassword');
 });
-
+Route::post('/user/location', 'UserController@updateUserLocation');
 Route::group(['prefix' => 'user', 'middleware' => ['guest']], function () {
     Route::get('/verification-mail', 'UserController@getVerificationMailView');
     Route::post('/verification-mail/send', 'UserController@resendEmailVerificationCode');

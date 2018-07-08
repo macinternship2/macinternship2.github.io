@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
-class LocationTag extends Eloquent
+class LocationTag extends Model
 {
     protected $fillable = [
         'name', 'description',

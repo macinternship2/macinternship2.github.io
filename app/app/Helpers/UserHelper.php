@@ -2,6 +2,10 @@
 
 namespace App\Helpers;
 
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 class UserHelper
 {
     const MAX_SEARCH_RADIUS_KM = 500;
@@ -58,5 +62,75 @@ class UserHelper
     {
         $imageUrl = storage_path('app/private/user_profile_images/user_'.$user->id.'.jpg');
         return file_exists($imageUrl) ? file_get_contents($imageUrl) : null;
+    }
+
+    /**
+     * Sets the user address
+     * @param $address
+     */
+    public function setAddress($address)
+    {
+        if (Auth::check()) {
+            $user = User::query()->findOrFail(Auth::user()->id);
+            $user->update(['location_search_text' => trim($address)]);
+        } else {
+            Session::put('location_search_text', $address);
+        }
+    }
+
+    /**
+     * Sets the user longitude
+     * @param $longitude
+     */
+    public function setLongitude($longitude)
+    {
+        if (Auth::check()) {
+            $user = User::query()->findOrFail(Auth::user()->id);
+            $user->update(['longitude' => $longitude]);
+        } else {
+            Session::put('longitude', $longitude);
+        }
+    }
+
+    /**
+     * Sets user latitude
+     * @param $latitude
+     */
+    public function setLatitude($latitude)
+    {
+        if (Auth::check()) {
+            $user = User::query()->findOrFail(Auth::user()->id);
+            $user->update(['latitude' => $latitude]);
+        } else {
+            Session::put('latitude', $latitude);
+        }
+    }
+
+    /**
+     * Returns the user/guest address.
+     * @return string
+     */
+    public function getAddress()
+    {
+        if (Auth::check()) {
+            return trim(Auth::user()->location_search_text);
+        } elseif (Session::has('location_search_text')) {
+            return trim(Session::get('location_search_text'));
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * Sets and gets the user search keywords
+     * @param string $query
+     * @param $keywords
+     * @return mixed
+     */
+    public function keywords($query = 'get', $keywords = null)
+    {
+        return $query === 'set' && !is_null($keywords) ?
+            Session::put('keywords', $keywords) :
+            Session::get('keywords');
     }
 }

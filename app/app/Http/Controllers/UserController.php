@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
-    public function getChangePasswordView() {
+    public function getChangePasswordView()
+    {
         return view('pages.profile.change_password');
     }
 
@@ -44,7 +45,8 @@ class UserController extends Controller
         return view('pages.recovery.verification_mail');
     }
 
-    public function resendEmailVerificationCode(Request $request) {
+    public function resendEmailVerificationCode(Request $request)
+    {
         $validator = \Validator::make($request->all(), [
             'email' => 'required|email|max:255|exists:user,email',
             'g-recaptcha-response' => 'required|captcha'
@@ -76,7 +78,8 @@ class UserController extends Controller
         return view('pages.recovery.password_recovery');
     }
 
-    public function sendPasswordRecoveryMail(Request $request) {
+    public function sendPasswordRecoveryMail(Request $request)
+    {
         $validator = \Validator::make($request->all(), [
             'email' => 'required|email|max:255|exists:user,email',
             'g-recaptcha-response'  => 'required|captcha'
@@ -88,7 +91,7 @@ class UserController extends Controller
             return redirect('/user/password-recovery')->withErrors($validator->errors());
         }
 
-        $user = User::query()->where('email','=', $request->get('email'))->first();
+        $user = User::query()->where('email', '=', $request->get('email'))->first();
         if (!is_null($user)) {
             $token = str_random(60);
             $recoveryLink = env('APP_URL')."/user/password-recovery/$user->email/$token";
@@ -153,5 +156,21 @@ class UserController extends Controller
                 'message' => 'Oops! Unable to reset your password!'
             ]);
         }
+    }
+
+    public function updateUserLocation(Request $request)
+    {
+        $latitude = floatval($request->get('latitude'));
+        $longitude = floatval($request->get('longitude'));
+        $address = $request->get('address');
+
+        $userHelper = UserHelper::build();
+        $userHelper->setAddress($address);
+        $userHelper->setLongitude($longitude);
+        $userHelper->setLatitude($latitude);
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

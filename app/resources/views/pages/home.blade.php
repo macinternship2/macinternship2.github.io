@@ -31,7 +31,7 @@
 		</div>
 		<div class="col-lg-7">
 			<div class="home-inputs">
-				@if (!$is_authenticated)
+				@if (!Auth::check())
 					<div class="signin-signup">
 						<a href="/signin">
 							<table>
@@ -55,11 +55,6 @@
 							</table>
 						</a>		
 					</div>
-					
-	
-						
-					
-				
 				@endif
 				<div>
 					<div id="map"></div>

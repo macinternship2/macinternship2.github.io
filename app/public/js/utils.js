@@ -73,7 +73,7 @@ function saveSearchLocation(address, latitude, longitude)
 
 	return $.ajax({
 		type: 'post',
-		url: '/save-user-location',
+		url: '/user/location',
 		data: {
 			'_token': token,
 			'latitude' : latitude,
