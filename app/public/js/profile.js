@@ -55,6 +55,7 @@ function selectAllToggle()
 			$checkboxes.removeAttr('checked');
 			$(this).text('Select All');
 		}
+		$("#submitButton").prop("disabled", false);
 	})
 }
 
