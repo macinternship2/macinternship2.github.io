@@ -93,6 +93,9 @@ class ProfileController extends Controller
         if ($request->has('question')) {
             $user->requiredQuestions()->sync($request->get('question'));
             $user->save();
+        } else {
+            $user->requiredQuestions()->detach();
+            $user->save();
         }
 
         return redirect()->action('ProfileController@getProfileView');
