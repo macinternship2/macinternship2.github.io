@@ -7,7 +7,7 @@
 	<script type="text/javascript">
 		var default_location = {
 			'latitude': {{ $default_location['latitude'] }},
-			'longitude': {{ $default_location['longitude'] }} 
+			'longitude': {{ $default_location['longitude'] }}
 		};
 	</script>
 	<script type="text/javascript" async defer
@@ -61,7 +61,7 @@
 				</div>
 				<div class="search">
 					{{ csrf_field() }}
-					<form role="search" action="/location-search">
+					<form role="search" action="/location/search">
 						<div class="address-row">
 							<datalist id="location_search_options">
 								@foreach ($location_search_options as $option)
@@ -83,7 +83,9 @@
 						<table>
 							<tr>
 								<td>
-									<input name="keywords" type="text" placeholder="Search by keyword(s)" class="form-control" value="{{ htmlspecialchars($keywords) }}">
+									<input name="keywords" type="text" placeholder="Search by keyword(s)"
+										   class="form-control"
+										   value="{{ is_null(htmlspecialchars($keywords)) ? ' ' : htmlspecialchars($keywords) }}">
 								</td>
 								<td class="search-button">
 									<button class="btn btn-default" type="submit">
@@ -97,13 +99,11 @@
 				<div class="location-tags">
 					<div class="row">
 					@foreach ( $location_tags as $key => $value )
-
 						<div class="location-tag col-sm-4 col-xs-6">
-							<a href="/location-search?location_tag_id={{ $value->id }}" title="{{ $value->description }}">
+							<a href="/location/search?location_tag_id={{ $value->id }}" title="{{ $value->description }}">
 							{{ $value->name }}
 							</a>
 						</div>
-
 					@endforeach
 					</div>
 				</div>

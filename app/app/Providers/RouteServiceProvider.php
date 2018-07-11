@@ -59,11 +59,11 @@ class RouteServiceProvider extends ServiceProvider
             require base_path("routes/auth.php");
             require base_path("routes/contact.php");
             require base_path("routes/profile.php");
-            require base_path("routes/location.php");
             require base_path("routes/ratings.php");
             require base_path("routes/internal_features.php");
             require base_path("routes/questions.php");
             require base_path("routes/users.php");
+            require base_path("routes/location/search.php");
         });
     }
 

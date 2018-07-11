@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
-class QuestionCategory extends Eloquent
+class QuestionCategory extends Model
 {
     protected $fillable = [
         'id', 'name',

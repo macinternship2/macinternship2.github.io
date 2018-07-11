@@ -251,7 +251,7 @@ function showMessage(html, extra_classes) {
 			'<div class="content">'	+ html +
 			'</div>' +
 			'<div class="modal-footer">' +
-				'<button class="btn btn-primary ok">OK</button' +
+				'<button class="btn btn-primary ok">OK</button>' +
 			'</div>' +
 		'</div>';
 	var $body = $('body');

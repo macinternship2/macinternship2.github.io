@@ -2,11 +2,11 @@
 
 namespace App;
 
-use Eloquent;
 use DB;
 use App\Location;
+use Illuminate\Database\Eloquent\Model;
 
-class Question extends Eloquent
+class Question extends Model
 {
     protected $fillable = [
         'question_html',
@@ -73,5 +73,10 @@ class Question extends Eloquent
     public function answers()
     {
         return $this->hasMany('App\UserAnswer');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(QuestionCategory::class,'category_id');
     }
 }

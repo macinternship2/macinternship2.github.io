@@ -1,6 +1,5 @@
 <?php
 
-Route::get('location-search', 'LocationSearchController@search');
 Route::get('get-nearby-locations/{longitude}/{latitude}', 'LocationManagementController@getLocationsNear');
 Route::get('delete-my-location/{location_id}', 'LocationManagementController@deleteMyLocation');
 Route::get('location-modify/{location_id}', 'LocationManagementController@show');
@@ -22,4 +21,3 @@ Route::get(
     'LocationReportController@showComprehensiveRatings'
 );
 Route::get('location-reporting/{location_id}/{question_category_id}', 'LocationReportController@show2');
-Route::post('api/set-search-radius', 'LocationSearchController@setSearchRadius');

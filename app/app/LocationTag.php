@@ -15,6 +15,6 @@ class LocationTag extends Model
 
     public function locations()
     {
-        return $this->belongsToMany('App\Location');
+        return $this->belongsToMany(Location::class, 'location_location_tag','location_tag_id');
     }
 }

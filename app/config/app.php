@@ -178,13 +178,13 @@ return [
         /*
          * Package Service Providers...
          */
+        Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
 
         //
 
         /*
          * Application Service Providers...
          */
-        App\Providers\ShareBaseUserWithViewsProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,

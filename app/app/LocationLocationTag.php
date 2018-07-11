@@ -2,10 +2,10 @@
 
 namespace App;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 use Webpatser\Uuid\Uuid;
 
-class LocationLocationTag extends Eloquent
+class LocationLocationTag extends Model
 {
     protected $fillable = [
         'location_id', 'location_tag_id',
@@ -21,6 +21,6 @@ class LocationLocationTag extends Eloquent
 
     public function __construct()
     {
-        $this->attributes = array('id' => Uuid::generate(4)->string);
+        $this->attributes['id'] = Uuid::generate(4)->string;
     }
 }

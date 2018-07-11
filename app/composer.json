@@ -10,7 +10,8 @@
        "laravelcollective/html": "5.*",
        "anhskohbo/no-captcha": "^2.2",
         "webpatser/laravel-uuid": "^3.0",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "laracasts/utilities": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

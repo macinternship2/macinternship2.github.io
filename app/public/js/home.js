@@ -181,7 +181,7 @@ function updateCategoryLinksOffKeywords()
 		var $this = $(this);
 		var oldUrl = $this.attr('href');
 		var location_category_id = getLocationCategoryIdFromURL(oldUrl);
-		var newUrl = '/location-search?location_tag_id=' + location_category_id;
+		var newUrl = '/location/search?location_tag_id=' + location_category_id;
 		if ( keywords )
 		{
 			newUrl = newUrl + '&keywords=' + keywords;

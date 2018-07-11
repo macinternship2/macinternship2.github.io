@@ -37,10 +37,29 @@ class UserHelper
     public function getSearchRadius($user)
     {
         $default_search_radius = 1;
-        if ($user->search_radius_km === null) {
-            return $default_search_radius;
-        } else {
+        if (is_null($user) || Session::has('search_radius_km')) {
+            return Session::get('search_radius_km');
+        }
+        if (!is_null($user) && !is_null($user->search_radius_km)) {
             return $user->search_radius_km;
+        }
+        return $default_search_radius;
+    }
+
+    /**
+     * Sets the Search Radius.
+     * @param $distance
+     */
+    public function setSearchRadius($distance)
+    {
+        $distance  = $distance > self::MAX_SEARCH_RADIUS_KM ? self::MAX_SEARCH_RADIUS_KM : $distance;
+        if (Auth::check()) {
+            if ($distance > 0) {
+                $user = User::query()->find(Auth::user()->id);
+                $user->update([ 'search_radius_km' => $distance]);
+            }
+        } else {
+            Session::put('search_radius_km', $distance);
         }
     }
 
@@ -104,6 +123,34 @@ class UserHelper
         } else {
             Session::put('latitude', $latitude);
         }
+    }
+
+    /**
+     * Getter for latitude.
+     * @return null
+     */
+    public function getLatitude()
+    {
+        if (Auth::check()) {
+            return Auth::user()->latitude;
+        } elseif (Session::has('latitude')) {
+            return Session::get('latitude');
+        }
+        return null;
+    }
+
+    /**
+     * Getter for longitude.
+     * @return null
+     */
+    public function getLongitude()
+    {
+        if (Auth::check()) {
+            return Auth::user()->longitude;
+        } elseif (Session::has('longitude')) {
+            return Session::get('longitude');
+        }
+        return null;
     }
 
     /**
