@@ -2,13 +2,13 @@
 
 namespace App;
 
-use Eloquent;
 use DateTime;
 use DateTimeZone;
 use DateInterval;
+use Illuminate\Database\Eloquent\Model;
 use Webpatser\Uuid\Uuid;
 
-class ReviewComment extends Eloquent
+class ReviewComment extends Model
 {
     protected $fillable = [
         'content', 'answered_by_user_id', 'question_category_id', 'location_id'
@@ -18,6 +18,11 @@ class ReviewComment extends Eloquent
     public function __construct()
     {
         $this->attributes = array('id' => Uuid::generate(4)->string);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'answered_by_user_id');
     }
 
     public function getQuestionCategory()

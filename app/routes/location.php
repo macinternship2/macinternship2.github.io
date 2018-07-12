@@ -10,8 +10,6 @@ Route::get(
     'location-suggestions-for-name/{location_name}',
     'LocationManagementController@getLocationSuggestionsForLocationName'
 );
-Route::get('location-report/{location_id}', 'LocationReportController@show');
-Route::get('location-report/{location_id}/{rating_system}', 'LocationReportController@show');
 Route::get('location-comments/{location_id}', 'LocationReportController@showComments');
 Route::get('location-map/{location_id}', 'LocationReportController@showMap');
 Route::get('location-map/{location_id}/{rating_system}', 'LocationReportController@showMap');
@@ -20,4 +18,3 @@ Route::get(
     'location-comprehensive-ratings/{location_id}/{rating_system}',
     'LocationReportController@showComprehensiveRatings'
 );
-Route::get('location-reporting/{location_id}/{question_category_id}', 'LocationReportController@show2');

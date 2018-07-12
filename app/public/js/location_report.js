@@ -1,8 +1,8 @@
 /*
-location_report.js is used in the report on a single location, 
-pages/location_report/collapsed.blade.php.
+location_report.js is used in the report on a single location.
 */
 function initMap() {
+	var locationPoint = {lat: lat, lng: lng};
 	var map = new google.maps.Map(document.getElementById('map'), {
 	  zoom: 15,
 	  center: locationPoint,
@@ -74,7 +74,7 @@ function updateHeightOfMap() {
 	  $map.css('height', 'calc(100vh - ' + extra_height + 'px)');
   }
   else {
-	  $map.css('height', '');
+	  $map.css('height', '100%');
   }
 }
 

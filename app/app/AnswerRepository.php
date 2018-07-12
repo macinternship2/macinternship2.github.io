@@ -21,68 +21,6 @@ class AnswerRepository
         $this->question_category_id = $question_category_id;
     }
 
-    public static function getRatingForLocation($location, $question_ids)
-    {
-        $num_questions = count($question_ids);
-        $ratings = $location->ratings_cache;
-        if (!$ratings) {
-            // Refresh the cache.
-            $location->getAccessibilityRating('universal');
-        }
-        if ($location->universal_rating === 0 || empty($question_ids)) {
-            // If the universal rating is 0,
-            // the result must be 0 no matter what question ids were specified.
-            // Skip the other work for sake of efficiency.
-            return $location->universal_rating;
-        }
-        $ratings = $location->ratings_cache;
-        $totalRating = 0;
-        foreach ($question_ids as $question_id) {
-            $question_key = '' . $question_id;
-            $rating = 0;
-            if (isset($ratings[$question_key])) {
-                $rating = $ratings[$question_key];
-            }
-            $totalRating += $rating;
-        }
-        return $totalRating / $num_questions;
-    }
-
-    public static function updateRatings(array $locations, $ratingSystem)
-    {
-        if ($ratingSystem === 'personal') {
-            $question_ids = BaseUser::getPersonalQuestions();
-            $num_questions = count($question_ids);
-            if (count($question_ids) > 0) {
-                foreach ($locations as $location) {
-                    $ratings = $location->ratings_cache;
-                    if (!$ratings) {
-                        // Refresh the cache.
-                        $location->getAccessibilityRating('universal');
-                    }
-                    $ratings = $location->ratings_cache;
-                    $totalRating = 0;
-                    foreach ($question_ids as $question_id) {
-                        $rating = 0;
-                        $question_id_key = '' . $question_id;
-                        if (isset($ratings[$question_id_key])) {
-                            $rating = $ratings[$question_id_key];
-                        }
-                        $totalRating += $rating;
-                    }
-                    $location->rating = $totalRating / $num_questions;
-                }
-            } else {
-                $ratingSystem = 'universal';
-            }
-        }
-        if ($ratingSystem === 'universal') {
-            foreach ($locations as $location) {
-                $location->rating = $location->getAccessibilityRating('universal');
-            }
-        }
-    }
-
     private static function getAnswersForLocation(string $location_id)
     {
         if (!Session::has('answers_'.$location_id)) {
@@ -260,40 +198,5 @@ class AnswerRepository
             DB::table('user_location')->where('location_id', '=', $location_id)->delete();
         }
         AnswerRepository::destroyUncommittedChanges();
-    }
-    
-    public static function updateRatingsCache($location_id, $questions)
-    {
-        foreach ($questions as $question) {
-            $question->getAccessibilityRating($location_id, 'universal');
-        }
-    }
-
-    public static function clearUnratedLocations()
-    {
-        $location_ids = Location::select('id')->where('ratings_cache', '=', null)->get()->toArray();
-        $location_ids = array_map(function ($e) {
-            return $e['id'];
-        }, $location_ids);
-        $answered_locations = UserAnswer::select('location_id')->distinct()->get()->toArray();
-        $answered_locations = array_map(function ($e) {
-            return $e['location_id'];
-        }, $answered_locations);
-
-        $location_ids = array_diff($location_ids, $answered_locations);
-
-        if (count($location_ids) > 0) {
-            $question_ids = Question::select('id')->get()->toArray();
-            $rating_data = [];
-            foreach ($question_ids as $question_id) {
-                $rating_data[$question_id['id']] = 0;
-            }
-            $zero_rating_cache = json_encode($rating_data);
-            Location::whereIn('id', $location_ids)->update([
-                    'ratings_cache' => $zero_rating_cache,
-                    'universal_rating' => 0
-                ]);
-        }
-        return count($location_ids);
     }
 }

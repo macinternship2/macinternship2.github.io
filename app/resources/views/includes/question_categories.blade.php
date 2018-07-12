@@ -1,11 +1,6 @@
-			<div class="question-categories">
-				@foreach ( $question_categories as $category )
-					<a href="{{ $base_url }}{{ $location_id }}/{{ $category->id }}"
-					@if ( $category->id === $question_category->id )
-						class="selected"
-					@endif
-					>
-						{{ $category->name }}
-					</a>
-				@endforeach
-			</div>
+@foreach ( $categories as $itemCategory )
+	<a href="/location/report/{{$location->id}}/{{implode('-', explode(" ",strtolower($itemCategory->name)))}}"
+	   class="{{$category->name === $itemCategory->name ? 'selected' : ''}}">
+		{{$itemCategory->name}}
+	</a>
+@endforeach

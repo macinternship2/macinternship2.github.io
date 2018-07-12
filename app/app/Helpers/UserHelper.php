@@ -37,7 +37,7 @@ class UserHelper
     public function getSearchRadius($user)
     {
         $default_search_radius = 1;
-        if (is_null($user) || Session::has('search_radius_km')) {
+        if (is_null($user) && Session::has('search_radius_km')) {
             return Session::get('search_radius_km');
         }
         if (!is_null($user) && !is_null($user->search_radius_km)) {

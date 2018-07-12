@@ -32,7 +32,7 @@ class QuestionCategory extends Model
 
     public function questions()
     {
-        return $this->hasMany('App\Question');
+        return $this->hasMany(Question::class);
     }
 
     public function getSortedQuestions()

@@ -164,7 +164,7 @@ class Location extends Model
         $keys = $query->keys()->toArray();
         $averageGroups = [];
         foreach ($keys as $key) {
-            $averageGroups[$key] = $query->get($key)->avg('answer_value');
+            $averageGroups[$key] = round($query->get($key)->avg('answer_value'), 2);
         }
         return $averageGroups;
     }

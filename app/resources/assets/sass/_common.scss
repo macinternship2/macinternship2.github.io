@@ -1,0 +1,16 @@
+.btn-ac {
+  background-color: rgba(21, 49, 87, 0.5);
+  color: white;
+
+  &:hover {
+    color: white !important;
+  }
+}
+.btn-ac-selected {
+  background-color: rgba(21, 49, 87, 0.95);
+  color: white;
+
+  &:hover {
+    color: white !important;
+  }
+}

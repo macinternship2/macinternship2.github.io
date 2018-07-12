@@ -64,7 +64,6 @@ function initMap()
 	});
 	google.maps.event.addListener(map, 'mousedown', function(event) {
 		locationInfo(map, event.latLng);
-		blinkMap($('#map')[0])
   	});
 	conditionalProcessAddress();
 	$('#address').bind('keyup change', delayedProcessAddress);
@@ -231,7 +230,3 @@ function bindCategoryLinksToKeywordInput()
 $(document).ready(bindCategoryLinksToKeywordInput);
 
 
-function blinkMap(map1)
-{
-	$(map1).fadeOut(200, function(){ $(map1).fadeIn(200); });
-}

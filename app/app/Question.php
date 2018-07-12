@@ -12,8 +12,30 @@ class Question extends Model
         'question_html',
     ];
 
+    protected $appends = [
+        'ratings',
+        'no_of_ratings'
+    ];
+
     public $timestamps = false;
     protected $table = 'question';
+
+    public function getRatingsAttribute()
+    {
+        return UserAnswer::query()->where('question_id', $this->id)
+            ->select([
+                DB::raw('CASE
+                WHEN answer_value = 1 THEN 100
+                WHEN answer_value = 2 THEN 0
+                WHEN answer_value = 3 THEN 0
+                END AS answer_value')
+            ])->get()->avg('answer_value');
+    }
+
+    public function getNoOfRatingsAttribute()
+    {
+        return UserAnswer::query()->where('question_id', $this->id)->groupBy('answered_by_user_id')->count();
+    }
     
     private static function setQuestionRatingInCache(int $question_id, $location, $new_value)
     {

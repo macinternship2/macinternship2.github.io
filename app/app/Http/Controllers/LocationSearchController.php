@@ -151,7 +151,6 @@ class LocationSearchController extends Controller
         $distance = floatval($request->get('distance'));
         $userHelper = UserHelper::build();
         $userHelper->setSearchRadius($distance);
-
         return redirect(url()->previous());
     }
 }

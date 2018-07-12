@@ -2,10 +2,10 @@
 
 namespace App;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 use Webpatser\Uuid\Uuid;
 
-class UserAnswer extends Eloquent
+class UserAnswer extends Model
 {
     protected $fillable = [
         'answered_by_user_id', 'question_id', 'location_id', 'answer_value',
@@ -16,6 +16,16 @@ class UserAnswer extends Eloquent
     
     public function __construct()
     {
-        $this->attributes = array('id' => Uuid::generate(4)->string);
+        parent::__construct();
+        $this->attributes['id'] = Uuid::generate(4)->string;
+    }
+
+    public function scopeGroupBySubmittedTime($query, $locationId, $userId)
+    {
+        $query->whereNull('deleted_at')->get();
+        return $query->where('answered_by_user_id', $userId)
+            ->where('location_id', $locationId)
+            ->orderBy('when_submitted')
+            ->groupBy('when_submitted');
     }
 }

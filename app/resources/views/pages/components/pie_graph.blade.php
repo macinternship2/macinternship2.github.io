@@ -1,4 +1,4 @@
-<div class="pie-graph{{ isset($size) && $size === 'big' ? ' big' : '' }}"
-	data-component='"percent": {{ $percent }}{{ isset($size) && $size === "big" ? ', "size": "big"' : '' }}'>
+<div style="margin-top: 50%" class="pie-graph"
+	 data-component='"percent": "{{$percentage}}"'>
 	<canvas></canvas>
 </div>

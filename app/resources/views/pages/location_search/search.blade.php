@@ -70,7 +70,9 @@
                         <tbody>
                             @foreach($locations as $location)
                                 <tr>
-                                    <td style="width: 30%" class="text-left">{{$location['name']}}</td>
+                                    <td style="width: 30%" class="text-left">
+                                        <a href="/location/report/{{$location['id']}}">{{$location['name']}}</a>
+                                    </td>
                                     <td style="width: 20%" class="text-center">{{Auth::check() ?
                                       $location['overall_personal_ratings']."%" :
                                       $location['overall_universal_ratings']."%"}}

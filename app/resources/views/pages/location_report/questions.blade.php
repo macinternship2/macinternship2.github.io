@@ -1,7 +1,7 @@
-<h2>{{ $question_category->name }}</h2>
+<h2 style="margin-left: 20px">{{ $question_category->name }}</h2>
 
 <div>
-	<div class="questions">
+	<div class="questions" style="margin-top: 20px">
 		@foreach ( $question_category->questions()->get() as $question )
 			<div>
 				<div class="question-html">
@@ -16,29 +16,33 @@
 				</div>
 				<div class="stats">
 					<div class="percentage">
-					{!! round($question->getAccessibilityRating($location_id, 'universal')) !!}%
+						@if (is_null($question->ratings))
+							No ratings
+						@else
+							{{ $question->ratings }}%
+						@endif
 					</div>
 					<div class="user-count">
-					{!! $user_counts[''.$question->id] !!} rating(s)
+						<p>{{ $question->no_of_ratings }} rating(s)</p>
 					</div>
 				</div>
 			</div>
 		@endforeach
 	</div>
-	<div class="comments">
+	<div class="comments" style="margin-top: 20px">
 		<h2>Comments</h2>
 		@if ( count($comments) === 0 )
 			<p>There are no comments for this category.</p>
 		@else
 			@foreach ( $comments as $comment )
-				<div class="comment">
+				<div class="comment" style="margin-top: 20px">
 					<div class="comment-header">
-						{{ $comment->getAnsweredByUser()->first_name }}
-						{{ $comment->getAnsweredByUser()->last_name }}
+						{{ $comment->user->first_name }}
+						{{ $comment->user->last_name }}
 						said,
-						
+
 						<span class="pull-right">
-						{{ $comment->getWhenSubmitted() }}
+						{{ \Carbon\Carbon::parse($comment->when_submitted)->toDayDateTimeString() }}
 						</span>
 					</div>
 					<div class="comment-content">
