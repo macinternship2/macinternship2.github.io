@@ -86,6 +86,14 @@ This is where to put SCSS for the location report that shows a map.
 					white-space: nowrap;
 					max-width: 100%;
 				}
+
+				em {
+					margin-right: 5px;
+				}
+
+				p {
+					margin-bottom: 0px;
+				}
 			}
 
 			&.location-tags {
