@@ -23,7 +23,7 @@
 	<div class="basic-info">
 		<div class="addresses">
 		<p><em class="fa fa-map-marker"></em>{{ $location->address }}</p>
-		<p><em class="fa fa-phone"></em>{{ $location->phone_number }}</p>
+		@if(!is_null($location->phone_number))<p><em class="fa fa-phone"></em>{{ $location->phone_number }}</p>
 		<a href="{{ $location->getExternalWebURL() }}">{{ $location->getExternalWebURL() }}</a>
 		</div>
 		<div class="location-tags text-right">
