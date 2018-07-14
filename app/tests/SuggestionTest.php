@@ -21,7 +21,8 @@ class SuggestionTest extends TestCase
         ];
         $response = $this->post('/add-suggestion', $data);
         $redirectUrl = $this->response->headers->get('Location');
-        $response->assertResponseStatus(302);
+        // $response->assertResponseStatus(302);
+        $this->assertEquals(302, $response->getStatusCode());
         $this->assertTrue(strpos($redirectUrl, 'location-report/00000000-0000-0000-0000-000000009146') !== false);
     }
 
@@ -40,9 +41,9 @@ class SuggestionTest extends TestCase
             'url' => 'testurl'
         ];
         $response = $this->post('/add-suggestion', $data);
-        $this->assertResponseStatus(302);
+        // $this->assertResponseStatus(302);
+        $this->assertEquals(302, $response->getStatusCode());
         $redirectUrl = $this->response->headers->get('Location');
-        $response->assertResponseStatus(302);
         $this->assertTrue(strpos($redirectUrl, 'signin') !== false);
     }
 }
