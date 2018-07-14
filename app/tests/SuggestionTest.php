@@ -11,19 +11,59 @@ class SuggestionTest extends TestCase
         $this->flushSession();
         $data = ['email' => 'josh.greig2@gmail.com', 'password' => 'password'];
         $response = $this->post('/signin', $data);
-        $response->assertResponseStatus(302);
+        $this->assertEquals(302, $response->getStatusCode());
         $data = [
             'location-id' => '00000000-0000-0000-0000-000000009146',
             'location-name' => 'testname',
-            'phone-number' => 'testphone',
+            'phone-number' => '226-961-3209',
             'address'=> 'testaddress',
-            'url' => 'testurl'
+            'url' => 'http://www.google.com'
         ];
-        $response = $this->post('/add-suggestion', $data);
-        $redirectUrl = $this->response->headers->get('Location');
-        // $response->assertResponseStatus(302);
+        $response = $this->post('/api/add-suggestion', $data);
+        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertJson([
+            'success' => 2,
+        ]);
+    }
+
+    public function testAddSuggestionWithEmptyUrl()
+    {
+        $this->flushSession();
+        $data = ['email' => 'josh.greig2@gmail.com', 'password' => 'password'];
+        $response = $this->post('/signin', $data);
         $this->assertEquals(302, $response->getStatusCode());
-        $this->assertTrue(strpos($redirectUrl, 'location-report/00000000-0000-0000-0000-000000009146') !== false);
+        $data = [
+            'location-id' => '00000000-0000-0000-0000-000000009146',
+            'location-name' => 'testname',
+            'phone-number' => '226-961-3209',
+            'address'=> 'testaddress',
+            'url' => ''
+        ];
+        $response = $this->post('/api/add-suggestion', $data);
+        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertJson([
+            'success' => 2,
+        ]);
+    }
+
+    public function testAddSuggestionWithInvalidParameters()
+    {
+        $this->flushSession();
+        $data = ['email' => 'josh.greig2@gmail.com', 'password' => 'password'];
+        $response = $this->post('/signin', $data);
+        $this->assertEquals(302, $response->getStatusCode());
+        $data = [
+            'location-id' => '00000000-0000-0000-0000-000000009146',
+            'location-name' => 'testname',
+            'phone-number' => '123-456-4',
+            'address'=> 'test',
+            'url' => 'abc@gmail.com'
+        ];
+        $response = $this->post('/api/add-suggestion', $data);
+        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertJson([
+            'success' => 1,
+        ]);
     }
 
     /**
@@ -38,12 +78,12 @@ class SuggestionTest extends TestCase
             'location-name' => 'testname',
             'phone-number' => 'testphone',
             'address'=> 'testaddress',
-            'url' => 'testurl'
+            'url' => 'www.testurlurl.com'
         ];
-        $response = $this->post('/add-suggestion', $data);
-        // $this->assertResponseStatus(302);
-        $this->assertEquals(302, $response->getStatusCode());
-        $redirectUrl = $this->response->headers->get('Location');
-        $this->assertTrue(strpos($redirectUrl, 'signin') !== false);
+        $response = $this->post('/api/add-suggestion', $data);
+        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertJson([
+            'success' => 0,
+        ]);
     }
 }
