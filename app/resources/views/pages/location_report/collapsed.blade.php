@@ -7,14 +7,6 @@
 	<script src="/js/location_report.js"></script>
 	<script language="JavaScript" src="/js/pie_graph.js"></script>
 	<script src="/js/bootstrap.js"></script>
-	<style>
-		.fade{
-			opacity:1;
-		}
-		.modal-dialog{
-			top:100px;
-		}
-	</style>
 @stop
 @section('footer-content')
 	@if (!$turn_off_maps)
@@ -36,10 +28,12 @@
 		</div>
 		<div class="location-tags text-right">
 			<div class="location-tags">
-			<a class="location-tag" title="Update Information" href="#" data-toggle="modal" data-target="#suggestionModal">
-				<span class="name">Update Information</span>
-				<span class="icon fa fa-bug"></span>
-			</a>
+			@if ($base_user->isSignedIn())
+				<a class="location-tag" title="Update Information" href="#" data-toggle="modal" data-target="#suggestionModal">
+					<span class="name">Update Information</span>
+					<span class="icon fa fa-bug"></span>
+				</a>
+			@endif
 			@foreach ( $location->tags()->orderBy('name')->get() as $location_tag )
 				<a class="location-tag" title="{{ $location_tag->name }}" href="/location-search?location_tag_id={{ $location_tag->id }}">
 					<span class="name">{{ $location_tag->name }}</span>
@@ -123,7 +117,7 @@
 		</div>
 		<div id="map">
 		</div>
-		<div class="modal fade" id="suggestionModal" tabindex="-1" role="dialog" 
+		<div class="modal" id="suggestionModal" tabindex="-1" role="dialog" 
 			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -136,10 +130,9 @@
 					</h4>
 					</div>
 					<div class="modal-body">
-						<form class="form" id="suggestionForm" method="POST" action="/add-suggestion">
+						<form class="form" id="suggestionForm">
 							{!! csrf_field() !!}
-							@include('pages.validation_messages', array('errors'=>$errors))	
-							<input type="hidden" name="location-id" value="{{ $location->id }}" readonly="readonly">	
+							<input type="hidden" name="location-id" id="location-id" value="{{ $location->id }}" readonly="readonly">	
 							<div class="input-group">
 								<label for="location-name">Location name:</label>
 								<input type="text" class="form-control"  name="location-name" id="location-name" value="{{ $location->name }}" required>
