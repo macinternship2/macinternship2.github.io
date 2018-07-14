@@ -85,6 +85,11 @@ class User extends Authenticatable
 
     public function reviews()
     {
-        return $this->hasMany(UserAnswer::class,'answered_by_user_id');
+        return $this->hasMany(UserAnswer::class, 'answered_by_user_id');
+    }
+
+    public function locations()
+    {
+        return $this->hasMany(Location::class, 'creator_user_id');
     }
 }

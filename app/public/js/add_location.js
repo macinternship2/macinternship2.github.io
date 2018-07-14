@@ -114,7 +114,7 @@ function updateNearbyLocationMarkers() {
 }
 
 function addLocationsNear(longitude, latitude) {
-	var url = '/get-nearby-locations/' + longitude + '/' + latitude;
+	var url = '/location/management/nearby/' + longitude + '/' + latitude;
 	$.ajax({
 		'method': 'GET',
 		'url': url,
@@ -163,7 +163,7 @@ function getName() {
 function processName(new_name) {
 	// Avoid route match problems from having slashes in the name.
 	new_name = new_name.replace(/[\/\\]/g, ' ');
-	var api_route = '/location-suggestions-for-name/';
+	var api_route = '/location/management/suggestions/';
 	$.ajax({
 		'method': 'GET',
 		'url': api_route + new_name,

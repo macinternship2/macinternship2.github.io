@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
-class DataSource extends Eloquent
+class DataSource extends Model
 {
     protected $fillable = [
         'name', 'description',
@@ -18,6 +18,6 @@ class DataSource extends Eloquent
      */
     public function locations()
     {
-        return $this->belongsToMany('App\Location');
+        return $this->hasMany(Location::class, 'data_source_id');
     }
 }

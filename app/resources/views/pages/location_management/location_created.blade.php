@@ -9,10 +9,10 @@
 		<nav>
 			<ul>
 				<li>
-					<a href="/location-rating/{{ $location->id }}">Rate the new location</a>
+					<a href="/location/rating/{{ $location->id }}">Rate the new location</a>
 				</li>
 				<li>
-					<a href="/add-location">Add Another Location</a>
+					<a href="/location/management">Add Another Location</a>
 				</li>
 			</ul>
 		</nav>

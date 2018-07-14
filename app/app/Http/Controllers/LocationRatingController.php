@@ -153,7 +153,7 @@ class LocationRatingController extends Controller
         Session::forget('answers_'.$locationId);
         Session::forget('comments_'.$locationId);
 
-        return redirect('/location/reviewed');
+        return redirect('/location/rating/reviews');
     }
 
     /**

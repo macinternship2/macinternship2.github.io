@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
-class LocationGroup extends Eloquent
+class LocationGroup extends Model
 {
     protected $fillable = [
         'name',

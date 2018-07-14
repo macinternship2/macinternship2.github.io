@@ -1,13 +1,8 @@
 @extends('layouts.default')
 @section('head-content')
 	<script src="/css/jquery/external/jquery/jquery.js"></script>
-	<script>
-		var nearby_locations = {!! $locations !!};
-	</script>
-	<script type="text/javascript" language="JavaScript" src="/js/utils.js">
-	</script>
-	<script src="/js/add_location.js">
-	</script>
+	<script type="text/javascript" language="JavaScript" src="/js/utils.js"></script>
+	<script src="/js/add_location.js"></script>
 @stop
 @section('footer-content')
 	@if ( !$turn_off_maps )
@@ -20,7 +15,7 @@
 <div class="add-location @if ( !$errors->isEmpty() ) with-errors @endif">
 	<h1>Add New Location</h1>
 	@include('pages.validation_messages', array('errors'=>$errors, 'show_only_first' => true))
-	<form method="post" action="/add-location">
+	<form method="post" action="/location/management">
 		{!! csrf_field() !!}
 		<input type="hidden" id="latitude" name="latitude" value="{{ $location->latitude }}">
 		<input type="hidden" id="longitude" name="longitude" value="{{ $location->longitude }}">
@@ -58,6 +53,5 @@
 			</div>
 		</div>
 	</form>
-	
 </div>
 @stop

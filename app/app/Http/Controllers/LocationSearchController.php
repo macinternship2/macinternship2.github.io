@@ -74,7 +74,8 @@ class LocationSearchController extends Controller
             $locationsQuery->where('latitude', '<=', $range['maxLat'])
                 ->where('latitude', '>=', $range['minLat'])
                 ->where('longitude', '>=', $range['minLng'])
-                ->where('longitude', '<=', $range['maxLng']);
+                ->where('longitude', '<=', $range['maxLng'])
+                ->take(50);
         }
 
         if ($request->has('keywords')) {

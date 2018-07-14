@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Location;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -129,11 +130,15 @@ class LocationHelper
     /**
      * Filters the far locations.
      * @param $locations
+     * @param null $searchRadius
      * @return array
      */
-    public function filterFarLocations($locations)
+    public function filterFarLocations($locations, $searchRadius = null)
     {
-        $searchRadius = UserHelper::build()->getSearchRadius(Auth::user());
+        if (!$searchRadius) {
+            $searchRadius = UserHelper::build()->getSearchRadius(Auth::user());
+        }
+
         $filteredLocations= [];
         foreach ($locations as $location) {
             if ($location['distance'] <= $searchRadius) {
@@ -141,5 +146,23 @@ class LocationHelper
             }
         }
         return $filteredLocations;
+    }
+
+    /**
+     * Returns nearby locations.
+     * @param $latitude
+     * @param $longitude
+     * @param $maxRadius
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function findLocationsWithinRadius($latitude, $longitude, $maxRadius)
+    {
+        $range = $this->calculateLatLngRange($latitude, $longitude, $maxRadius);
+        $locationQuery = Location::query()
+              ->where('latitude', '<=', $range['maxLat'])
+              ->where('latitude', '>=', $range['minLat'])
+              ->where('longitude', '>=', $range['minLng'])
+              ->where('longitude', '<=', $range['maxLng']);
+        return $locationQuery->get();
     }
 }
