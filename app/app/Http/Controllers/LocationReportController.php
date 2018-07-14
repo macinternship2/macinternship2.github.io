@@ -4,9 +4,15 @@ use App\Location;
 use App\QuestionCategory;
 use App\BaseUser;
 use App\ReviewComment;
+use App\Suggestion;
 use DB;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use DateTime;
+use DateTimeZone;
 
 class LocationReportController extends Controller
 {
@@ -159,5 +165,57 @@ class LocationReportController extends Controller
         ];
         
         return view('pages.location_report.comments', $view_data);
+    }
+
+    public function addSuggestion(Request $request)
+    {
+        // user needs to sign in before sending suggestions
+        if (!BaseUser::isSignedIn()) {
+            return redirect()->intended('signin');
+        }
+        $user = BaseUser::getDbUser();
+        // validate data from front end
+        $validation_rules = array(
+            'location-id'           => 'required',
+            'location-name'         => 'required',
+            'phone-number'          => '',
+            'url'                   => '',
+            'address'               => 'required'
+
+        );
+        $validator = Validator::make(Input::all(), $validation_rules);
+        if ($validator->fails()) {
+            if ($request->get('location-id') != null) {
+                return Redirect::to('location-report/'.$request->get('location-id'));
+            } else {
+                //if the field has been modified and the 'location-id' is missing
+                return Redirect::to('/');
+            }
+        }
+
+        //Fetch the message
+        $location_id = $request->get('location-id');
+        $location_name = $request->get('location-name');
+        $phone_number = $request->get('phone-number');
+        $url = $request->get('url');
+        $address = $request->get('address');
+
+        $location = Location::where('id', '=', $location_id)->first();
+
+        if (!$location) {
+            return Redirect::to('/');
+        }
+        //Add a new record in the database
+        $suggestion = new Suggestion;
+        $suggestion->location_id = $request->input('location-id');
+        $suggestion->location_name = $request->input('location-name');
+        $suggestion->location_phone_number = $request->input('phone-number');
+        $suggestion->location_address = $request->input('address');
+        $suggestion->location_external_web_url = $request->input('url');
+        $suggestion->user_id = $user->id;
+        $suggestion->when_generated = new DateTime('now', new DateTimeZone('UTC'));
+        $suggestion->save();
+
+        return Redirect::to('location-report/'.$request->get('location-id'));
     }
 }

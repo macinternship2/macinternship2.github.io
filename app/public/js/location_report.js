@@ -104,3 +104,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	setupToggleRatingsPopup();
 });
 
+function checkForm(){
+	if($('#location-name').val().trim() != '' && $('#address').val().trim() != ''){
+		document.getElementById('suggestionForm').submit();
+	} else {
+		alert("location-name and location-address cannot be empty");
+	}
+}
+

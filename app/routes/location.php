@@ -23,3 +23,4 @@ Route::get(
 );
 Route::get('location-reporting/{location_id}/{question_category_id}', 'LocationReportController@show2');
 Route::post('api/set-search-radius', 'LocationSearchController@setSearchRadius');
+Route::post('add-suggestion', 'LocationReportController@addSuggestion');

@@ -136,22 +136,25 @@
 					</h4>
 					</div>
 					<div class="modal-body">
-						<form class="form" method="POST">
+						<form class="form" id="suggestionForm" method="POST" action="/add-suggestion">
+							{!! csrf_field() !!}
+							@include('pages.validation_messages', array('errors'=>$errors))	
+							<input type="hidden" name="location-id" value="{{ $location->id }}" readonly="readonly">	
 							<div class="input-group">
 								<label for="location-name">Location name:</label>
-								<input type="text" class="form-control"  name="location-name" id="location-name" value="{{ $location->name }}">
+								<input type="text" class="form-control"  name="location-name" id="location-name" value="{{ $location->name }}" required>
 							</div>
 							<div class="input-group">
 								<label for="phone-number">Phone number:</label>
 								<input type="text" class="form-control" name="phone-number" id="phone-number" value="{{ $location->phone_number }}">
 							</div>
-							<div class="input-group">
+							<div class="input-group" style="width:100%">
 								<label for="address">Address:</label>
-								<input type="text" class="form-control" name="address" id="address" value="{{ $location->address }}">
+								<input type="text" class="form-control" name="address" id="address" value="{{ $location->address }}" required>
 							</div>
-							<div class="input-group">
-								<label for="website">External website:</label>
-								<input type="text" class="form-control" name="website" id="website" value="{{ $location->external_web_url }}">
+							<div class="input-group"  style="width:100%">
+								<label for="url">External website:</label>
+								<input type="text" class="form-control" name="url" id="url" value="{{ $location->external_web_url }}">
 							</div>
 						</form>
 					</div>
@@ -159,7 +162,7 @@
 					<button type="button" class="btn btn-default" 
 						data-dismiss="modal">Close
 					</button>
-					<button type="button" class="btn btn-primary" id='modifyParentConfirm' data-dismiss="modal">
+					<button type="button" class="btn btn-primary" onclick="checkForm()" data-dismiss="modal">
 						Confirm
 					</button>
 					</div>
