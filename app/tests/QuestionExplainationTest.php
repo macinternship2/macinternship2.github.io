@@ -4,7 +4,9 @@ class QuestionExplainationTest extends TestCase
 {
     public function testGet()
     {
-        $content = $this->get('/api/question-explanation/1')->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/api/question-explanation/1');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $value = json_decode($content);
         $this->assertInternalType('object', $value);
         $this->assertInternalType('string', $value->html);

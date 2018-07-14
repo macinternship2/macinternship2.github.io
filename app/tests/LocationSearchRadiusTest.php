@@ -5,15 +5,17 @@ class LocationSearchRadiusTest extends TestCase
     public static function useDistance($testCase, $testDistance)
     {
         $data = ['distance' => $testDistance];
-        $response_content = $testCase->post('/api/set-search-radius', $data)
-            ->seeStatusCode(200)->response->getContent();
+        $response = $testCase->post('/api/set-search-radius', $data);
+        $testCase->assertEquals(200, $response->getStatusCode());
+        $response_content = $response->getContent();
         $response_data = json_decode($response_content);
         $testCase->assertTrue(is_object($response_data));
         $testCase->assertTrue(isset($response_data->message));
 
         // Check that the radius was set.
-        $search_content = $testCase->get('/location-search?location_tag_id=1')
-            ->seeStatusCode(200)->response->getContent();
+        $response = $testCase->get('/location-search?location_tag_id=1');
+        $testCase->assertEquals(200, $response->getStatusCode());
+        $search_content = $response->getContent();
         $pos = strpos($search_content, 'placeholder="distance" value="'.$testDistance.'"');
         $testCase->assertTrue($pos !== false);
     }
@@ -30,14 +32,17 @@ class LocationSearchRadiusTest extends TestCase
 
         // Invalid due to not specifying a distance.
         $data = [];
-        $this->post('/api/set-search-radius', $data)->seeStatusCode(422);
+        $response = $this->post('/api/set-search-radius', $data);
+        $this->assertEquals(422, $response->getStatusCode());
 
         // Invalid due to being negative.
         $data = ['distance' => -1];
-        $this->post('/api/set-search-radius', $data)->seeStatusCode(422);
+        $response = $this->post('/api/set-search-radius', $data);
+        $this->assertEquals(422, $response->getStatusCode());
 
         // Invalid distance due to being an invalid number.
         $data = ['distance' => 'bobby'];
-        $this->post('/api/set-search-radius', $data)->seeStatusCode(422);
+        $response = $this->post('/api/set-search-radius', $data);
+        $this->assertEquals(422, $response->getStatusCode());
     }
 }

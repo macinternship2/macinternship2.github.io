@@ -24,6 +24,8 @@
 				<div class="col-xs-12">
 					<input type="submit" class="clean" value="Send Message">
 				</div>
+				<div class="col-xs-12">
+					<a href="https://www.surveymonkey.com/r/2SZ98H7">Please answer a survey. Thank You!</a>
 			</div>
 		</form>
 	</div>

@@ -5,8 +5,8 @@
     "license": "MIT",
     "type": "project",
     "require": {
-       "php": ">=7.0",
-       "laravel/framework": "5.3.*",
+       "php": ">=7.1",
+       "laravel/framework": "5.4.*",
        "laravelcollective/html": "5.*",
        "hybridauth/hybridauth": "2.10.0",
        "anhskohbo/no-captcha": "^2.2",
@@ -16,7 +16,7 @@
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.0",
+        "phpunit/phpunit": "~7.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
         "squizlabs/php_codesniffer": "*"

@@ -4,7 +4,9 @@ class PrivacyPolicyTest extends TestCase
 {
     public function testGet()
     {
-        $content = $this->get('/privacy-policy')->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/privacy-policy');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $this->assertTrue(strpos($content, 'Privacy Policy') !== false);
     }
 }

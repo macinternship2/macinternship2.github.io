@@ -4,7 +4,9 @@ class RegionsTest extends TestCase
 {
     public function testGet()
     {
-        $content = $this->get('/api/regions')->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/api/regions');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $value = json_decode($content);
         $this->assertInternalType('array', $value);
         foreach ($value as $region) {

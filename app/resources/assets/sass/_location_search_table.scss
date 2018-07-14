@@ -120,6 +120,12 @@
 			.hide-for-small-viewports {
 				display: none;
 			}
+			.no-locations-found{
+				text-align: center;
+				h3{
+					font-size: 3.8vw;
+				}
+			}
 		}
 	}
 }

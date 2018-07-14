@@ -31,7 +31,6 @@ class HomeController extends Controller
         return view('pages.home', [
             'keywords' => $keywords,
             'location_tags' => LocationTag::orderBy('name')->get(),
-            'is_authenticated' => BaseUser::isSignedIn(),
             'address_default' => BaseUser::getDefaultAddress(),
             'address_value' => $address_value,
             'default_location' => BaseUser::getDefaultLocation(),

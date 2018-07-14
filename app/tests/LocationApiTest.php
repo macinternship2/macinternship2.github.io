@@ -10,7 +10,9 @@ class LocationApiTest extends TestCase
      */
     public function testGet()
     {
-        $locations_content = $this->get('/api/locations')->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/api/locations');
+        $this->assertEquals(200, $response->getStatusCode());
+        $locations_content = $response->getContent();
         $locations_data = json_decode($locations_content);
         $this->assertTrue(is_array($locations_data));
         foreach ($locations_data as $location) {

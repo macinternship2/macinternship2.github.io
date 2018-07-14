@@ -4,7 +4,9 @@ class LocationRatingsCacheTest extends TestCase
 {
     private function processCache()
     {
-        $content = $this->post('/api/populate-ratings-cache')->seeStatusCode(200)->response->getContent();
+        $response = $this->post('/api/populate-ratings-cache');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $response_data = json_decode($content);
         return $response_data;
     }

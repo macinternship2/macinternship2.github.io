@@ -15,7 +15,17 @@
 			<button type="button" id="updateRadius" class="btn btn-primary">Update</button>
 	</div>
 	@if (count($locations) === 0)
-		No location found matching the specified keywords
+		<div class="no-locations-found">
+			<h3>No location found matching the specified keywords</h3>
+			@if ($base_user->isSignedIn())
+				<a class="btn btn-default" href="/add-location">Add New Location</a>
+			@else
+				<h4>Add a new location by</h4>
+				<a class="btn btn-default" href="/signin">Signing In</a>
+				<h4>or</h4>
+				<a class="btn btn-default" href="/signup">Signing Up</a>
+			@endif
+		</div>			
 	@else
 		<div class="row column-titles">
 			<div class="col-xs-6 name">

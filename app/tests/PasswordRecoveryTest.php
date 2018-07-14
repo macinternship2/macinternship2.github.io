@@ -4,7 +4,9 @@ class PasswordRecoveryTest extends TestCase
 {
     public function testGetForm()
     {
-        $content = $this->get('/password-recovery')->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/password-recovery');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $this->assertTrue(strpos($content, 'Password Recovery') !== false);
     }
 }

@@ -10,14 +10,16 @@ class SigninApiTest extends TestCase
     public function testPost()
     {
         $data = ['email' => 'test', 'password' => 'password'];
-        $this->post('/signin', $data)->seeStatusCode(302);
+        $response = $this->post('/signin', $data);
+        $this->assertEquals(302, $response->getStatusCode());
     }
 
     private function checkProfileAfterSignin()
     {
         // Test that we can access the profile.
-        $response = $this->get('/profile')->seeStatusCode(200);
-        $content = $response->response->getContent();
+        $response = $this->get('/profile');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $this->assertTrue(strpos($content, 'My Reviews') !== false);
         $this->assertTrue(strpos($content, 'Sign out') !== false);
     }
@@ -30,32 +32,42 @@ class SigninApiTest extends TestCase
 
     private function checkAddLocationFeature()
     {
-        $content = $this->get('/add-location')->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/add-location');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $this->assertTrue(strpos($content, 'Add New Location') !== false);
     }
 
     private function checkLocationsAddedByMe()
     {
-        $content = $this->get('/locations-added-by-me')->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/locations-added-by-me');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $this->assertTrue(strpos($content, 'Added Locations') !== false);
     }
 
     private function checkChangePasswordFeature()
     {
-        $content = $this->get('/change-password')->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/change-password');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $this->assertTrue(strpos($content, 'Change Password') !== false);
         $this->assertTrue(strpos($content, 'Update Password') !== false);
     }
 
     private function checkLocationGroups()
     {
-        $content = $this->get('/location-groups')->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/location-groups');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $this->assertTrue(strpos($content, 'Location Groups') !== false);
     }
 
     private function checkUserReport($userId)
     {
-        $content = $this->get('/user-report/' . $userId)->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/user-report/' . $userId);
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $this->assertTrue(strpos($content, 'Basic Information') !== false);
         $this->assertTrue(strpos($content, 'Ratings') !== false);
     }
@@ -75,7 +87,9 @@ class SigninApiTest extends TestCase
 
     private function checkUsers()
     {
-        $content = $this->get('/users')->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/users');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $this->assertTrue(strpos($content, 'Users') !== false);
         $this->assertTrue(strpos($content, 'Email') !== false);
         $this->assertTrue(strpos($content, 'total user(') !== false);
@@ -87,7 +101,9 @@ class SigninApiTest extends TestCase
 
     private function checkInternalDashboard()
     {
-        $content = $this->get('/dashboard')->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/dashboard');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $this->assertTrue(strpos($content, 'Internal Dashboard') !== false);
         $this->assertTrue(strpos($content, 'Location Categories') !== false);
 
@@ -114,15 +130,20 @@ class SigninApiTest extends TestCase
         }
         // merge with the overrides.
         $data = array_merge($data, $overrides);
-        $content = $this->post('/profile', $data)->seeStatusCode(200)->response->getContent();
+        $response = $this->post('/profile', $data);
+        $this->assertEquals(302, $response->getStatusCode());
+        $response = $this->get('/profile');
+        $content = $response->getContent();
         return $content;
     }
     
     private function isUsingScreenReader()
     {
-        return json_decode($this->get('/api/is-using-screen-reader')->seeStatusCode(200)->response->getContent());
+        $response = $this->get('/api/is-using-screen-reader');
+        $this->assertEquals(200, $response->getStatusCode());
+        return json_decode($response->getContent());
     }
-    
+
     private function checkScreenReader()
     {
         $content = $this->saveProfileInformation(['uses_screen_reader' => false]);
@@ -139,8 +160,8 @@ class SigninApiTest extends TestCase
         $this->flushSession();
         $data = ['email' => 'josh.greig2@gmail.com', 'password' => 'password'];
         $response = $this->post('/signin', $data);
-        $response->seeStatusCode(302);
-        $redirectUrl = $this->response->headers->get('Location');
+        $this->assertEquals(302, $response->getStatusCode());
+        $redirectUrl = $response->headers->get('Location');
         $this->assertTrue(strpos($redirectUrl, '/profile') !== false);
         $this->checkProfileAfterSignin();
         $this->checkLocationSearchRadius();
@@ -153,6 +174,7 @@ class SigninApiTest extends TestCase
 
     public function testSignout()
     {
-        $content = $this->get('/signout')->seeStatusCode(302);
+        $response = $this->get('/signout');
+        $this->assertEquals(302, $response->getStatusCode());
     }
 }

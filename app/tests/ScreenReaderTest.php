@@ -9,7 +9,9 @@ class ScreenReaderTest extends TestCase
      */
     public function testGet()
     {
-        $content = $this->get('/api/is-using-screen-reader')->seeStatusCode(200)->response->getContent();
+        $response = $this->get('/api/is-using-screen-reader');
+        $this->assertEquals(200, $response->getStatusCode());
+        $content = $response->getContent();
         $value = json_decode($content);
         $this->assertInternalType('bool', $value);
     }

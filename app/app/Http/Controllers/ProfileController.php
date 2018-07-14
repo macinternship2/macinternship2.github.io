@@ -140,7 +140,7 @@ class ProfileController extends \Illuminate\Routing\Controller
 
         $user->save();
 
-        return ProfileController::getProfileView();
+        return redirect()->intended('/');
     }
 
     /**
