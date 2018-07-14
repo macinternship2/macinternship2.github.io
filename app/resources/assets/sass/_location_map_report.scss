@@ -5,6 +5,14 @@ This is where to put SCSS for the location report that shows a map.
 @import "_placeholders.scss";
 @import "_mixins.scss";
 
+.modal-dialog{
+	top:100px;
+}
+
+.modal-backdrop.show {
+	opacity: 0.5;
+}
+
 .pie-graph {
 	display: inline-block;
 
