@@ -3,8 +3,6 @@
 namespace App;
 
 use Eloquent;
-use DB;
-use Webpatser\Uuid\Uuid;
 
 class Suggestion extends Eloquent
 {
