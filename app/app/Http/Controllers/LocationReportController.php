@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use DateTime;
 use DateTimeZone;
+use Response;
 
 class LocationReportController extends Controller
 {
@@ -171,26 +172,27 @@ class LocationReportController extends Controller
     {
         // user needs to sign in before sending suggestions
         if (!BaseUser::isSignedIn()) {
-            return redirect()->intended('signin');
+            return  Response::json([
+                'success' => 0,
+                'message' => "Not signed in."
+            ], 200);
         }
         $user = BaseUser::getDbUser();
         // validate data from front end
         $validation_rules = array(
             'location-id'           => 'required',
-            'location-name'         => 'required',
-            'phone-number'          => '',
-            'url'                   => '',
-            'address'               => 'required'
+            'location-name'         => 'between:2,255|required',
+            'phone-number'          => 'max:50',
+            'url'                   => 'max:255|url',
+            'address'               => 'max:255'
 
         );
         $validator = Validator::make(Input::all(), $validation_rules);
         if ($validator->fails()) {
-            if ($request->get('location-id') != null) {
-                return Redirect::to('location-report/'.$request->get('location-id'));
-            } else {
-                //if the field has been modified and the 'location-id' is missing
-                return Redirect::to('/');
-            }
+            return Response::json([
+                'success' => 1,
+                'message' => $validator->errors()
+            ], 200);
         }
 
         //Fetch the message
@@ -201,9 +203,18 @@ class LocationReportController extends Controller
         $address = $request->get('address');
 
         $location = Location::where('id', '=', $location_id)->first();
-
+        //Return to home page if the location-id doesn't exist in the database or the phone number is invalid
         if (!$location) {
-            return Redirect::to('/');
+            return Response::json([
+                'success' => 1,
+                'message' => "Location doesn't exist."
+            ], 200);
+        }
+        if ($phone_number !== '' && preg_match_all("/[0-9]/", $phone_number) < 9) {
+            return Response::json([
+                'success' => 1,
+                'message' => "Phone number is invalid."
+            ], 200);
         }
         //Add a new record in the database
         $suggestion = new Suggestion;
@@ -216,6 +227,8 @@ class LocationReportController extends Controller
         $suggestion->when_generated = new DateTime('now', new DateTimeZone('UTC'));
         $suggestion->save();
 
-        return Redirect::to('location-report/'.$request->get('location-id'));
+        return Response::json([
+            'success' => 2
+        ], 200);
     }
 }
