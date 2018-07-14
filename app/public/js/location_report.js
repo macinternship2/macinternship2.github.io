@@ -105,10 +105,44 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 function checkForm(){
-	if($('#location-name').val().trim() != '' && $('#address').val().trim() != ''){
-		document.getElementById('suggestionForm').submit();
+	var location_id = $("#location-id").val().trim();
+	var location_name = $("#location-name").val().trim();
+	var address = $("#address").val().trim();
+	var phonenumber = $("#phone-number").val().trim();
+	var url = $("#url").val().trim();
+	var token = $('[name="_token"]').val();
+	if(location_name != ''){
+		$.ajax({
+			'method': 'POST',
+			'data': {
+				'_token': token,
+				'location-id': $("#location-id").val().trim(),
+				'location-name': location_name,
+				'phone-number': phonenumber,
+				'address': address,
+				'url': url
+			},
+			'url': '/api/add-suggestion',
+			'success': function(r) {
+				if(r.success == 0){
+					location.href = '/signin';
+				} else if(r.success == 1){
+					var msg = '';
+					if(typeof(r.message) == 'object'){
+						for(key in r.message){
+							msg += r.message[key];
+							msg += '\n';
+						}
+					} else {
+						msg = r.message;
+					}
+					alert(msg);
+				} else 
+					alert("Suggestion has been created.");
+			}
+		});
 	} else {
-		alert("location-name and location-address cannot be empty");
+		alert("location-name cannot be empty");
 	}
 }
 
