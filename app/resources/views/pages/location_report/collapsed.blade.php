@@ -155,7 +155,7 @@
 					<button type="button" class="btn btn-default" 
 						data-dismiss="modal">Close
 					</button>
-					<button type="button" class="btn btn-primary" onclick="checkForm()" data-dismiss="modal">
+					<button type="button" class="btn btn-primary" id="suggestionFormConfirm" data-dismiss="modal">
 						Confirm
 					</button>
 					</div>
