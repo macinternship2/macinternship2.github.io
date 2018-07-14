@@ -42,7 +42,7 @@ class ProfileController extends Controller
             'countries' => $countries,
             'required_questions' => $required_questions,
             'profile_photo' => UserHelper::build()->getProfilePhoto($user),
-            'num_reviews' => count(AnswerRepository::getReviewedLocations()['location_ids']),
+            'num_reviews' => Auth::user()->reviews()->count(),
             'num_locations_added_by_me' => $num_locations_added_by_me,
             'is_internal_user' => $user->isInternal(),
             'enabled_country_ids' => $enabled_country_ids,

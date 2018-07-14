@@ -3,16 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
 
 class UserAnswer extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'answered_by_user_id', 'question_id', 'location_id', 'answer_value',
     ];
     public $timestamps = false;
     
     protected $table = 'user_answer';
+
+    protected $dates = ['deleted_at'];
     
     public function __construct()
     {
@@ -20,12 +25,8 @@ class UserAnswer extends Model
         $this->attributes['id'] = Uuid::generate(4)->string;
     }
 
-    public function scopeGroupBySubmittedTime($query, $locationId, $userId)
+    public function location()
     {
-        $query->whereNull('deleted_at')->get();
-        return $query->where('answered_by_user_id', $userId)
-            ->where('location_id', $locationId)
-            ->orderBy('when_submitted')
-            ->groupBy('when_submitted');
+        return $this->belongsTo(Location::class, 'location_id');
     }
 }

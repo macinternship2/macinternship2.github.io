@@ -17,6 +17,7 @@
                 <div style="margin-left: 22px">
                     <h2><b>{{$location->name}}</b></h2>
                     <h4>{{$location->address}}</h4>
+                    <h4>{{$location->phone_number}}</h4>
                     <h5>
                         <a href="{{$location->external_web_url}}">{{$location->external_web_url}}</a>
                     </h5>
@@ -36,9 +37,11 @@
                             <i class="fa fa-globe"></i> Universal
                         </button>
                     </a>
-                    <button class="btn btn-ac">
-                        <i class="fa fa-location-arrow"></i> Rate the location
-                    </button>
+                    <a href="/location/rating/{{$location->id}}">
+                        <button class="btn btn-ac">
+                            <i class="fa fa-location-arrow"></i> Rate the location
+                        </button>
+                    </a>
                     <div style="margin-top: 16px;margin-bottom: 10px">
                         @foreach($location->tags as $tag)
                             <a href="/location/search?location_tag_id={{$tag->id}}">
@@ -55,6 +58,7 @@
             <div class="col-xs-12 text-center">
                 <h3><b>{{$location->name}}</b></h3>
                 <h4>{{$location->address}}</h4>
+                <h4>{{$location->phone_number}}</h4>
                 <h4>
                     <a href="{{$location->external_web_url}}"><i class="fa fa-link"></i> Website</a>
                 </h4>
@@ -72,9 +76,11 @@
                         <i class="fa fa-globe"></i> Universal
                     </button>
                 </a>
-                <button class="btn btn-ac btn-xs">
-                    <i class="fa fa-location-arrow"></i> Rate the location
-                </button>
+                <a href="/location/rating/{{$location->id}}">
+                    <button class="btn btn-ac btn-xs">
+                        <i class="fa fa-location-arrow"></i> Rate the location
+                    </button>
+                </a>
                 <div style="margin-top: 16px;margin-bottom: 10px">
                     @foreach($location->tags as $tag)
                         <button class="btn btn-ac-selected">

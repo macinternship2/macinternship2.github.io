@@ -107,7 +107,8 @@ class LocationHelper
      * @param $location
      * @return int
      */
-    public function calculateLocationDistance($userLatitude, $userLongitude, $location) {
+    public function calculateLocationDistance($userLatitude, $userLongitude, $location)
+    {
 
         $userLatitude = deg2rad($userLatitude);
         $userLongitude = deg2rad($userLongitude);
@@ -130,7 +131,8 @@ class LocationHelper
      * @param $locations
      * @return array
      */
-    public function filterFarLocations($locations) {
+    public function filterFarLocations($locations)
+    {
         $searchRadius = UserHelper::build()->getSearchRadius(Auth::user());
         $filteredLocations= [];
         foreach ($locations as $location) {

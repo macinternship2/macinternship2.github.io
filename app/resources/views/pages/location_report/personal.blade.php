@@ -6,13 +6,17 @@
             <h4 class="text-muted">
                 This place is not rated yet. <br/> If you have visited this place then help others by rating this place
             </h4>
-            <button class="btn btn-default btn-lg" style="margin-top: 40px">
-                <i class="fa fa-check-square-o"></i> Be the first to rate this location
-            </button>
-            <p class="text-muted" style="margin-top: 24px">
-                For rating place you have to login.
-                If you are not then you can <a href="/signin">Sign in</a>  or <a href="/signup">Sign up</a>.
-            </p>
+            <a href="/location/rating/{{$location->id}}">
+                <button class="btn btn-default btn-lg" style="margin-top: 40px">
+                    <i class="fa fa-check-square-o"></i> Be the first to rate this location
+                </button>
+            </a>
+            @if(!Auth::check())
+                <p class="text-muted" style="margin-top: 24px">
+                    For rating place you have to login.
+                    If you are not then you can <a href="/signin">Sign in</a>  or <a href="/signup">Sign up</a>.
+                </p>
+            @endif
         </div>
     @endif
     @if($location['overall_personal_ratings'] > 0)
@@ -69,9 +73,11 @@
             <div class="row" style="margin-top: 40px">
                 <div class="col-md-12 text-center">
                     <p>If you have visited {{$location->name}} then you can rate this location by clicking "Rate this location".</p>
-                    <button class="btn btn-default btn-lg center-block">
-                        <i class="fa fa-check-square-o"></i> Rate this location
-                    </button>
+                    <a href="/location/rating/{{$location->id}}">
+                        <button class="btn btn-default btn-lg center-block">
+                            <i class="fa fa-check-square-o"></i> Rate this location
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>

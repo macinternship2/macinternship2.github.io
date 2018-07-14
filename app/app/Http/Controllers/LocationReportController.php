@@ -51,7 +51,7 @@ class LocationReportController extends Controller
             'lng' => $location->longitude
         ]);
 
-        return view('pages.location_report.location_report' ,[
+        return view('pages.location_report.location_report', [
             'location' => $location,
             'rating_system' => $ratingSystem,
             'body_class' => 'show-ratings-popup',

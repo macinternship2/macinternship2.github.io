@@ -59,7 +59,7 @@ function removeAnswer(question_id)
 {
 	processPromise($.ajax({
 		'method': 'DELETE',
-		'url': '/location-rating/answer',
+		'url': '/location/rating/session',
 		'data': {
 			'location_id': location_id,
 			'question_id': question_id,
@@ -79,7 +79,7 @@ function saveAnswerChange(question_id, answer_text)
 	}
 	processPromise($.ajax({
 		'method': 'PUT',
-		'url': '/location-rating/answer',
+		'url': '/location/rating/session',
 		'data': {
 			'location_id': location_id,
 			'question_id': question_id,

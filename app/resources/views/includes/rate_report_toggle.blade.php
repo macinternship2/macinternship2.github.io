@@ -22,10 +22,10 @@
 			@if ( !$is_reporting )
 			<li class="text-center">
 				<div class="submit">
-					@include('pages.location_rating.submit',
-						array(
-							'location_id' => $location_id
-						))
+					<form method="post" action="/location/rating/{{$location->id}}">
+						{!! csrf_field() !!}
+						<input type="submit" class="clean" value="Submit">
+					</form>
 				</div>
 			</li>
 			@endif

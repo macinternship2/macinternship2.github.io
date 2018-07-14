@@ -9,12 +9,6 @@
     </script>
     <script type="text/javascript" language="JavaScript" src="/js/utils.js"></script>
     <script type="text/javascript" language="JavaScript" src="/js/question_explanation.js"></script>
-	<script type="text/javascript" language="JavaScript">
-	// values used in location_rating.js
-	var location_id = '{{ $location->id }}';
-	var question_category_id = {{ $question_category->id }};
-	var csrf_token = '{{ csrf_token() }}';
-    </script>
 @stop
 @section('content')
 	<div class="location-rating">
@@ -22,46 +16,43 @@
 		<p>The specified location couldn't be found</p>
 	@else
 		<div class="menu">
-			<h1>Rate Location</h1>
-			@include('includes.question_categories',
-				array(
-					'location_id' => $location->id,
-					'question_categories' => $question_categories,
-					'base_url' => '/location-rating/'
-				))
+			<h3 class="text-center">Rate Location</h3>
+			<div class="question-categories">
+				@include('includes.question_categories', [
+				'base_url' => '/location/rating'
+				])
+			</div>
 			<div class="submit">
-				@include('pages.location_rating.submit',
-					array(
-						'location_id' => $location->id
-					))
+				<form method="post" action="/location/rating/{{$location->id}}">
+					{!! csrf_field() !!}
+					<input type="submit" class="clean" value="Submit">
+				</form>
 			</div>
 		</div>
 		<div class="rate">
-			<h1><a href="/location-report/{{ $location->id }}">{{ $location->name }}</a></h1>
+			<h3 style="margin-left: 20px"><a href="/location/report/{{ $location->id }}">{{ $location->name }}</a></h3>
 				@include('includes.rate_report_toggle',
 					array(
 						'location_id' => $location->id,
-						'question_categories' => $question_categories,
-						'question_category_id' => $question_category->id,
+						'question_categories' => $categories,
+						'question_category' => $category,
+						'question_category_id' => $category->id,
 						'base_url' => '/location-rating/',
 						'is_reporting' => false
 					))
-			@if ( $question_category === null )
-				@include('pages.location_rating.introduction',
-					array(
-						'location' => $location
-					))
+			@if ( $category === null )
+				@include('pages.location_rating.introduction')
 			@else
 				@include('pages.location_rating.questions',
 					array(
-						'question_category' => $question_category,
+						'question_category' => $category,
 						'location' => $location,
 						'uses_screen_reader' => $uses_screen_reader,
-						'answer_repository' => $answer_repository
+						'answer_helper' => \App\Helpers\AnswerHelper::build(),
+						'comment_helper' => \App\Helpers\CommentHelper::build()
 					))
 			@endif
 		</div>
 	@endif
 	</div>
-
 @stop

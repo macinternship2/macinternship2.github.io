@@ -103,7 +103,7 @@ class Location extends Model
                    WHEN answer_value = 3 THEN 0
                    END AS answer_value')
                 )->get()->avg('answer_value');
-            return $overAllRatings ? round($overAllRatings,2) : 0;
+            return $overAllRatings ? round($overAllRatings, 2) : 0;
         }
         return null;
     }
@@ -146,12 +146,12 @@ class Location extends Model
             ->where('location_id', $locationId)
             ->select(
                 DB::raw('CASE
+               WHEN answer_value = 0 THEN 0
                WHEN answer_value = 1 THEN 100
                WHEN answer_value = 2 THEN 0
-               WHEN answer_value = 3 THEN 0
                END AS answer_value')
             )->get()->avg('answer_value');
-        return $overAllRatings ? round($overAllRatings,2) : 0;
+        return $overAllRatings ? round($overAllRatings, 2) : 0;
     }
 
     /**
@@ -173,7 +173,8 @@ class Location extends Model
      * This function is responsible for getting value of mutator attribute.
      * @return mixed|null
      */
-    public function getOverallUniversalRatingsAttribute() {
+    public function getOverallUniversalRatingsAttribute()
+    {
         return $this->scopeGetOverallUniversalRatings(null, $this->id);
     }
 
@@ -181,14 +182,23 @@ class Location extends Model
      * This function is responsible for getting value of mutator attribute.
      * @return mixed|null
      */
-    public function getOverallPersonalRatingsAttribute() {
+    public function getOverallPersonalRatingsAttribute()
+    {
         return $this->scopeGetOverallPersonalRatings(null, $this->id);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(ReviewComment::class);
+    }
 
-
-
-
+    /**
+     * The tags that belong to this location.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(LocationTag::class);
+    }
 
 
 
@@ -215,23 +225,14 @@ class Location extends Model
         return $result;
     }
 
-    /**
-     * The tags that belong to this location.
-     */
-    public function tags()
-    {
-        return $this->belongsToMany('App\LocationTag');
-    }
+
 
     public function personalizedRatings()
     {
         return $this->hasMany('App\UserLocation');
     }
 
-    public function comments()
-    {
-        return $this->hasMany('App\ReviewComment');
-    }
+
 
     public function locationGroup()
     {

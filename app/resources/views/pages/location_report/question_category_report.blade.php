@@ -19,7 +19,9 @@
             <div class="menu">
                 <h3 class="text-center">Location Ratings</h3>
                 <div class="question-categories">
-                    @include('includes.question_categories')
+                    @include('includes.question_categories', [
+                    'base_url' => '/location/report'
+                    ])
                 </div>
             </div>
             <div class="ratings">

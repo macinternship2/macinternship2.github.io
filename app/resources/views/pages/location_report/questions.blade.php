@@ -16,14 +16,22 @@
 				</div>
 				<div class="stats">
 					<div class="percentage">
-						@if (is_null($question->ratings))
+						@if (!isset($question->ratings[$location->id]))
 							No ratings
 						@else
-							{{ $question->ratings }}%
+							{{ $question->ratings[$location->id]->avg('answer_value')}}%
 						@endif
 					</div>
 					<div class="user-count">
-						<p>{{ $question->no_of_ratings }} rating(s)</p>
+						@if (!isset($question['all_ratings'][$location->id]))
+							<p>0 rating</p>
+						@else
+							@if(collect($question->all_ratings[$location->id]->flatten())->whereIn('question_id', $question->id)->isEmpty())
+								<p> 0 ratings</p>
+							@else
+								<p> {{collect($question->all_ratings[$location->id]->flatten())->whereIn('question_id', $question->id)->count()}} rating(s)</p>
+							@endif
+						@endif
 					</div>
 				</div>
 			</div>

@@ -14,7 +14,7 @@ class Question extends Model
 
     protected $appends = [
         'ratings',
-        'no_of_ratings'
+        'all_ratings'
     ];
 
     public $timestamps = false;
@@ -24,17 +24,20 @@ class Question extends Model
     {
         return UserAnswer::query()->where('question_id', $this->id)
             ->select([
+                'location_id',
                 DB::raw('CASE
                 WHEN answer_value = 1 THEN 100
                 WHEN answer_value = 2 THEN 0
                 WHEN answer_value = 3 THEN 0
                 END AS answer_value')
-            ])->get()->avg('answer_value');
+            ])->get()->groupBy('location_id');
     }
 
-    public function getNoOfRatingsAttribute()
+    public function getAllRatingsAttribute()
     {
-        return UserAnswer::query()->where('question_id', $this->id)->groupBy('answered_by_user_id')->count();
+        return UserAnswer::query()->where('question_id', $this->id)
+            ->get(['location_id', 'question_id'])
+            ->groupBy('location_id');
     }
     
     private static function setQuestionRatingInCache(int $question_id, $location, $new_value)
@@ -99,6 +102,6 @@ class Question extends Model
 
     public function category()
     {
-        return $this->belongsTo(QuestionCategory::class,'category_id');
+        return $this->belongsTo(QuestionCategory::class, 'category_id');
     }
 }

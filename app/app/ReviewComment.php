@@ -17,7 +17,8 @@ class ReviewComment extends Model
 
     public function __construct()
     {
-        $this->attributes = array('id' => Uuid::generate(4)->string);
+        parent::__construct();
+        $this->attributes['id'] = Uuid::generate(4)->string;
     }
 
     public function user()
