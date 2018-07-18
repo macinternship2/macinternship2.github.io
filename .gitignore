@@ -2,3 +2,4 @@
 /importers/**/*.class
 /importers/**/raw_html/*.html
 /importers/**/raw_xml/*.xml
+.DS_Store
