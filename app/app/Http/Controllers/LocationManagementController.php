@@ -96,10 +96,30 @@ class LocationManagementController extends \Illuminate\Routing\Controller
         $location_tags = DB::table('location_tag')->orderBy('name')->get();
         if (!empty($location_id)) {
             $location=location::find($location_id);
+            $location_tag_location_ids = DB::table('location_location_tag')
+                               ->where('location_id', '=', $location_id)
+                               ->get(array('location_tag_id'))->toArray();
+           
+            $array_location_ids = array_map(function ($item) {
+                return (array)$item;
+            }, $location_tag_location_ids);
+
+            foreach ($array_location_ids as $array_location_id) {
+                $location_location_tag_ids[] = $array_location_id['location_tag_id'];
+            }
+           
+            if (!isset($location_location_tag_ids)|| $location_location_tag_ids === null) {
+                $location_location_tag_ids = [];
+            }
+            foreach ($location_tags as $location_tag) {
+                $location_tag->is_selected = in_array($location_tag->id, $location_location_tag_ids);
+            }
         } else {
             $location = new Location();
+            foreach ($location_tags as $location_tag) {
+                $location_tag->is_selected = false;
+            }
         }
-
         $location->latitude = $user->latitude;
         $location->longitude = $user->longitude;
         if ($location->latitude === null) {
@@ -107,9 +127,6 @@ class LocationManagementController extends \Illuminate\Routing\Controller
         }
         if ($location->longitude === null) {
             $location->longitude = BaseUser::getLongitude();
-        }
-        foreach ($location_tags as $location_tag) {
-            $location_tag->is_selected = false;
         }
         return [
             'location' => $location,
@@ -143,12 +160,11 @@ class LocationManagementController extends \Illuminate\Routing\Controller
     }
     public function editLocation($location_id)
     {
-        $view_data = $this->getLocationAddViewData();
+        $view_data = $this->getLocationAddViewData($location_id);
         $view_data['location'] = DB::table('location')->where("id", '=', trim($location_id))->first();
         $view_data['action'] = 'edit';
         $view_data['locations'] = json_encode($this->
             getLocationsNear($view_data['location']->longitude, $view_data['location']->latitude));
-
         return view('pages.location_management.add_new_location', $view_data);
     }
 
@@ -219,18 +235,26 @@ class LocationManagementController extends \Illuminate\Routing\Controller
         // Delete records from child tables.
         DB::transaction(function () use ($location, $view_data) {
             $location->save();
-            foreach ($view_data['location_tags'] as $location_tag) {
-                if ($location_tag->is_selected) {
-                    DB::table('location_location_tag')->insert(
-                        ['location_id' => $location->id,
-                        'location_tag_id' => $location_tag->id,
-                        'id' => Uuid::generate(4)->string]
-                    );
-                }
-            }
+            $this->saveLoactionLocationTag($location, $view_data);
         });
 
         return view('pages.location_management.location_created', $view_data);
+    }
+
+    public function saveLoactionLocationTag($location, $view_data, $action = '')
+    {
+        if (!empty($action) && $action == 'edit') {
+            DB::table('location_location_tag')->where('location_id', '=', $location->id)->delete();
+        }
+        foreach ($view_data['location_tags'] as $location_tag) {
+            if ($location_tag->is_selected) {
+                DB::table('location_location_tag')->insert(
+                    ['location_id' => $location->id,
+                    'location_tag_id' => $location_tag->id,
+                    'id' => Uuid::generate(4)->string]
+                );
+            }
+        }
     }
 
     public function showCurrentUserLocations()
@@ -330,13 +354,7 @@ class LocationManagementController extends \Illuminate\Routing\Controller
         // Delete records from child tables.
         DB::transaction(function () use ($location, $view_data) {
             $location->save();
-            foreach ($view_data['location_tags'] as $location_tag) {
-                if ($location_tag->is_selected) {
-                    DB::table('location_location_tag')->where('location_id', '=', $location->id)->update(
-                        ['location_tag_id' => $location_tag->id]
-                    );
-                }
-            }
+            $this->saveLoactionLocationTag($location, $view_data, 'edit');
         });
 
         $view_data['action'] = 'edit';
