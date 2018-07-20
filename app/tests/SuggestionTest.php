@@ -2,9 +2,15 @@
 
 class SuggestionTest extends TestCase
 {
+    private function signOut()
+    {
+        $response = $this->get('/signout');
+        $this->assertEquals(302, $response->getStatusCode());
+    }
+
     private function signIn()
     {
-        $this->flushSession();
+        $this->signOut();
         $data = ['email' => 'josh.greig2@gmail.com', 'password' => 'password'];
         $response = $this->post('/signin', $data);
         $this->assertEquals(302, $response->getStatusCode());
@@ -12,6 +18,7 @@ class SuggestionTest extends TestCase
 
     public function testAddSuggestionAvailableOnLocationReport()
     {
+        Session::start();
         $this->signIn();
         $response = $this->get('/location/report/00000000-0000-0000-0000-000000000001');
         $this->assertEquals(200, $response->getStatusCode());
@@ -24,13 +31,15 @@ class SuggestionTest extends TestCase
      */
     public function testAddSuggestion()
     {
+        Session::start();
         $this->signIn();
         $data = [
             'location-id' => '00000000-0000-0000-0000-000000009146',
             'location-name' => 'testname',
             'phone-number' => '226-961-3209',
             'address'=> 'testaddress',
-            'url' => 'http://www.google.com'
+            'url' => 'http://www.google.com',
+            '_token' => csrf_token()
         ];
         $response = $this->post('/api/add-suggestion', $data);
         $this->assertEquals(200, $response->getStatusCode());
@@ -41,13 +50,16 @@ class SuggestionTest extends TestCase
 
     public function testAddSuggestionWithEmptyUrl()
     {
+        Session::start();
+        echo 'csrf = '. csrf_token();
         $this->signIn();
         $data = [
             'location-id' => '00000000-0000-0000-0000-000000009146',
             'location-name' => 'testname',
             'phone-number' => '226-961-3209',
             'address'=> 'testaddress',
-            'url' => ''
+            'url' => '',
+            '_token' => csrf_token()
         ];
         $response = $this->post('/api/add-suggestion', $data);
         $this->assertEquals(200, $response->getStatusCode());
@@ -58,13 +70,15 @@ class SuggestionTest extends TestCase
 
     public function testAddSuggestionWithInvalidParameters()
     {
+        Session::start();
         $this->signIn();
         $data = [
             'location-id' => '00000000-0000-0000-0000-000000009146',
             'location-name' => 'testname',
             'phone-number' => '123-456-4',
             'address'=> 'test',
-            'url' => 'abc@gmail.com'
+            'url' => 'abc@gmail.com',
+            '_token' => csrf_token()
         ];
         $response = $this->post('/api/add-suggestion', $data);
         $this->assertEquals(422, $response->getStatusCode());
@@ -78,13 +92,15 @@ class SuggestionTest extends TestCase
      */
     public function testNotSignIn()
     {
-        $this->flushSession();
+        Session::start();
+        $this->signOut();
         $data = [
             'location-id' => '00000000-0000-0000-0000-000000009146',
             'location-name' => 'testname',
             'phone-number' => 'testphone',
             'address'=> 'testaddress',
-            'url' => 'www.testurlurl.com'
+            'url' => 'www.testurlurl.com',
+            '_token' => csrf_token()
         ];
         $response = $this->post('/api/add-suggestion', $data);
         $this->assertEquals(403, $response->getStatusCode());
