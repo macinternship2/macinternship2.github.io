@@ -9,55 +9,58 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="signin-form">
-				@if ( isset($message) && $message )
-				<div class="message text-center alert alert-info">
-					{{$message}}
-				</div>
-				@endif
-				@if ( isset($confirmmessage) && $confirmmessage )
-				<strong>{{ $confirmmessage }}</strong>
-				@else
 				<form method="post" action="/signin">
+					@if (Session::has('verification_message'))
+						<div class="alert alert-success">
+							{{Session::get('verification_message')}}
+						</div>
+					@endif
+					@if($errors->has('message'))
+						<div class="alert alert-danger">
+							<p>{{$errors->get('message')[0]}}</p>
+						</div>
+					@endif
+					@if($errors->has('email'))
+						<div class="alert alert-danger">
+							<p>{{$errors->get('email')[0]}}</p>
+						</div>
+					@endif
 					{!! csrf_field() !!}
-					@include('pages.validation_messages', array('errors'=>$errors))
-					<input type="hidden" name="after_signin_redirect" value="{{ isset($after_signin_redirect) ? $after_signin_redirect : '' }}">
 					<div class="row">
 						<div class="col-xs-12">
 							<input type="email"
 								class="clean" name="email"
-								placeholder="Email" value="{{ old('email', $email) }}">
+								placeholder="Email" value="{{ old('email') }}">
 						</div>
 						<div class="col-xs-12">
 							<input class="clean" name="password" type="password" placeholder="Password" value="{{ old('password') }}">
+							@if ($errors->has('password'))
+								<p class="text-danger">{{$errors->get('password')[0]}}</p>
+							@endif
 						</div>
-						
                         <div class="col-xs-12">
 							<div class="remember-password">
-								<a class="pull-right" href="/user/password-recovery"> Account Recovery </a>
+								<input type="checkbox" name="remember_me" />
+								<span>Remember Me</span>
+								<a class="pull-right" href="/user/password-recovery">Account Recovery</a>
 							</div>
                         </div>
-                                                
 					</div>
 					<div>
 						<input class="clean" type="submit" value="Sign in">
 					</div>
 				</form>
-				@endif
 			</div> 
 		</div>
 		<div class="col-md-6">
 			<div class="social-media-signins">
 				Or sign in using your social media account
 				
-				<a rel="nofollow" class="facebook" href="/socialauth/auth/Facebook{{
-					isset($after_signin_redirect) && $after_signin_redirect ? htmlentities('?after_signin_redirect='.urlencode($after_signin_redirect)) : ''
-				}}">
+				<a rel="nofollow" class="facebook" href="/social_auth/callback/facebook">
 					<i class="fa-lg fa fa-facebook"></i>
 					<div class="pull-right">Sign in with facebook</div>
 				</a>
-				<a rel="nofollow" class="google-plus" href="/socialauth/auth/Google{{
-					isset($after_signin_redirect) && $after_signin_redirect ? htmlentities('?after_signin_redirect='.urlencode($after_signin_redirect)) : ''
-				}}">
+				<a rel="nofollow" class="google-plus" href="/social_auth/callback/google">
 					<i class="fa-lg fa fa-google-plus"></i>
 					<div class="pull-right">Sign in with Google</div>
 				</a>
