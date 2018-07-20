@@ -30,17 +30,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'user_role');
     }
-    
-    // Checks if this user has the specified role
-    public function hasRole(int $role_id)
-    {
-        $matches = DB::table('user_role')
-            ->where('user_id', '=', $this->id)
-            ->where('role_id', '=', $role_id)
-            ->first(['id']);
-        return !!$matches;
-    }
-    
+
     /**
     isQuestionRequired checks if the specified id is in the array of questions.
     This is used in profile.blade.php and ProfileController.

@@ -117,7 +117,7 @@ class InternalFeaturesController extends \Illuminate\Routing\Controller
             'num_rated_locations' => $num_rated_locations,
             'num_created_locations' => $num_created_locations,
             'is_hard_deletable' => self::isDeletableEmailAddress($user->email),
-            'is_internal' => $user->hasRole(Role::INTERNAL)
+            'is_internal' => $user->isInternal()
         ];
 
         return view('pages.internal_features.user_report', $view_data);
