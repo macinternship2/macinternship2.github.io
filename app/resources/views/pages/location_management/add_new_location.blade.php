@@ -18,12 +18,20 @@
 @stop
 @section('content')
 <div class="add-location @if ( !$errors->isEmpty() ) with-errors @endif">
+
+	@if(!empty($action))
+	<h1>Edit Location</h1>
+	@else
 	<h1>Add New Location</h1>
+	@endif
 	@include('pages.validation_messages', array('errors'=>$errors, 'show_only_first' => true))
-	<form method="post" action="/add-location">
+	<form method="post" @if(!empty($action)) action="/edit-location"  @else action="/add-location"  @endif >
 		{!! csrf_field() !!}
 		<input type="hidden" id="latitude" name="latitude" value="{{ $location->latitude }}">
 		<input type="hidden" id="longitude" name="longitude" value="{{ $location->longitude }}">
+		@if(!empty($action))
+		<input type="hidden" id="location_id" name="location_id" value="{{ $location->id }}">
+		@endif
 		<div>
 			<label for="name">Name</label>
 			<input id="name" name="name" value="{{ $location->name }}">
@@ -53,7 +61,11 @@
 					@endforeach
 						<option value="-">Other</option>
 					</select>
+					@if(!empty($action))
+					<button class="btn btn-primary" type="submit">Save</button>
+					@else
 					<button class="btn btn-primary" type="submit">Add</button>
+					@endif
 				</div>
 			</div>
 		</div>
