@@ -10,6 +10,7 @@
   <script src="/js/question_explanation.js"></script>
 @stop
 @section('content')
+
 <div class="profile row">
 	<div class="col-md-3 col-sm-4 col-xs-12">
 		@if ($has_profile_photo)
@@ -157,14 +158,23 @@
 						<div class="col-sm-4 col-xs-5">
 							<label for="distance">Distance (km)</label>
 						</div>
-						<div class="col-sm-8 col-xs-7">
+						<div class="col-sm-8 col-xs-7" id="dis_class">
 							<!-- from 10 meters to the full radius of Earth -->
 							<input class="form-control" id="distance" name="search_radius_km"
 								type="number"
 								step="0.01"
 								min="0.01"
 								max="{{ $max_search_radius_km }}"
-								value="{{ number_format($user->search_radius_km, 2) }}">
+								value="{{ number_format($user->search_radius_km, 2) }}"
+								style="display: table-cell;">
+						</div>
+						<div id="display" style="visibility: hidden">
+								<button type="button" id="up_distance" onclick="inc_distance();"> 
+									&#x25B2;
+								</button>
+								<button type="button" id="down_distance" onclick="dec_distance();"> 
+									&#x25BC;
+								</button>
 						</div>
 					</div>
 				</div>
@@ -236,5 +246,43 @@
 
 	</div>
 </div>
+
+<script type="text/javascript" >
+window.onload = detect();
+function detect()
+{
+	var explorer = false || !!document.documentMode;
+	var edge = !explorer && !!window.StyleMedia;
+	
+	if ((edge) || (explorer))
+	{
+		document.getElementById("display").style.visibility = "visible";
+		document.getElementById("dis_class").className = "col-lg-7 col-sm-7 col-xs-7";
+	}
+}
+
+function inc_distance()
+{
+	var value = parseFloat(document.getElementById("distance").value);
+	if (value < 5000)
+	{
+		value += 0.01;
+		document.getElementById("distance").value = value.toPrecision(3).toString();
+		document.getElementById("submitButton").disabled = false;
+	}
+	return false;
+}
+function dec_distance()
+{
+	var value = parseFloat(document.getElementById("distance").value);
+	if (value > 0.01)
+	{
+		value -= 0.01;
+		document.getElementById("distance").value = value.toPrecision(3).toString();
+		document.getElementById("submitButton").disabled = false;
+	}
+	return false;
+}
+</script>
 
 @stop

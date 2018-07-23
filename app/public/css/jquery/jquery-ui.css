@@ -1320,3 +1320,7 @@ a.ui-button:active,
     margin-left: 21px;
     
 }
+.display:hover
+{
+	cursor: pointer; 
+}
