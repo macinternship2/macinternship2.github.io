@@ -60,7 +60,7 @@ function initMap() {
 	var options = {
 	  zoom: 19,
 	  center: user_point,
-	  draggable: false,
+	  draggable: true,
 	  streetViewControl: false,
 	  clickableIcons: false
 	};
