@@ -6,12 +6,28 @@ function initMap() {
 	var map = new google.maps.Map(document.getElementById('map'), {
 	  zoom: 15,
 	  center: locationPoint,
-	  draggable: true,
+	  draggable: false,
 	  streetViewControl: false
 	});
 	var marker = new google.maps.Marker({
 	  position: locationPoint,
 	  map: map
+	});
+
+	var lastRight = null;
+	map.addListener('mouseup',function(){
+		if (event.which === 3){
+			var newRight = event.timeStamp;
+			
+			if(newRight - lastRight < 400){
+				map.setZoom(map.getZoom()-1);
+			}
+			lastRight=newRight;	
+		}
+	});
+
+	map.addListener('dblclick',function(){
+		map.setZoom(map.getZoom()+1);
 	});
 
 	function centreLocation() {
