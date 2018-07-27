@@ -23,8 +23,10 @@
 		'location' => $location))
 	<div class="basic-info">
 		<div class="addresses">
-			<address>{{ $location->address }}</address>
-			<a href="{{ $location->getExternalWebURL() }}">{{ $location->getExternalWebURL() }}</a>
+		<address><em class="fa fa-map-marker"></em>{{ $location->address }}
+		@if(!is_null($location->phone_number))<p><em class="fa fa-phone"></em><a href="tel: {{ $location->phone_number }}">{{ $location->phone_number }}</a></p>@endif
+		<a href="{{ $location->getExternalWebURL() }}">{{ $location->getExternalWebURL() }}</a>
+		</address>
 		</div>
 		<div class="location-tags text-right">
 			<div class="location-tags">
