@@ -123,6 +123,7 @@ function initMap() {
 	map.addListener('dragend', function() {
 		saveSearchLocationWithOptionalAddress(map.getCenter());
 		circle.setCenter(map.getCenter());
+		location.reload();
 	});
 
 	var lastRight = null;
