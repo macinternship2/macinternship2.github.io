@@ -40,37 +40,39 @@ self.addEventListener('activate', function(e) {
 })
 
 self.addEventListener('fetch',function(e) {
-    e.respondWith(
+   
+    if (e.request.url.indexOf('https://maps.googleapi.com') !== 0 ||
+     e.request.url.indexOf('http://maps.googleapis.com') !== 0) {
+        e.respondWith(
+            caches.match(e.request)
+                .then(function(response) {
 
-        caches.match(e.request)
+                    if (response) {
+                        return response;
+                    }
 
+                    var requestClone = e.request.clone();
+                    return fetch(requestClone)
+                        .then(function(response) {
 
-            .then(function(response) {
+                            if (!response) {
+                                return response;
+                            }
 
-                if (response) {
-                    return response;
-                }
+                            var responseClone = response.clone();
+                            caches.open(cacheName).then(function(cache) {
+                                cache.put(e.request, responseClone)
+                                .catch(function(err) {
+                                    console.log('Post Request Made', err);
+                                });     
+                                return response;
+                            });
 
-                var requestClone = e.request.clone();
-                return fetch(requestClone)
-                    .then(function(response) {
-
-                        if (!response) {
-                            return response;
-                        }
-
-                        var responseClone = response.clone();
-                        caches.open(cacheName).then(function(cache) {
-                            cache.put(e.request, responseClone);
-                            return response;
+                        })
+                        .catch(function(err) {
+                            console.log('[ServiceWorker] Error Fetching & Caching New Data', err);
                         });
-
-                    })
-                    .catch(function(err) {
-                        console.log('[ServiceWorker] Error Fetching & Caching New Data', err);
-                    });
-
-
-            })
-    );
+                })
+        );
+  }
 })
