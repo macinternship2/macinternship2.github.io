@@ -43,7 +43,7 @@ class HomeController extends Controller
             'firebase_database_url' => config('app.firebase_database_url'),
             'firebase_project_id' => config('app.firebase_project_id'),
             'firebase_storage_bucket' => config('app.firebase_storage_bucket'),
-            'firebase_messaging_sender_id' => config('firebase_messaging_sender_id')
+            'firebase_messaging_sender_id' => config('app.firebase_messaging_sender_id')
             ]);
     }
 

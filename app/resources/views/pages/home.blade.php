@@ -22,12 +22,12 @@
 	<script>
 	  // Initialize Firebase
 	  var config = {
-	    apiKey: "AIzaSyBX6l4geba-CjXE_WlQwOX6pxCIrVl-tjk",
-	    authDomain: "wise-bongo-209220.firebaseapp.com",
-	    databaseURL: "https://wise-bongo-209220.firebaseio.com",
-	    projectId: "wise-bongo-209220",
-	    storageBucket: "wise-bongo-209220.appspot.com",
-	    messagingSenderId: "926874022337"
+	    apiKey: "{{$firebase_api_key}}",
+	    authDomain: "{{$firebase_auth_domain}}",
+	    databaseURL: "{{$firebase_database_url}}",
+	    projectId: "{{$firebase_project_id}}",
+	    storageBucket: "{{$firebase_storage_bucket}}",
+	    messagingSenderId: "{{$firebase_messaging_sender_id}}"
 	  };
 	  firebase.initializeApp(config);
 	</script>
