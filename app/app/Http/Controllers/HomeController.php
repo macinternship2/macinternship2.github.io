@@ -37,7 +37,13 @@ class HomeController extends Controller
             'default_location' => BaseUser::getDefaultLocation(),
             'google_map_api_key' => config('app.google_map_api_key'),
             'turn_off_maps'      => config('app.turn_off_maps'),
-            'location_search_options' => $location_search_options
+            'location_search_options' => $location_search_options,
+            'firebase_api_key' => config('app.firebase_api_key'),
+            'firebase_auth_domain' => config('app.firebase_auth_domain'),
+            'firebase_database_url' => config('app.firebase_database_url'),
+            'firebase_project_id' => config('app.firebase_project_id'),
+            'firebase_storage_bucket' => config('app.firebase_storage_bucket'),
+            'firebase_messaging_sender_id' => config('app.firebase_messaging_sender_id')
             ]);
     }
 

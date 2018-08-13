@@ -118,6 +118,16 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    /* Firebase keys
+    | Will be used for push notifications
+    */
+    'firebase_api_key' => env('FIREBASE_API_KEY', ''),
+    'firebase_auth_domain'=> env('FIREBASE_AUTH_DOMAIN', ''),
+    'firebase_database_url' => env('FIREBASE_DATABASE_URL, '),
+    'firebase_project_id' => env('FIREBASE_PROJECT_ID', ''),
+    'firebase_storage_bucket' => env('FIREBASE_STOREAGE_BUCKET', ''),
+    'firebase_messaging_sender_id' => env('FIREBASE_MESSAGING_SENDER_ID', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration

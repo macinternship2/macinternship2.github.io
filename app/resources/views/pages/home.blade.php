@@ -4,6 +4,7 @@
 	<script src="/js/utils.js" type="text/javascript"></script>
 	<script src="/js/home.js" type="text/javascript"></script>
 	<script src="/js/hover_text.js" type="text/javascript"></script>
+	<script src="/js/service_worker_script.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		var default_location = {
 			'latitude': {{ $default_location['latitude'] }},
@@ -12,6 +13,23 @@
 	</script>
 	<script type="text/javascript" async defer
 		src="//maps.googleapis.com/maps/api/js?key={{ $google_map_api_key }}&amp;callback=initMap">
+	</script>
+	
+	<!-- Firebase App is always required and must be first -->
+	<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-messaging.js"></script>
+
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "{{$firebase_api_key}}",
+	    authDomain: "{{$firebase_auth_domain}}",
+	    databaseURL: "{{$firebase_database_url}}",
+	    projectId: "{{$firebase_project_id}}",
+	    storageBucket: "{{$firebase_storage_bucket}}",
+	    messagingSenderId: "{{$firebase_messaging_sender_id}}"
+	  };
+	  firebase.initializeApp(config);
 	</script>
 @stop
 @section('content')
