@@ -3,7 +3,7 @@ title = 'We Need Your Help!';
 options = {
 	body: '',
 	icon: '/images/logo-192x192.png',
-	sound: '/sounds/alert.wav',
+	sound: '/sounds/alert.mp3',
 	actions: [
 			{
 			action: 'review',
@@ -13,18 +13,16 @@ options = {
 	tag: 'help-notification',
 	vibrate: [500,110,500,110,450]
 	};
-function helpNotification(name,id) {
+function updateHelpNotificationData(name,id) {
 	if(name=='404')
 		options.body='';
 	else{
 		reviewRedirect='location/rating/'+id+'/5';
 		options.body='Would you like to add a review to '+name+'?';
 	}
-	//self.registration.showNotification(title, options);
 };
 
-function sendNotification() {
-	//check to send here
+function sendHelpNotification() {
 	sendMessage({type: 'refresh'});
 	if(options.body!=='')
 		self.registration.showNotification(title,options);
@@ -64,9 +62,6 @@ self.addEventListener('activate', function(e) {
     console.log('Service Worker Activated');
 })
 
-self.addEventListener('fetch',function(e) {
-    //console.log('fetching '+e);
-})
 
 self.addEventListener('notificationclick', function(e) {
     switch(e.action) {
@@ -81,10 +76,10 @@ self.addEventListener('notificationclick', function(e) {
 })
 
 self.addEventListener('message', function(e) {
-	helpNotification(e.data.name,e.data.id);
+	updateHelpNotificationData(e.data.name,e.data.id);
 })
 
 //send first notification
-setTimeout(sendNotification,5000);
+setTimeout(sendHelpNotification,5000);
 //Starting the push notification clock
-setTimeout(setInterval(sendNotification,3600000),5000);
+setTimeout(setInterval(sendHelpNotification,3600000),5000);

@@ -1,29 +1,37 @@
 var url= window.location.href;
 var pos = url.search('using_pwa');
 
-if (pos+1 && url[pos+8] && 'serviceWorker' in navigator) {
-	navigator.serviceWorker
-	.register('service-worker.js')
-	.then(function(registration) {
-		if (!navigator.serviceWorker.controller){
-			location.reload();
-		}
-		sendNewLocation();
-	})
-	.catch(function(err) {
-		console.log("Service Worker Failed to Register", err);
-	});
+function initServiceWorker(){
+	if (pos+1 && url[pos+8] && 'serviceWorker' in navigator) {
+		navigator.serviceWorker
+		.register('service-worker.js')
+		.then(function(registration) {
+			if (!navigator.serviceWorker.controller){
+				location.reload();
+			}
+			sendNewLocation();
+		})
+		.catch(function(err) {
+			console.log("Service Worker Failed to Register", err);
+		});
+	}
 }
 
-if ('serviceWorker' in navigator){
-	navigator.serviceWorker.addEventListener('message', function(e) {
-		if(e.data.type=='redirect') {
-			location.replace(e.data.url);
-		} else if(e.data.type='refresh') {
-			sendNewLocation();
-		}
-	});
+function initListener(){
+	if ('serviceWorker' in navigator){
+		navigator.serviceWorker.addEventListener('message', function(e) {
+			if(e.data.type=='redirect') {
+				location.replace(e.data.url);
+			} else if(e.data.type='refresh') {
+				sendNewLocation();
+			}
+		});
+	}
 }
+
+
+initServiceWorker();
+initListener();
 
 function sendNewLocation() {
 	getCurrentGeolocation().then( function(latlng){
