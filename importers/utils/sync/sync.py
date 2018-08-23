@@ -117,10 +117,9 @@ def set_fields_on_questions(db):
 	# as order is updated in the following loop.
 	cursor = db.cursor()
 	for question_data in questions_data:
-		update_sql = 'update question set question_html=%s, is_always_required=%s, `order`=%s, explanation=%s, is_required_config=%s where id=%s'
+		update_sql = 'update question set question_html=%s, is_always_required=%s, `order`=%s, explanation=%s, is_required_config=%s, name=%s where id=%s'
 		cursor.execute(update_sql, (question_data['question_html'],
-			question_data['is_always_required'], question_data['order'], question_data['explanation'], question_data['is_required_config'], question_data['id']))
-
+			question_data['is_always_required'], question_data['order'], question_data['explanation'], question_data['is_required_config'], question_data['name'], question_data['id']))
 
 def set_fields_on_location_tags(db):
 	print 'setting fields on location_tags table'
