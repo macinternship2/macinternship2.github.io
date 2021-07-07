@@ -15,6 +15,7 @@ class ShareBaseUserWithViewsProvider extends ServiceProvider
     public function boot()
     {
          view()->share('base_user', new BaseUser());
+         view()->share('google_map_api_key', config('app.google_map_api_key'));
     }
 
     /**

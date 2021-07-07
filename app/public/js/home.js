@@ -55,8 +55,12 @@ function initMap()
 		streetViewControl: false,
 		clickableIcons: false
 	});
-	default_location = new google.maps.LatLng(default_location.latitude, default_location.longitude);
-
+	try{
+		default_location = new google.maps.LatLng(default_location.latitude, default_location.longitude);
+	}
+	catch(e){
+		default_location= new google.maps.LatLng(function(){return 42.317503},function(){return -83.035474});
+	}
 	google.maps.event.addDomListener(window, "resize", function() {
 		var center = map.getCenter();
 		google.maps.event.trigger(map, "resize");
